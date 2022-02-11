@@ -1,0 +1,46 @@
+:root {
+	--th-blue: #7aa2f7;
+	--th-indigo: #2ac3de;
+	--th-purple: #9d7cd8;
+	--th-pink: #f7768e;
+	--th-red: #f7768e;
+	--th-orange: #ff9e64;
+	--th-yellow: #e0af68;
+	--th-green: #9ece6a;
+	--th-teal: #1abc9c;
+	--th-cyan: #7dcfff;
+	--th-white: #c0caf5;
+	--th-gray: #6c757d;
+	--th-gray-100: #f8f9fa;
+	--th-gray-200: #e9ecef;
+	--th-gray-300: #dee2e6;
+	--th-gray-400: #ced4da;
+	--th-gray-500: #adb5bd;
+	--th-gray-600: #6c757d;
+	--th-gray-700: #495057;
+	--th-gray-800: #343a40;
+	--th-gray-900: #24283b;
+	--th-primary: #292e42;
+	--th-secondary: #a9b1d6;
+	--th-success: #9ece6a;
+	--th-info: #9d7cd8;
+	--th-warning: #e0af68;
+	--th-danger: #f7768e;
+	--th-light: #a9b1d6;
+	--th-dark: #343a40;
+	--th-font: "DejaVu Mono", "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	--th-font-size: 1rem;
+	--th-font-weight: 500;
+}
+
+body {
+	color: var(--th-secondary);
+	font-family: var(--th-font);
+	font-size: var(--th-font-size);
+	font-weight: var(--th-font-weight);
+	padding: 0;
+	margin: 0;
+	background-color: var(--th-gray-800);
+	width: 100vw;
+	height: 100vh;
+}

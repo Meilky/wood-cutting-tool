@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+    php-apache-environment:
+        container_name: php-apache
+        build:
+            context: ./php
+            dockerfile: Dockerfile
+        volumes:
+            - ./site/:/var/www/html/
+        ports:
+        - 8000:80
