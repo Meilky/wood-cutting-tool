@@ -12,7 +12,7 @@
 	width: 25vw;
 	border: 2px solid var(--th-teal);
 	background-color: var(--th-gray-700);
-	border-radius: 5px;
+	border-radius: 0.5vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: stretch;
@@ -23,17 +23,20 @@
 	padding-top: 1vh;
 	padding-left: 1vw;
 	padding-right: 1vw;
-	font-size: 30px;
+	font-size: 2.5rem;
 	color: var(--th-white);
 	background-color: var(--th-primary);
 	text-decoration: none;
-	border-radius: 5px;
+	border-radius: 0.5vw;
 	transition-duration: 500ms;
 }
 
 #references div a:hover {
 	color: var(--th-teal);
 	background-color: var(--th-dark);
+	border-left: 1vw solid var(--th-teal);
+	border-top-left-radius: 0.25vw;
+	border-bottom-left-radius: 0.25vw;
 }
 
 #references div p {

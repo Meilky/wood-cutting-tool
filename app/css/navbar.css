@@ -24,7 +24,7 @@
 
 #navbar a p {
 	color: var(--th-white);
-	font-size: 25px;
+	font-size: 1.5rem;
 	padding: 0;
 	margin: 0;
 }
@@ -32,6 +32,7 @@
 #navbar a:hover {
 	background-color: var(--th-dark);
 	text-decoration: none;
+	border-left: 1vw solid var(--th-teal);
 }
 
 #navbar a:hover p {
@@ -47,7 +48,7 @@
 	color: var(--th-teal);
 	height: max-content;
 	font-weight: 700;
-	font-size: 35px;
+	font-size: 3rem;
 }
 
 #navbar > :first-child:hover p {

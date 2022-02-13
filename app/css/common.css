@@ -40,7 +40,7 @@ body {
 	font-weight: var(--th-font-weight);
 	padding: 0;
 	margin: 0;
-	background-color: var(--th-gray-800);
+	background-color: var(--th-dark);
 	width: 100vw;
 	height: 100vh;
 	display: grid;
