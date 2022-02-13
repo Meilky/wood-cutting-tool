@@ -1,0 +1,44 @@
+#references {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+	column-gap: 2vw;
+	row-gap: 2vh;
+}
+
+#references div {
+	width: 25vw;
+	border: 2px solid var(--th-teal);
+	background-color: var(--th-gray-700);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: stretch;
+}
+
+#references div a {
+	padding-top: 1vh;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	font-size: 30px;
+	color: var(--th-white);
+	background-color: var(--th-primary);
+	text-decoration: none;
+	border-radius: 5px;
+	transition-duration: 500ms;
+}
+
+#references div a:hover {
+	color: var(--th-teal);
+	background-color: var(--th-dark);
+}
+
+#references div p {
+	padding-bottom: 1vh;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	font-size: 17px;
+}

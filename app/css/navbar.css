@@ -30,7 +30,7 @@
 }
 
 #navbar a:hover {
-	background-color: var(--th-gray-800);
+	background-color: var(--th-dark);
 	text-decoration: none;
 }
 
@@ -48,10 +48,6 @@
 	height: max-content;
 	font-weight: 700;
 	font-size: 35px;
-}
-
-#navbar > :first-child:hover {
-	background-color: var(--th-gray-800);
 }
 
 #navbar > :first-child:hover p {
