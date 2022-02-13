@@ -15,6 +15,11 @@ $data = [
 		"name" => "Html element",
 		"description" => "Utiliser pour les reference au element html.",
 		"link" => "https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"
+	],
+	[
+		"name" => "Css flex box",
+		"description" => "Utiliser pour la nav bar.",
+		"link" => "https://www.w3schools.com/css/css3_flexbox_container.asp"
 	]
 ];
 

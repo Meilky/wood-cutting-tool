@@ -2,14 +2,24 @@
 <html lang="en">
 	<head>
 		<title>Wood Cutting Tool</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="css/common.css">
-		<link rel="stylesheet" href="css/index.css">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/navbar.css" />
+		<link rel="stylesheet" href="css/topbar.css" />
+		<link rel="stylesheet" href="css/content.css" />
 	</head>
 	<body>
-		<ul id="plankTypes"></ul>
-		<canvas id="canvas"></canvas>
-		<script type="module" src="js/pages/index.js"></script> 
+		<div id="topbar"><p>Wood cutting tool</p></div>
+		<nav id="navbar">
+			<a href="/"><p>Home</p></a>
+			<a href="references.html"><p>References</p></a>
+		</nav>
+		<div id="content">
+			<ul id="plankTypes"></ul>
+			<canvas id="canvas"></canvas>
+		</div>
+		<script type="module" src="js/pages/index.js"></script>
 	</body>
 </html>

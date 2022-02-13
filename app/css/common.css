@@ -43,4 +43,7 @@ body {
 	background-color: var(--th-gray-800);
 	width: 100vw;
 	height: 100vh;
+	display: grid;
+	grid-template-columns: 10vw auto;
+	grid-template-rows: 10vh auto;
 }
