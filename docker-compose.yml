@@ -6,6 +6,6 @@ services:
             context: ./php
             dockerfile: Dockerfile
         volumes:
-            - ./site/:/var/www/html/
+            - ./app/:/var/www/html/
         ports:
         - 8000:80
