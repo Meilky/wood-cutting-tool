@@ -32,6 +32,7 @@ class Plank extends Component {
 
 	createElement() {
 		this.element = document.createElement("li");
+		this.element.className = "item";
 	}
 
 	onRender() {

@@ -6,6 +6,7 @@
 	display: flex;
 	align-items: center;
 	padding-left: 5vw;
+	max-width: 90vw;
 }
 
 #topbar p {

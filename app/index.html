@@ -5,10 +5,10 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="css/common.css" />
-		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/navbar.css" />
 		<link rel="stylesheet" href="css/topbar.css" />
 		<link rel="stylesheet" href="css/content.css" />
+		<link rel="stylesheet" href="css/index.css" />
 	</head>
 	<body>
 		<div id="topbar"><p>Wood cutting tool</p></div>
@@ -17,8 +17,28 @@
 			<a href="references.html"><p>References</p></a>
 		</nav>
 		<div id="content">
-			<ul id="plankTypes"></ul>
-			<canvas id="canvas"></canvas>
+			<div class="container">
+				<p class="name">Preferences</p>
+				<form id="logForm" class="container-data form">
+					<label id="logUnitLabel" class="label">Unit:</label>
+					<select id="logUnit" class="value" name="unit">
+						<option value="in">Inches</option>
+						<option value="cm">Centimeters</option>
+					</select>
+					<br />
+					<label id="logDiameterLabel" class="label">Log diameter:</label>
+					<input type="number" id="logDiameter" class="value" name="diameter" />
+				</form>
+			</div>
+			<div class="container">
+				<p class="name">Plank types</p>
+				<ul id="plankTypes" class="container-data list"></ul>
+			</div>
+			<div class="break-line"></div>
+			<div class="container">
+				<p class="name">Log</p>
+				<canvas id="canvas" class="container-data"></canvas>
+			</div>
 		</div>
 		<script type="module" src="js/pages/index.js"></script>
 	</body>

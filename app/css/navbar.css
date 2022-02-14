@@ -3,17 +3,16 @@
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	width: 10vw;
 	min-height: 90vh;
 	max-height: max-content;
 	grid-row-start: 1;
 	grid-row-end: 3;
 	grid-column: 1;
+	max-width: 10vw;
 }
 
 #navbar a {
 	text-decoration: none;
-	min-width: auto;
 	padding-top: 1vh;
 	padding-bottom: 1vh;
 	display: flex;
