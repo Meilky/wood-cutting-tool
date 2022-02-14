@@ -8,7 +8,7 @@ export class References extends StateFullComponent {
 	}
 
 	createElement() {
-		this.element = document.getElementById("references");
+		this.element = document.getElementById("content");
 	}
 
 	beforeRender() {
@@ -31,12 +31,13 @@ class Reference extends Component {
 
 	createElement() {
 		this.element = document.createElement("div");
+		this.element.className = "container";
 	}
 
 	onRender() {
 		this.element.innerHTML = `
-		<a href="${this.reference.link}">${this.reference.name}</a>
-		<p>${this.reference.description}</p>
+		<a href="${this.reference.link}" class="name link">${this.reference.name}</a>
+		<p class="container-data">${this.reference.description}</p>
 		`;
 	}
 }

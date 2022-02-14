@@ -1,47 +1,13 @@
-#references {
+#content {
 	display: flex;
-	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
+	flex-direction: row;
+	justify-content: space-evenly;
 	align-items: stretch;
-	column-gap: 2vw;
-	row-gap: 2vh;
+	column-gap: 1vw;
+	row-gap: 1vh;
 }
 
-#references div {
-	width: 25vw;
-	border: 2px solid var(--th-teal);
-	background-color: var(--th-gray-700);
-	border-radius: 0.5vw;
-	display: flex;
-	flex-direction: column;
-	justify-content: stretch;
-	align-items: stretch;
-}
-
-#references div a {
-	padding-top: 1vh;
-	padding-left: 1vw;
-	padding-right: 1vw;
-	font-size: 2.5rem;
-	color: var(--th-white);
-	background-color: var(--th-primary);
-	text-decoration: none;
-	border-radius: 0.5vw;
-	transition-duration: 500ms;
-}
-
-#references div a:hover {
-	color: var(--th-teal);
-	background-color: var(--th-dark);
-	border-left: 1vw solid var(--th-teal);
-	border-top-left-radius: 0.25vw;
-	border-bottom-left-radius: 0.25vw;
-}
-
-#references div p {
-	padding-bottom: 1vh;
-	padding-left: 1vw;
-	padding-right: 1vw;
-	font-size: 1.2rem;
+.container {
+	max-width: 25vw;
 }
