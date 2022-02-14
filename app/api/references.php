@@ -20,6 +20,11 @@ $data = [
 		"name" => "Css flex box",
 		"description" => "Utiliser pour la nav bar.",
 		"link" => "https://www.w3schools.com/css/css3_flexbox_container.asp"
+	],
+	[
+		"name" => "Html form event",
+		"description" => "Use to prevent the reload of the page when you submit your new preferences.",
+		"link" => "https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event"
 	]
 ];
 
