@@ -10,7 +10,7 @@
 }
 
 #topbar p {
-	font-size: 3rem;
+	font-size: var(--th-font-size-800);
 	padding: 0;
 	margin: 0;
 }

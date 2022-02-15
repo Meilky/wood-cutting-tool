@@ -10,16 +10,28 @@ export class MyCanvas extends StateFullComponent {
 	createElement() {
 		this.element = document.getElementById("canvas");
 		this.ctx = this.element.getContext("2d");
-		this.ctx.font = "20px Georgia";
 	}
 
 	beforeRender() {
-		this.ctx.clearRect(0,0,this.element.width,this.element.height);
+		this.element.width = this.element.offsetWidth;
+		this.element.height = this.element.offsetHeight;
+		this.ctx.clearRect(0, 0, this.element.width, this.element.height);
 	}
 
 	onRender() {
-		this.ctx.strokeText(this.stores.preferences.value.unit, 10, 50);
-		this.ctx.strokeText(this.stores.preferences.value.diameter, 100, 50);
+		const centerx = this.element.width / 2;
+		const centery = this.element.height / 2;
+
+		let radius = centerx;
+
+		if (centerx > centery) {
+			radius = centery;
+		}
+
+		this.ctx.beginPath();
+		this.ctx.arc(centerx, centery, radius, 0, 2 * Math.PI);
+		this.ctx.moveTo(0,centery);
+		this.ctx.lineTo(centerx*2,centery)
 		this.ctx.stroke();
 	}
 }

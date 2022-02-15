@@ -29,7 +29,15 @@
 	--th-light: #a9b1d6;
 	--th-dark: #343a40;
 	--th-font: "DejaVu Mono", "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-	--th-font-size: 1rem;
+	--th-font-size-100: 0.5vw;
+	--th-font-size-200: 0.6vw;
+	--th-font-size-300: 0.8vw;
+	--th-font-size-400: 1vw;
+	--th-font-size-500: 1.2vw;
+	--th-font-size-600: 1.7vw;
+	--th-font-size-700: 2vw;
+	--th-font-size-800: 2.2vw;
+	--th-font-size-900: 2.5vw;
 	--th-font-weight: 500;
 }
 
@@ -41,7 +49,7 @@
 body {
 	color: var(--th-secondary);
 	font-family: var(--th-font);
-	font-size: var(--th-font-size);
+	font-size: var(--th-font-size-500);
 	font-weight: var(--th-font-weight);
 	padding: 0;
 	margin: 0;
