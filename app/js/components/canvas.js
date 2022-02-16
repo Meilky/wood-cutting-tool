@@ -13,8 +13,6 @@ export class MyCanvas extends StateFullComponent {
 	}
 
 	beforeRender() {
-		this.element.width = this.element.offsetWidth;
-		this.element.height = this.element.offsetHeight;
 		this.ctx.clearRect(0, 0, this.element.width, this.element.height);
 	}
 
@@ -36,7 +34,7 @@ export class MyCanvas extends StateFullComponent {
 		this.ctx.moveTo(centerx - radius, centery);
 		this.ctx.lineTo(centerx + radius, centery);
 
-		for (let i = 1; i < logDiameter; i++) {
+		for (let i = 0; i <= logDiameter; i++) {
 			this.ctx.moveTo(0, centery - radius + space * i);
 			this.ctx.lineTo(centerx * 2, centery - radius + space * i);
 
