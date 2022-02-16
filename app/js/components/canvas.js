@@ -23,6 +23,7 @@ export class MyCanvas extends StateFullComponent {
 		const centery = this.element.height / 2;
 
 		// bug here
+		// explem fix
 		let radius = centerx;
 
 		if (centerx > centery) {
