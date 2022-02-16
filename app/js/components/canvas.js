@@ -21,19 +21,29 @@ export class MyCanvas extends StateFullComponent {
 	onRender() {
 		const centerx = this.element.width / 2;
 		const centery = this.element.height / 2;
+		const logDiameter = this.stores.preferences.value.diameter;
 
-		// bug here
-		// explem fix
 		let radius = centerx;
+		let space = (radius * 2) / logDiameter;
 
 		if (centerx > centery) {
 			radius = centery;
+			space = (radius * 2) / logDiameter;
 		}
 
 		this.ctx.beginPath();
 		this.ctx.arc(centerx, centery, radius, 0, 2 * Math.PI);
-		this.ctx.moveTo(0,centery);
-		this.ctx.lineTo(centerx*2,centery)
+		this.ctx.moveTo(centerx - radius, centery);
+		this.ctx.lineTo(centerx + radius, centery);
+
+		for (let i = 1; i < logDiameter; i++) {
+			this.ctx.moveTo(0, centery - radius + space * i);
+			this.ctx.lineTo(centerx * 2, centery - radius + space * i);
+
+			this.ctx.moveTo(centerx + radius - space * i, 0);
+			this.ctx.lineTo(centerx + radius - space * i, centery * 2);
+		}
+
 		this.ctx.stroke();
 	}
 }
