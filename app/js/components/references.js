@@ -7,34 +7,34 @@ export class References extends StateFullComponent {
 		super({ stores: { references: ReferencesStore } });
 	}
 
-	createElement() {
+	start() {
 		this.element = document.getElementById("content");
 	}
 
-	beforeRender() {
+	beforeUpdate() {
 		this.children = [];
 	}
 
-	onRender() {
+	onUpdate() {
 		for (const ref of this.stores.references.value) {
-			this.children.push(new Reference(ref));
+			const e = new Reference(ref);
+			e.start();
+			this.children.push(e);
 		}
 	}
 }
 
 class Reference extends Component {
 	reference;
+
 	constructor(reference) {
 		super();
 		this.reference = reference;
 	}
 
-	createElement() {
+	start() {
 		this.element = document.createElement("div");
 		this.element.className = "container";
-	}
-
-	onRender() {
 		this.element.innerHTML = `
 		<a href="${this.reference.link}" class="name link">${this.reference.name}</a>
 		<p class="container-data">${this.reference.description}</p>

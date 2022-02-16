@@ -4,38 +4,40 @@ import PlankTypesStore from "../stores/plank-types.js";
 
 export class PlankTypes extends StateFullComponent {
 	ctx;
+
 	constructor() {
 		super({ stores: { plankTypes: PlankTypesStore } });
 	}
 
-	createElement() {
+	start() {
 		this.element = document.getElementById("plankTypes");
+		this.update();
 	}
 
-	beforeRender() {
+	beforeUpdate() {
 		this.children = [];
 	}
 
-	onRender() {
+	onUpdate() {
 		for (const plank of this.stores.plankTypes.value) {
-			this.children.push(new Plank(plank));
+			const e = new Plank(plank);
+			e.start();
+			this.children.push(e);
 		}
 	}
 }
 
 class Plank extends Component {
 	plank;
+
 	constructor(plank) {
 		super();
 		this.plank = plank;
 	}
 
-	createElement() {
+	start() {
 		this.element = document.createElement("li");
 		this.element.className = "item";
-	}
-
-	onRender() {
 		this.element.innerText = this.plank.name;
 	}
 }

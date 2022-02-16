@@ -3,20 +3,22 @@ import PreferencesStore from "../stores/preferences.js";
 
 export class MyCanvas extends StateFullComponent {
 	ctx;
+
 	constructor() {
 		super({ stores: { preferences: PreferencesStore } });
 	}
 
-	createElement() {
+	start() {
 		this.element = document.getElementById("canvas");
 		this.ctx = this.element.getContext("2d");
+		this.update()
 	}
 
-	beforeRender() {
+	beforeUpdate() {
 		this.ctx.clearRect(0, 0, this.element.width, this.element.height);
 	}
 
-	onRender() {
+	onUpdate() {
 		const centerx = this.element.width / 2;
 		const centery = this.element.height / 2;
 		const logDiameter = this.stores.preferences.value.diameter;

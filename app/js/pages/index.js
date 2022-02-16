@@ -3,9 +3,10 @@ import { PlankTypes } from "../components/plank-types.js";
 import { Preferences } from "../components/preferences.js";
 
 const c = new MyCanvas();
-c.render();
+c.start();
 
 const pt = new PlankTypes();
-pt.render();
+pt.start();
 
-new Preferences();
+const rf = new Preferences();
+rf.start()

@@ -2,19 +2,19 @@ export class Component {
 	element;
 	options;
 	children;
+
 	constructor(options = {}) {
 		this.options = options;
 		this.children = options.children || [];
-		this.render = this.render.bind(this);
+		this.update = this.update.bind(this);
 	}
 
-	render() {
-		if (!this.element) this.createElement();
+	update() {
 		this.destroyChildren();
-		if (this.beforeRender) this.beforeRender();
-		if (this.onRender) this.onRender();
+		if (this.beforeUpdate) this.beforeUpdate();
+		if (this.onUpdate) this.onUpdate();
 		this.appendChildren();
-		if (this.afterRender) this.afterRender();
+		if (this.afterUpdate) this.afterUpdate();
 	}
 
 	destroy() {
@@ -35,7 +35,6 @@ export class Component {
 	appendChildren() {
 		if (this.children) {
 			for (const c of this.children) {
-				c.render();
 				this.element.append(c.element);
 			}
 		}

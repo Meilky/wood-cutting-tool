@@ -22,4 +22,10 @@ export class Store {
 	addListener(listener) {
 		this.listeners.push(listener);
 	}
+
+	removeListener(listener) {
+		const id = this.listeners.findIndex(listener);
+
+		if (id !== -1) this.listeners = this.listeners.splice(id, 1);
+	}
 }
