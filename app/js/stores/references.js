@@ -1,14 +1,14 @@
-import { Store } from "../lib/store.js"
+import { Store } from "../lib/store.js";
 
 class ReferencesStore extends Store {
 	constructor() {
-		super([])
+		super([]);
 	}
 
 	async init() {
 		const req = await fetch("/api/references.php");
 		const data = await req.json();
-		
+
 		this.value = data;
 	}
 }

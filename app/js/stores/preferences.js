@@ -1,14 +1,14 @@
-import { Store } from "../lib/store.js"
+import { Store } from "../lib/store.js";
 
 class PreferencesStore extends Store {
 	constructor() {
-		super([])
+		super([]);
 	}
 
 	init() {
 		this.value = {
 			unit: "in",
-			diameter: 10
+			diameter: 10,
 		};
 	}
 }

@@ -9,4 +9,4 @@ const pt = new PlankTypes();
 pt.start();
 
 const rf = new Preferences();
-rf.start()
+rf.start();

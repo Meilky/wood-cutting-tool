@@ -11,7 +11,7 @@ export class MyCanvas extends StateFullComponent {
 	start() {
 		this.element = document.getElementById("canvas");
 		this.ctx = this.element.getContext("2d");
-		this.update()
+		this.update();
 	}
 
 	beforeUpdate() {

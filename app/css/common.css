@@ -28,7 +28,8 @@
 	--th-danger: #f7768e;
 	--th-light: #a9b1d6;
 	--th-dark: #343a40;
-	--th-font: "DejaVu Mono", "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	--th-font: "DejaVu Mono", "Source Code Pro", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+		"Courier New", monospace;
 	--th-font-size-100: 0.5vw;
 	--th-font-size-200: 0.6vw;
 	--th-font-size-300: 0.8vw;

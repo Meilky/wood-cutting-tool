@@ -20,8 +20,8 @@
 	list-style: none;
 }
 
-.break-line{
-	height:0;
+.break-line {
+	height: 0;
 	flex-basis: 100%;
 }
 
