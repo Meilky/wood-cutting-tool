@@ -25,7 +25,13 @@ $data = [
 		"name" => "Html form event",
 		"description" => "Utilisé pour que la page ne \"reload\" pas lorsque nous cliquons sur le boutton soumettre dans la page d'accueil.",
 		"link" => "https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event"
+	],
+	[
+		"name" => "Github repo",
+		"description" => "Lien à la \"repo\" Github.",
+		"link" => "https://github.com/Meilky/wood-cutting-tool"
 	]
+
 ];
 
 header('Content-Type: application/json'); 
