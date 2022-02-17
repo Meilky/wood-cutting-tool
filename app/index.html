@@ -12,34 +12,34 @@
 		<link rel="stylesheet" href="css/index.css" />
 	</head>
 	<body>
-		<div id="topbar"><p>Wood cutting tool</p></div>
+		<div id="topbar"><p>Aide aux coupes du bois</p></div>
 		<nav id="navbar">
 			<a href="/"><p>Home</p></a>
-			<a href="references.html"><p>References</p></a>
+			<a href="references.html"><p>Références</p></a>
 		</nav>
 		<div id="content">
 			<div class="container">
-				<p class="name">Preferences</p>
+				<p class="name">Préférences</p>
 				<form id="preferences" class="container-data form">
-					<label id="logUnitLabel" class="label">Unit:</label>
+					<label id="logUnitLabel" class="label">Unité:</label>
 					<select id="logUnit" class="value" name="unit">
-						<option value="in">Inches</option>
-						<option value="cm">Centimeters</option>
+						<option value="in">Pouces</option>
+						<option value="cm">Centimèters</option>
 					</select>
 					<br />
-					<label id="logDiameterLabel" class="label">Log diameter:</label>
+					<label id="logDiameterLabel" class="label">Diamètere Buche:</label>
 					<input type="number" id="logDiameter" class="value" name="diameter" />
 					<br/>
-					<button type="submit">Submit</button>
+					<button type="submit">Soumettre</button>
 				</form>
 			</div>
 			<div class="container">
-				<p class="name">Plank types</p>
+				<p class="name">Type de planches</p>
 				<ul id="plankTypes" class="container-data list"></ul>
 			</div>
 			<div class="break-line"></div>
 			<div class="container" style="flex-grow: 3;">
-				<p class="name">Log : Live preview</p>
+				<p class="name">Buche</p>
 				<canvas width="500px" height="500px" id="canvas" class="container-data"></canvas>
 			</div>
 		</div>
