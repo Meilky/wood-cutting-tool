@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   wc-nginx:
-    hostname: wc-nginx
+    hostname: wcnginx
     container_name: wc-nginx
     image: nginx:latest
     restart: always
@@ -14,28 +14,49 @@ services:
     networks:
       - wc-network
   wc-auth:
-    hostname: wc-auth
+    hostname: wcauth
     container_name: wc-auth
-    restart: always
+    restart: on-failure
     volumes:
       - ./keys/public-key.pem:/etc/wc-auth/public-key.pem
       - ./keys/private-key.pem:/etc/wc-auth/private-key.pem
+    depends_on:
+      - wc-nginx
+      - wc-db
     networks:
       - wc-network
     build:
       context: ./auth
       dockerfile: Dockerfile
   wc-api:
-    hostname: wc-api
+    hostname: wcapi
     container_name: wc-api
-    restart: always
+    restart: on-failure
     volumes:
       - ./keys/public-key.pem:/etc/wc-api/public-key.pem
+    depends_on:
+      - wc-nginx
+      - wc-db
     networks:
       - wc-network
     build:
       context: ./api
       dockerfile: Dockerfile
+  wc-db:
+    hostname: wcdb
+    container_name: wc-db
+    image: mariadb:latest
+    environment:
+      - MARIADB_ROOT_PASSWORD=$DB_ROOT_PASSWORD
+      - MARIADB_USER=$DB_USER
+      - MARIADB_PASSWORD=$DB_PASSWORD
+      - MARIADB_DATABASE=$DB_NAME
+    networks:
+      - wc-network
+    restart: on-failure
+    volumes:
+      - ./mariadb:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 networks:
   wc-network:
