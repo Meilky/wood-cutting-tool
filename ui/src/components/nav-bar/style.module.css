@@ -1,0 +1,18 @@
+.NavBar {
+	grid-row-start: 1;
+	grid-row-end: 3;
+	background-color: var(--th-dark);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding-right: 1vw;
+	padding-left: 1vw;
+}
+
+.NavBarItem {
+	background-color: var(--th-gray);
+	border: 2px solid black;
+	border-radius: 5px;
+	height: max-content;
+	width: 100%;
+}

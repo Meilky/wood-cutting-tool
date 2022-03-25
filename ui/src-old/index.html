@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Wood Cutting Tool</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/navbar.css" />
+		<link rel="stylesheet" href="css/topbar.css" />
+		<link rel="stylesheet" href="css/content.css" />
+		<link rel="stylesheet" href="css/bundle.css" />
+		<link rel="stylesheet" href="css/index.css" />
+	</head>
+	<body>
+		<div id="topbar"><p>Aide aux coupes du bois</p></div>
+		<nav id="navbar">
+			<a href="/"><p>Accueil</p></a>
+			<a href="references.html"><p>Références</p></a>
+		</nav>
+		<div id="content">
+			<div class="container">
+				<p class="name">Préférences</p>
+				<form id="preferences" class="container-data form">
+					<label id="logUnitLabel" class="label">Unité:</label>
+					<select id="logUnit" class="value" name="unit">
+						<option value="in">Pouces</option>
+						<option value="cm">Centimèters</option>
+					</select>
+					<br />
+					<label id="logDiameterLabel" class="label">Diamètere Buche:</label>
+					<input type="number" id="logDiameter" class="value" name="diameter" />
+					<br />
+					<button type="submit">Soumettre</button>
+				</form>
+			</div>
+			<div class="container">
+				<p class="name">Type de planches</p>
+				<ul id="plankTypes" class="container-data list"></ul>
+			</div>
+			<div class="break-line"></div>
+			<div class="container" style="flex-grow: 3">
+				<p class="name">Buche</p>
+				<canvas width="500px" height="500px" id="canvas" class="container-data"></canvas>
+			</div>
+		</div>
+		<script type="module" src="js/pages/index.js"></script>
+	</body>
+</html>
