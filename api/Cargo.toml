@@ -3,4 +3,10 @@ name = "wood-cutting-api"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "wcapi"
+path = "src/main.rs"
+test = false
+bench = false
+
 [dependencies]

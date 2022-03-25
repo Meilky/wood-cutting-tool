@@ -5,7 +5,7 @@ import config from "../../../config"
 class ConfigStore extends BaseStore<Config> {
 	constructor() {
 		super({
-			theme: "default.css"
+			theme: "themes/default.css"
 		})
 
 		this.init()
@@ -18,7 +18,7 @@ class ConfigStore extends BaseStore<Config> {
 
 		link.rel = 'stylesheet';
 		link.type = 'text/css';
-		link.href = this.value.theme;
+		link.href = "themes/" + this.value.theme;
 
 		document.getElementsByTagName('HEAD')[0].appendChild(link);
 	}

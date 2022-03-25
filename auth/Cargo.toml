@@ -3,4 +3,10 @@ name = "wood-cutting-auth"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "wcauth"
+path = "src/main.rs"
+test = false
+bench = false
+
 [dependencies]

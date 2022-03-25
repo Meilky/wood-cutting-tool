@@ -7,7 +7,8 @@ services:
     restart: always
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ui/dist/:/srv/wc-nginx/www/
+      - ./ui/dist/:/var/www/wc-nginx/
+      - ./ui/themes/:/var/www/wc-nginx/themes/
     ports:
       - "8080:80"
     networks:
@@ -23,7 +24,7 @@ services:
       - wc-network
     build:
       context: ./auth
-      dockerfile: ./auth/Dockerfile
+      dockerfile: Dockerfile
   wc-api:
     hostname: wc-api
     container_name: wc-api
@@ -34,7 +35,7 @@ services:
       - wc-network
     build:
       context: ./api
-      dockerfile: ./api/Dockerfile
+      dockerfile: Dockerfile
 
 networks:
   wc-network:
