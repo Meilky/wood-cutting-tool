@@ -10,3 +10,5 @@ test = false
 bench = false
 
 [dependencies]
+actix-web = "4"
+dotenv = "0.15"
