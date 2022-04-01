@@ -26,9 +26,7 @@ RUN cargo build --release
 RUN sed -i 's#dummy.rs#src/main.rs#' Cargo.toml
 
 COPY ./src ./src
-COPY ./Cargo.lock .
 COPY ./Cargo.toml .
-
 
 RUN cargo install --path . --root . --force
 

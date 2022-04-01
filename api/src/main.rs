@@ -1,10 +1,8 @@
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 use dotenv;
 use std::path::Path;
 
-async fn api() -> impl Responder {
-    HttpResponse::Ok().body("Hello from api!")
-}
+mod api;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -12,8 +10,7 @@ async fn main() -> std::io::Result<()> {
     dotenv::from_path(env_path).ok();
 
     HttpServer::new(|| {
-        App::new()
-            .route("/api", web::get().to(api))
+        App::new().configure(api::register_urls)
     })
     .bind(("0.0.0.0", 4000))?
     .run()
