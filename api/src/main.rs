@@ -1,4 +1,4 @@
-use actix_web::{web, App, HttpResponse, HttpServer, Responder,middleware::Logger};
+use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use dotenv;
 use std::path::Path;
 
@@ -8,6 +8,7 @@ async fn api() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let env_path = Path::new("/ect/wc-api/.env");
     dotenv::from_path(env_path).ok();
 
     HttpServer::new(|| {
