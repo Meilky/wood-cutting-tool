@@ -52,6 +52,18 @@ pub async fn get_references() -> Json<Vec<Reference>> {
             name: "Project hiearchy".to_string(),
             description: "Utilisé pour sructuré tout la structure de fichier de l'api.".to_string(),
             link:"https://medium.com/geekculture/backend-design-actix-web-project-hierarchy-7fc229bd830c".to_string()
+        },
+        Reference {
+            id: 7,
+            name: "Rust .env".to_string(),
+            description: "Librarie rust utiliser pour accédé aux variables d'environement.".to_string(),
+            link: "https://github.com/dotenv-rs/dotenv".to_string()
+        },
+        Reference {
+            id: 8,
+            name: "Rust sqlx".to_string(),
+            description: "Library rust utilisé pour créer la connection a la db.".to_string(),
+            link: "https://github.com/launchbadge/sqlx".to_string()
         }
     ];
 
