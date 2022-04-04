@@ -1,14 +1,19 @@
-import { StateFullComponent } from "../../lib/components/state-full-component";
 import { TopBar as TopBarStyle } from "./style.module.css";
-import SizeStore from "../../stores/size";
+import { StateFullComponent } from "../../lib/components/state-full-component";
+import LoadedModuleStore from "../../stores/loaded-module";
+import ModulesStore from "../../stores/modules";
 
-export class TopBar extends StateFullComponent<{ size: typeof SizeStore }> {
+export class TopBar extends StateFullComponent<{
+	loadedModule: typeof LoadedModuleStore
+	modules: typeof ModulesStore
+}> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
 			stores: {
-				size: SizeStore,
-			},
+				loadedModule: LoadedModuleStore,
+				modules: ModulesStore
+			}
 		});
 
 		this.element.className = TopBarStyle;
@@ -16,12 +21,12 @@ export class TopBar extends StateFullComponent<{ size: typeof SizeStore }> {
 	}
 
 	public init(): void {
-		this.update();
+		const loadedMod = this.stores.loadedModule.value;
+		this.element.innerText = this.stores.modules.value[loadedMod].name;
 	}
 
-	public onUpdate(): void {
-		const size = this.stores.size.value;
-
-		this.element.innerText = "Package App " + size.width.toString() + "," + size.heigth.toString();
+	protected onUpdate(): void {
+		const loadedMod = this.stores.loadedModule.value;
+		this.element.innerText = this.stores.modules.value[loadedMod].name;
 	}
 }

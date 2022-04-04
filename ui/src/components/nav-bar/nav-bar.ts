@@ -1,15 +1,17 @@
 import { StateFullComponent } from "../../lib/components/state-full-component";
-import PackagesStore from "../../stores/packages";
-import { Package } from "../../stores/stores.I";
+import ModulesStore from "../../stores/modules";
+import { Module } from "../../stores/stores.I";
 import { StateLessComponent } from "../../lib/components/state-less-component";
-import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css"
+import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
+import LoadedModule from "../../stores/loaded-module";
 
-export class NavBar extends StateFullComponent<{ packages: typeof PackagesStore }> {
+export class NavBar extends StateFullComponent<{ modules: typeof ModulesStore; loadedModule: typeof LoadedModule }> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
 			stores: {
-				packages: PackagesStore,
+				modules: ModulesStore,
+				loadedModule: LoadedModule,
 			},
 		});
 
@@ -27,31 +29,44 @@ export class NavBar extends StateFullComponent<{ packages: typeof PackagesStore 
 	}
 
 	public onUpdate(): void {
-		const packages = this.stores.packages.value;
+		const modules = this.stores.modules.value;
+		const loadedMod = this.stores.loadedModule.value;
 
-		for (const pack of packages) {
-			this.children.push(new NavBarItem(pack));
+		for (const mod of modules) {
+			let isLoaded = false;
+
+			if (mod.id == loadedMod) {
+				isLoaded = true;
+			}
+
+			this.children.push(new NavBarItem({ module: mod, isLoaded }));
 		}
 	}
 }
 
-class NavBarItem extends StateLessComponent {
-	protected item: Package;
+interface NavBarItemProps {
+	module: Module;
+	isLoaded?: boolean;
+}
 
-	constructor(props: Package) {
+class NavBarItem extends StateLessComponent {
+	constructor(protected props: NavBarItemProps) {
 		super({
 			element: document.createElement("div"),
 		});
 
-		this.item = props;
 		this.init();
 	}
 
 	public init(): void {
-		const name = `<h3>${this.item.name}</h3>`;
-		const description = `<p>${this.item.description}</p>`;
+		const name = `<h3>${this.props.module.name}</h3>`;
+		const description = `<p>${this.props.module.description}</p>`;
 
 		this.element.className = NavBarItemStyle;
+
+		if (this.props.isLoaded) {
+			this.element.style.backgroundColor = "var(--th-teal)";
+		}
 
 		this.element.innerHTML = name + description;
 	}

@@ -9,7 +9,9 @@ class SizeStore extends BaseStore<Size> {
 		});
 	}
 
-	public init(): void {}
+	public init(): void {
+		return;
+	}
 }
 
 export default new SizeStore();
