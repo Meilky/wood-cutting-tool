@@ -5,8 +5,3 @@ export interface Module {
 }
 
 export type Modules = Module[];
-
-export interface Size {
-	width: number;
-	heigth: number;
-}

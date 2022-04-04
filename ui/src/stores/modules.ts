@@ -3,7 +3,7 @@ import { BaseStore } from "../lib/stores/store";
 
 class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
-		super([{ id:0, name: "Settings", description: "Your settings" }]);
+		super([{ id: 0, name: "Settings", description: "Your settings" }]);
 	}
 
 	public async init(): Promise<void> {

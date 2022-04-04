@@ -22,11 +22,11 @@ export abstract class StateFullComponent<T extends { [key: string]: BaseStore<an
 
 	public update(): void {
 		if (this.isRendered()) {
-			this.beforeUpdate();
 			this.removeChildren();
+			this.beforeUpdate();
 			this.onUpdate();
-			this.appenChildren();
 			this.afterUpdate();
+			this.appenChildren();
 		} else {
 			this.remove();
 		}

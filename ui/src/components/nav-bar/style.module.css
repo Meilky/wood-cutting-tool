@@ -3,8 +3,10 @@
 	grid-row-end: 3;
 	background-color: var(--th-dark);
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 1vh;
+	padding-top: 1vh;
 	padding-right: 1vw;
 	padding-left: 1vw;
 }
