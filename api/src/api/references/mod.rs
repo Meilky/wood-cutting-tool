@@ -1,9 +1,9 @@
 use actix_web::{self, web};
 
-mod urls;
+mod controllers;
 
 pub fn register_urls(cfg: &mut web::ServiceConfig) {
-    cfg.route("", web::get().to(urls::get_references));
-    cfg.route("/", web::get().to(urls::get_references));
-    cfg.route("/{id}", web::get().to(urls::get_reference));
+    cfg.route("", web::get().to(controllers::get_references));
+    cfg.route("/", web::get().to(controllers::get_references));
+    cfg.route("/{id}", web::get().to(controllers::get_reference));
 }
