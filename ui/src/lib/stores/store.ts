@@ -10,9 +10,7 @@ export abstract class BaseStore<T> implements Store<T> {
 
 	public set value(v: T) {
 		this._value = v;
-		for (const c of this.listeners) {
-			c(this._value);
-		}
+		this.refresh()
 	}
 
 	constructor(defaultValue: T) {
@@ -30,5 +28,11 @@ export abstract class BaseStore<T> implements Store<T> {
 		const index = this.listeners.indexOf(callback);
 
 		if (index !== -1) this.listeners.splice(index, 1);
+	}
+
+	public refresh():void {
+		for (const callback of this.listeners) {
+			callback(this._value);
+		}
 	}
 }

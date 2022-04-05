@@ -2,7 +2,7 @@ import { BaseStore } from "../lib/stores/store";
 
 class LoadedModuleStore extends BaseStore<number> {
 	constructor() {
-		super(0);
+		super(-1);
 	}
 
 	public init(): void {

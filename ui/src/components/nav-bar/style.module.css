@@ -12,9 +12,17 @@
 }
 
 .NavBarItem {
-	background-color: var(--th-gray);
+	background-color: var(--th-gray-900);
 	border: 2px solid black;
 	border-radius: 5px;
 	height: max-content;
 	width: 100%;
+	align-items: center;
+	justify-content: center;
+	display: grid;
+	grid-template-columns: max-content auto;
+}
+
+.NavBarItem p {
+	font-weight: 700;
 }

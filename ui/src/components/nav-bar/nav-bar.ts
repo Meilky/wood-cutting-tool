@@ -5,7 +5,10 @@ import { StateLessComponent } from "../../lib/components/state-less-component";
 import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
 import LoadedModuleStore from "../../stores/loaded-module";
 
-export class NavBar extends StateFullComponent<{ modules: typeof ModulesStore; loadedModule: typeof LoadedModuleStore }> {
+export class NavBar extends StateFullComponent<{
+	modules: typeof ModulesStore;
+	loadedModule: typeof LoadedModuleStore;
+}> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
@@ -47,7 +50,7 @@ export class NavBar extends StateFullComponent<{ modules: typeof ModulesStore; l
 interface NavBarItemProps {
 	module: Module;
 	isLoaded?: boolean;
-	loadedModule: typeof LoadedModuleStore
+	loadedModule: typeof LoadedModuleStore;
 }
 
 class NavBarItem extends StateLessComponent {
@@ -56,22 +59,33 @@ class NavBarItem extends StateLessComponent {
 			element: document.createElement("div"),
 		});
 
-		this.onClick = this.onClick.bind(this)
+		this.onClick = this.onClick.bind(this);
 		this.init();
 	}
 
 	public init(): void {
-		const name = `<h3>${this.props.module.name}</h3>`;
-		const description = `<p>${this.props.module.description}</p>`;
+		const html = `<span><p>${this.props.module.name}</p></span>`;
 
 		this.element.className = NavBarItemStyle;
 		this.element.onclick = this.onClick;
 
-		if (this.props.isLoaded) {
-			this.element.style.backgroundColor = "var(--th-teal)";
+		switch (this.props.module.state) {
+			case "error":
+				this.element.style.color = "var(--th-danger)";
+				break;
+			case "warning":
+				this.element.style.color = "var(--th-warning)";
+				break;
+			default:
+				this.element.style.color = "var(--th-light)";
+				break;
 		}
 
-		this.element.innerHTML = name + description;
+		if (this.props.isLoaded) {
+			this.element.style.backgroundColor = "var(--th-gray-700)";
+		}
+
+		this.element.innerHTML = html;
 	}
 
 	protected onClick(): void {
