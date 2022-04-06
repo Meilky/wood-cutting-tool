@@ -1,6 +1,6 @@
-import { App } from "./components/App";
+import { App } from "./components/app";
 
-const app = document.getElementById("App");
+const app = document.getElementById("root");
 
 if (!app) {
 	throw "No app element";
