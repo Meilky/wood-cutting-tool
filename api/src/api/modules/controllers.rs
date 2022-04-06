@@ -18,19 +18,19 @@ pub async fn get_modules() -> Json<Vec<Module>> {
             id: 0,
             name: "Test Module 0".to_string(),
             description: "The long description of the test module 0".to_string(),
-            path:"assets/modules/helloworld".to_string()
+            path:"/assets/modules/helloworld.js".to_string()
         },
         Module {
             id: 1,
             name: "Test Module 1".to_string(),
             description: "The long description of the test module 1".to_string(),
-            path:"assets/modules/helloworld".to_string()
+            path:"/assets/modules/helloworld.js".to_string()
         },
         Module {
             id: 2,
             name: "Test Module 2".to_string(),
             description: "The long description of the test module 2".to_string(),
-            path:"assets/modules/helloworld".to_string()
+            path:"/assets/modules/helloworld.js".to_string()
         }
     ];
 
@@ -56,19 +56,19 @@ pub async fn get_module(id: Path<u32>) -> Result<Json<Module>, MyError> {
             id: 0,
             name: "Test Module 0".to_string(),
             description: "The long description of the test module 0".to_string(),
-            path:"helloworld".to_string()
+            path:"/assets/modules/helloworld.js".to_string()
         },
         Module {
             id: 1,
             name: "Test Module 1".to_string(),
             description: "The long description of the test module 1".to_string(),
-            path:"assets/modules/helloworld".to_string()
+            path:"/assets/modules/helloworld.js".to_string()
         },
         Module {
             id: 2,
             name: "Test Module 2".to_string(),
             description: "The long description of the test module 2".to_string(),
-            path:"assets/modules/helloworld".to_string()
+            path:"/assets/modules/helloworld.js".to_string()
         }
     ];
 

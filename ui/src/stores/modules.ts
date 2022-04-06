@@ -36,8 +36,11 @@ class ModulesStore extends BaseStore<Module[]> {
 				try {
 					const m = await import(raw_mod.path);
 
-					if (m.Component) {
-						mod.component = m.Component;
+					if (m.component) {
+						mod.state = "nothing";
+						mod.msg = undefined;
+
+						mod.component = m.component;
 					}
 					else {
 						mod.state = "error";
