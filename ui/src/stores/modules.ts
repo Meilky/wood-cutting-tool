@@ -1,17 +1,16 @@
-import { Module } from "./stores.I";
+import { Module } from "~/src/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
 import { Settings } from "~/src/components/settings";
+import { Component } from "~/lib/components/component.I";
 
 class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
 		super([
 			{
-				id: -1,
-				order: -1,
+				id: 0,
 				name: "Settings",
-				description: "Your settings",
+				description: "The settings for you",
 				component: new Settings(),
-				state: "nothing",
 			},
 		]);
 	}
@@ -34,35 +33,44 @@ class ModulesStore extends BaseStore<Module[]> {
 
 			const mod: Module = {
 				id: i,
-				order: raw_mod.id,
 				name: raw_mod.name,
 				description: raw_mod.description,
-				state: "warning",
-				msg: "No path to load the module",
+				component: {} as Component,
+				fetching: {
+					id: raw_mod.id,
+					origin: "/api/modules"
+				},
+				error: {
+					state: "warning",
+					msg: "No origin to load module!",
+				}
 			};
 
-			if (raw_mod.path) {
+			if (raw_mod.origin) {
 				try {
-					const m = await import(raw_mod.path);
+					const m = await import(raw_mod.origin);
 
 					if (m.component) {
-						mod.state = "nothing";
-						mod.msg = undefined;
-
+						mod.error = undefined;
 						mod.component = m.component;
 					} else {
-						mod.state = "error";
-						mod.msg = `No component for: ${raw_mod.name}`;
+						mod.error = {
+							state: "error",
+							msg: `Unable to find component in module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
+						}
 					}
 				} catch {
-					mod.state = "error";
-					mod.msg = `Unable to load module: ${raw_mod.name}`;
+					mod.error = {
+						state: "error",
+						msg: `Unable to load module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
+					}
 				}
 			}
 
-			i++;
 			this.value.push(mod);
 			this.refresh();
+
+			i++;
 		}
 	}
 }

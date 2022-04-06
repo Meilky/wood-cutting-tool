@@ -1,19 +1,13 @@
 import { TopBar as TopBarStyle } from "./style.module.css";
 import { StateFullComponent } from "~/lib/components/state-full-component";
 import LoadedModuleStore from "~/src/stores/loaded-module";
-import ModulesStore from "~/src/stores/modules";
-import { Module } from "~/src/stores/stores.I";
 
-export class TopBar extends StateFullComponent<{
-	loadedModule: typeof LoadedModuleStore;
-	modules: typeof ModulesStore;
-}> {
+export class TopBar extends StateFullComponent<{ loadedModule: typeof LoadedModuleStore; }> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
 			stores: {
 				loadedModule: LoadedModuleStore,
-				modules: ModulesStore,
 			},
 		});
 
@@ -25,28 +19,24 @@ export class TopBar extends StateFullComponent<{
 		this.update();
 	}
 
+	protected beforeUpdate(): void {
+		this.element.style.color = "var(--th-light)";
+	}
+
 	protected onUpdate(): void {
-		const loadedMod = this.stores.loadedModule.value;
-		let mod: Module = {} as Module;
-
-		for (const m of this.stores.modules.value) {
-			if (m.id == loadedMod) {
-				mod = m;
-			}
-		}
-
-		switch (mod.state) {
-			case "error":
-				this.element.style.color = "var(--th-danger)";
-				break;
-			case "warning":
-				this.element.style.color = "var(--th-warning)";
-				break;
-			default:
-				this.element.style.color = "var(--th-light)";
-				break;
-		}
+		const mod = this.stores.loadedModule.value;
 
 		this.element.innerText = mod.name;
+
+		if (mod.error) {
+			switch (mod.error.state) {
+				case "error":
+					this.element.style.color = "var(--th-danger)";
+					break;
+				case "warning":
+					this.element.style.color = "var(--th-warning)";
+					break;
+			}
+		}
 	}
 }
