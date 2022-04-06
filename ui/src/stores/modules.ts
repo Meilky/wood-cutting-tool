@@ -4,7 +4,16 @@ import { Settings } from "../lib/components/settings";
 
 class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
-		super([{ id: -1, order: -1, name: "Settings", description: "Your settings", component: new Settings(), state: "nothing" }]);
+		super([
+			{
+				id: -1,
+				order: -1,
+				name: "Settings",
+				description: "Your settings",
+				component: new Settings(),
+				state: "nothing",
+			},
+		]);
 	}
 
 	public async init(): Promise<void> {
@@ -41,8 +50,7 @@ class ModulesStore extends BaseStore<Module[]> {
 						mod.msg = undefined;
 
 						mod.component = m.component;
-					}
-					else {
+					} else {
 						mod.state = "error";
 						mod.msg = `No component for: ${raw_mod.name}`;
 					}
@@ -52,9 +60,9 @@ class ModulesStore extends BaseStore<Module[]> {
 				}
 			}
 
-			i++
+			i++;
 			this.value.push(mod);
-			this.refresh()
+			this.refresh();
 		}
 	}
 }

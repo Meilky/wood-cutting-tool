@@ -5,16 +5,16 @@ import ModulesStore from "../../stores/modules";
 import { Module } from "../../stores/stores.I";
 
 export class TopBar extends StateFullComponent<{
-	loadedModule: typeof LoadedModuleStore
-	modules: typeof ModulesStore
+	loadedModule: typeof LoadedModuleStore;
+	modules: typeof ModulesStore;
 }> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
 			stores: {
 				loadedModule: LoadedModuleStore,
-				modules: ModulesStore
-			}
+				modules: ModulesStore,
+			},
 		});
 
 		this.element.className = TopBarStyle;
@@ -22,7 +22,7 @@ export class TopBar extends StateFullComponent<{
 	}
 
 	public init(): void {
-		this.update()
+		this.update();
 	}
 
 	protected onUpdate(): void {
@@ -31,7 +31,7 @@ export class TopBar extends StateFullComponent<{
 
 		for (const m of this.stores.modules.value) {
 			if (m.id == loadedMod) {
-				mod = m
+				mod = m;
 			}
 		}
 

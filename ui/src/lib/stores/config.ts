@@ -1,26 +1,26 @@
-import { Config } from "./config.I"
-import { BaseStore } from "./store"
-import config from "../../../config"
+import { Config } from "./config.I";
+import { BaseStore } from "./store";
+import config from "../../../config";
 
 class ConfigStore extends BaseStore<Config> {
 	constructor() {
 		super({
-			theme: "assets/themes/default.css"
-		})
+			theme: "assets/themes/default.css",
+		});
 
-		this.init()
+		this.init();
 	}
 
 	public init(): void {
-		this.value = config
+		this.value = config;
 
-		const link = document.createElement('link');
+		const link = document.createElement("link");
 
-		link.rel = 'stylesheet';
-		link.type = 'text/css';
+		link.rel = "stylesheet";
+		link.type = "text/css";
 		link.href = "assets/themes/" + this.value.theme;
 
-		document.getElementsByTagName('HEAD')[0].appendChild(link);
+		document.getElementsByTagName("HEAD")[0].appendChild(link);
 	}
 }
 

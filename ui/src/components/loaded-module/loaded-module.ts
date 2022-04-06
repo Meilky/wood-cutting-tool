@@ -1,13 +1,13 @@
 import { StateFullComponent } from "../../lib/components/state-full-component";
-import { LoadedModule as LoadedModuleStyle } from "./style.module.css"
+import { LoadedModule as LoadedModuleStyle } from "./style.module.css";
 import LoadedModuleStore from "../../stores/loaded-module";
 import ModulesStore from "../../stores/modules";
 import { StateLessComponent } from "../../lib/components/state-less-component";
-import { Module } from "../../stores/stores.I"
+import { Module } from "../../stores/stores.I";
 
 export class LoadedModule extends StateFullComponent<{
-	loadedModule: typeof LoadedModuleStore,
-	modules: typeof ModulesStore
+	loadedModule: typeof LoadedModuleStore;
+	modules: typeof ModulesStore;
 }> {
 	constructor() {
 		super({
@@ -15,7 +15,7 @@ export class LoadedModule extends StateFullComponent<{
 			stores: {
 				loadedModule: LoadedModuleStore,
 				modules: ModulesStore,
-			}
+			},
 		});
 
 		this.init();
@@ -23,7 +23,7 @@ export class LoadedModule extends StateFullComponent<{
 
 	public init(): void {
 		this.element.className = LoadedModuleStyle;
-		this.update()
+		this.update();
 	}
 
 	protected onUpdate(): void {
@@ -36,14 +36,13 @@ export class LoadedModule extends StateFullComponent<{
 			}
 		}
 
-
 		this.children = [mod.component || new ErrorModule({ msg: mod.msg || "no message", state: mod.state })];
 	}
 }
 
 interface ErrorModuleProps {
-	state: string,
-	msg: string
+	state: string;
+	msg: string;
 }
 
 class ErrorModule extends StateLessComponent {
@@ -57,6 +56,6 @@ class ErrorModule extends StateLessComponent {
 
 	public init(): void {
 		this.element.className = LoadedModuleStyle;
-		this.element.innerText = `${this.props.state}: ${this.props.msg}`
+		this.element.innerText = `${this.props.state}: ${this.props.msg}`;
 	}
 }

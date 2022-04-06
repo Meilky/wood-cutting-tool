@@ -10,7 +10,7 @@ export abstract class BaseStore<T> implements Store<T> {
 
 	public set value(v: T) {
 		this._value = v;
-		this.refresh()
+		this.refresh();
 	}
 
 	constructor(defaultValue: T) {
@@ -30,7 +30,7 @@ export abstract class BaseStore<T> implements Store<T> {
 		if (index !== -1) this.listeners.splice(index, 1);
 	}
 
-	public refresh():void {
+	public refresh(): void {
 		for (const callback of this.listeners) {
 			callback(this._value);
 		}

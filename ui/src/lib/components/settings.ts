@@ -1,14 +1,15 @@
-import {StateLessComponent} from "./state-less-component"
+import { StateLessComponent } from "./state-less-component";
 
 export class Settings extends StateLessComponent {
 	constructor() {
 		super({
-			element: document.createElement("div")
-		})
+			element: document.createElement("div"),
+		});
+
+		this.init();
 	}
 
 	public init(): void {
-		this.element.innerText = "my settings"
-		return
+		this.element.innerText = "my settings";
 	}
 }
