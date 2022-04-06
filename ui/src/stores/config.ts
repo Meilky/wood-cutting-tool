@@ -1,6 +1,6 @@
 import { Config } from "./config.I";
-import { BaseStore } from "./store";
-import config from "../../../config";
+import { BaseStore } from "~/lib/stores/store";
+import config from "~/config";
 
 class ConfigStore extends BaseStore<Config> {
 	constructor() {

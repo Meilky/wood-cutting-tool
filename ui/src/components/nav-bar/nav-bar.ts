@@ -1,9 +1,9 @@
-import { StateFullComponent } from "../../lib/components/state-full-component";
-import ModulesStore from "../../stores/modules";
-import { Module } from "../../stores/stores.I";
-import { StateLessComponent } from "../../lib/components/state-less-component";
+import { StateFullComponent } from "~/lib/components/state-full-component";
+import ModulesStore from "~/src/stores/modules";
+import { Module } from "~/src/stores/stores.I";
+import { StateLessComponent } from "~/lib/components/state-less-component";
 import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
-import LoadedModuleStore from "../../stores/loaded-module";
+import LoadedModuleStore from "~/src/stores/loaded-module";
 
 export class NavBar extends StateFullComponent<{
 	modules: typeof ModulesStore;

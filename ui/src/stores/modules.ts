@@ -1,6 +1,6 @@
 import { Module } from "./stores.I";
-import { BaseStore } from "../lib/stores/store";
-import { Settings } from "../lib/components/settings";
+import { BaseStore } from "~/lib/stores/store";
+import { Settings } from "~/src/components/settings";
 
 class ModulesStore extends BaseStore<Module[]> {
 	constructor() {

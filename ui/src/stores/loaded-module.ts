@@ -1,4 +1,4 @@
-import { BaseStore } from "../lib/stores/store";
+import { BaseStore } from "~/lib/stores/store";
 
 class LoadedModuleStore extends BaseStore<number> {
 	constructor() {

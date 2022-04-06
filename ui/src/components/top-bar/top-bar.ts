@@ -1,8 +1,8 @@
 import { TopBar as TopBarStyle } from "./style.module.css";
-import { StateFullComponent } from "../../lib/components/state-full-component";
-import LoadedModuleStore from "../../stores/loaded-module";
-import ModulesStore from "../../stores/modules";
-import { Module } from "../../stores/stores.I";
+import { StateFullComponent } from "~/lib/components/state-full-component";
+import LoadedModuleStore from "~/src/stores/loaded-module";
+import ModulesStore from "~/src/stores/modules";
+import { Module } from "~/src/stores/stores.I";
 
 export class TopBar extends StateFullComponent<{
 	loadedModule: typeof LoadedModuleStore;

@@ -1,4 +1,4 @@
-import { StateLessComponent } from "./state-less-component";
+import { StateLessComponent } from "~/lib/components/state-less-component";
 
 export class Settings extends StateLessComponent {
 	constructor() {

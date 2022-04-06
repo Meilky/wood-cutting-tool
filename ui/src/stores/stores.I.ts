@@ -1,4 +1,4 @@
-import { Component } from "../lib/components/component.I";
+import { Component } from "~/lib/components/component.I";
 
 export interface Module {
 	id: number;

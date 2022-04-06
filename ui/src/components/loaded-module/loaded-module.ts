@@ -1,9 +1,9 @@
-import { StateFullComponent } from "../../lib/components/state-full-component";
+import { StateFullComponent } from "~/lib/components/state-full-component";
 import { LoadedModule as LoadedModuleStyle } from "./style.module.css";
-import LoadedModuleStore from "../../stores/loaded-module";
-import ModulesStore from "../../stores/modules";
-import { StateLessComponent } from "../../lib/components/state-less-component";
-import { Module } from "../../stores/stores.I";
+import LoadedModuleStore from "~/src/stores/loaded-module";
+import ModulesStore from "~/src/stores/modules";
+import { StateLessComponent } from "~/lib/components/state-less-component";
+import { Module } from "~/src/stores/stores.I";
 
 export class LoadedModule extends StateFullComponent<{
 	loadedModule: typeof LoadedModuleStore;
