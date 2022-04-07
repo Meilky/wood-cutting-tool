@@ -27,7 +27,7 @@ export class LoadedModule extends StateFullComponent<{
 
 		if (mod.error) {
 			this.children = [new ErrorModule({ msg: mod.error.msg })];
-			return
+			return;
 		}
 
 		this.children = [mod.component];

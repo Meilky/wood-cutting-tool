@@ -38,12 +38,12 @@ class ModulesStore extends BaseStore<Module[]> {
 				component: {} as Component,
 				fetching: {
 					id: raw_mod.id,
-					origin: "/api/modules"
+					origin: "/api/modules",
 				},
 				error: {
 					state: "warning",
 					msg: "No origin to load module!",
-				}
+				},
 			};
 
 			if (raw_mod.origin) {
@@ -57,13 +57,13 @@ class ModulesStore extends BaseStore<Module[]> {
 						mod.error = {
 							state: "error",
 							msg: `Unable to find component in module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
-						}
+						};
 					}
-				} catch(e) {
+				} catch (e) {
 					mod.error = {
 						state: "error",
 						msg: `Unable to load module "${raw_mod.name}" from origin "${raw_mod.origin}" with error: ${e}`,
-					}
+					};
 				}
 			}
 

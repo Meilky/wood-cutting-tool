@@ -2,7 +2,7 @@ import { TopBar as TopBarStyle } from "./style.module.css";
 import { StateFullComponent } from "~/lib/components/state-full-component";
 import LoadedModuleStore from "~/src/stores/loaded-module";
 
-export class TopBar extends StateFullComponent<{ loadedModule: typeof LoadedModuleStore; }> {
+export class TopBar extends StateFullComponent<{ loadedModule: typeof LoadedModuleStore }> {
 	constructor() {
 		super({
 			element: document.createElement("div"),

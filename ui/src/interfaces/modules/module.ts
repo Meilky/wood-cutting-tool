@@ -13,5 +13,5 @@ export interface Module {
 	error?: {
 		state: "error" | "warning";
 		msg: string;
-	}
+	};
 }
