@@ -9,29 +9,29 @@ pub struct Module {
     id: u32,
     name: String,
     description: String,
-    path: String,
+    origin: String,
 }
 
 pub async fn get_modules() -> Json<Vec<Module>> {
     let modules = vec![
         Module {
             id: 0,
-            name: "Test Module 0".to_string(),
-            description: "The long description of the test module 0".to_string(),
-            path:"/assets/modules/helloworld.js".to_string()
+            name: "Hello Claude".to_string(),
+            description: "The long description of claude".to_string(),
+            origin: "/modules/hello-world/index.js".to_string(),
         },
         Module {
             id: 1,
             name: "Test Module 1".to_string(),
             description: "The long description of the test module 1".to_string(),
-            path:"/assets/modules/helloworld.js".to_string()
+            origin: "/modules/hello-world/index.js".to_string(),
         },
         Module {
             id: 2,
             name: "Test Module 2".to_string(),
             description: "The long description of the test module 2".to_string(),
-            path:"/assets/modules/helloworld.js".to_string()
-        }
+            origin: "/modules/hello-world/index.js".to_string(),
+        },
     ];
 
     Json(modules)
@@ -54,22 +54,22 @@ pub async fn get_module(id: Path<u32>) -> Result<Json<Module>, MyError> {
     let modules = vec![
         Module {
             id: 0,
-            name: "Test Module 0".to_string(),
-            description: "The long description of the test module 0".to_string(),
-            path:"/assets/modules/helloworld.js".to_string()
+            name: "Hello Claude".to_string(),
+            description: "The long description of claude".to_string(),
+            origin: "/modules/hello-world/index.js".to_string(),
         },
         Module {
             id: 1,
             name: "Test Module 1".to_string(),
             description: "The long description of the test module 1".to_string(),
-            path:"/assets/modules/helloworld.js".to_string()
+            origin: "/modules/hello-world/index.js".to_string(),
         },
         Module {
             id: 2,
             name: "Test Module 2".to_string(),
             description: "The long description of the test module 2".to_string(),
-            path:"/assets/modules/helloworld.js".to_string()
-        }
+            origin: "/modules/hello-world/index.js".to_string(),
+        },
     ];
 
     let real_id: u32 = id.into_inner();

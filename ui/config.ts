@@ -1,4 +1,4 @@
-import { Config } from "lib/stores/config.I";
+import { Config } from "./src/stores/config.I";
 
 class config implements Config {
 	public theme = "default.css"

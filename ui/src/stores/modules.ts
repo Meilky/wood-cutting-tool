@@ -59,10 +59,10 @@ class ModulesStore extends BaseStore<Module[]> {
 							msg: `Unable to find component in module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
 						}
 					}
-				} catch {
+				} catch(e) {
 					mod.error = {
 						state: "error",
-						msg: `Unable to load module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
+						msg: `Unable to load module "${raw_mod.name}" from origin "${raw_mod.origin}" with error: ${e}`,
 					}
 				}
 			}
