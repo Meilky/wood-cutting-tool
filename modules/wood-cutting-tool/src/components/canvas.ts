@@ -2,7 +2,7 @@ import { StateFullComponent } from "~/lib/components/state-full-component";
 import PreferencesStore from "~/src/stores/preferences";
 
 export class Canvas extends StateFullComponent<{
-	preferences: typeof PreferencesStore,
+	preferences: typeof PreferencesStore;
 }> {
 	protected ctx?: CanvasRenderingContext2D;
 	protected element: HTMLCanvasElement;
@@ -11,21 +11,21 @@ export class Canvas extends StateFullComponent<{
 		super({ element: document.createElement("canvas"), stores: { preferences: PreferencesStore } });
 		this.element = document.createElement("canvas");
 
-		this.init()
+		this.init();
 	}
 
 	public init(): void {
 		this.ctx = this.element.getContext("2d") || undefined;
-		this.update()
+		this.update();
 	}
 
-	public beforeUpdate() {
-		if (this.ctx){
+	public beforeUpdate(): void {
+		if (this.ctx) {
 			this.ctx.clearRect(0, 0, this.element.width, this.element.height);
 		}
 	}
 
-	public onUpdate() {
+	public onUpdate(): void {
 		const centerx = this.element.width / 2;
 		const centery = this.element.height / 2;
 		const logDiameter = this.stores.preferences.value.diameter;

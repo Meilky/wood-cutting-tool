@@ -1,0 +1,20 @@
+{
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 12,
+		"sourceType": "module"
+	},
+	"plugins": ["@typescript-eslint"],
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+	"rules": {
+		"no-console": 2,
+		"@typescript-eslint/no-unused-vars": "error",
+		"@typescript-eslint/consistent-type-assertions": 1,
+		"@typescript-eslint/explicit-function-return-type" : ["error"]
+	},
+	"env": {
+		"browser": true,
+		"es2021": true
+	}
+}

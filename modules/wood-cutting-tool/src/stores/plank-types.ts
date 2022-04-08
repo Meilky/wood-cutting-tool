@@ -6,7 +6,7 @@ class PlantTypesStore extends BaseStore<PlankType[]> {
 		super([]);
 	}
 
-	async init() {
+	async init(): Promise<void> {
 		const req = await fetch("/api/plankTypes");
 		const data = await req.json();
 

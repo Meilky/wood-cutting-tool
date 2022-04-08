@@ -7,12 +7,12 @@ export class PlankTypes extends StateFullComponent<{ plankTypes: typeof PlankTyp
 	constructor() {
 		super({
 			element: document.createElement("ul"),
-			stores: { plankTypes: PlankTypesStore }
+			stores: { plankTypes: PlankTypesStore },
 		});
 	}
 
 	public init(): void {
-		this.update()
+		this.update();
 	}
 
 	public beforeUpdate(): void {
@@ -30,7 +30,7 @@ export class PlankTypes extends StateFullComponent<{ plankTypes: typeof PlankTyp
 class Plank extends StateLessComponent {
 	constructor(protected plank: PlankType) {
 		super({
-			element: document.createElement("li")
+			element: document.createElement("li"),
 		});
 	}
 

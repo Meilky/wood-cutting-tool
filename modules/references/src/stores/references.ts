@@ -3,15 +3,17 @@ import { Reference } from "~/src/interfaces/reference";
 
 class ReferencesStore extends BaseStore<Reference[]> {
 	constructor() {
-		super([{
-			id: -1,
-			name: "No references found",
-			description: "There is no references found.",
-			link: ""
-		}]);
+		super([
+			{
+				id: -1,
+				name: "No references found",
+				description: "There is no references found.",
+				link: "",
+			},
+		]);
 	}
 
-	async init() {
+	async init(): Promise<void> {
 		const req = await fetch("/api/references");
 		const data = await req.json();
 

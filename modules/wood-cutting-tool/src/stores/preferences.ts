@@ -1,5 +1,5 @@
 import { BaseStore } from "~/lib/stores/store";
-import { Preference } from "~/src/interfaces/preference"
+import { Preference } from "~/src/interfaces/preference";
 
 class PreferencesStore extends BaseStore<Preference> {
 	constructor() {
@@ -10,7 +10,7 @@ class PreferencesStore extends BaseStore<Preference> {
 	}
 
 	public init(): void {
-		return
+		return;
 	}
 }
 

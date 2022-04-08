@@ -4,26 +4,26 @@ import ReferencesStore from "~/src/stores/references";
 import { Reference } from "~/src/interfaces/reference";
 //import { References as ReferencesStyle,Reference as ReferenceStyle } from "./style.module.css";
 
-export class References extends StateFullComponent<{ references: typeof ReferencesStore }>{
+export class References extends StateFullComponent<{ references: typeof ReferencesStore }> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			stores: { references: ReferencesStore }
+			stores: { references: ReferencesStore },
 		});
 
 		this.init();
 	}
 
 	public init(): void {
-//		this.element.className = ReferencesStyle;
-		this.update()
+		//		this.element.className = ReferencesStyle;
+		this.update();
 	}
 
-	public beforeUpdate() {
+	public beforeUpdate(): void {
 		this.children = [];
 	}
 
-	protected onUpdate() {
+	protected onUpdate(): void {
 		for (const ref of this.stores.references.value) {
 			const e = new ReferenceComponent(ref);
 			this.children.push(e);
@@ -34,12 +34,12 @@ export class References extends StateFullComponent<{ references: typeof Referenc
 class ReferenceComponent extends StateLessComponent {
 	constructor(protected reference: Reference) {
 		super({
-			element: document.createElement("div")
+			element: document.createElement("div"),
 		});
 	}
 
-	public init() {
-//		this.element.className = ReferenceStyle;
+	public init(): void {
+		//		this.element.className = ReferenceStyle;
 
 		this.element.innerHTML = `
 		<a href="${this.reference.link}">${this.reference.name}</a>

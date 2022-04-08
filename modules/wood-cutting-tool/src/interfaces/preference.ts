@@ -1,4 +1,4 @@
 export interface Preference {
-	unit: "cm" | "in",
-	diameter: number
+	unit: "cm" | "in";
+	diameter: number;
 }

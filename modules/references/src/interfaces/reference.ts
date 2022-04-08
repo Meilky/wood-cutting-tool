@@ -1,6 +1,6 @@
 export interface Reference {
-	id: number,
-	name: string,
-	description: string,
-	link: string
+	id: number;
+	name: string;
+	description: string;
+	link: string;
 }

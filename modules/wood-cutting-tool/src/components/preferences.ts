@@ -9,13 +9,13 @@ export class Preferences extends StateFullComponent<{ preferences: typeof Prefer
 
 		this.onSubmit = this.onSubmit.bind(this);
 
-		this.init()
+		this.init();
 	}
 
 	public init(): void {
 		this.element.addEventListener("submit", this.onSubmit);
 		this.children = [new UnitInput(), new DiameterInput(), new Submit()];
-		this.appenChildren()
+		this.appenChildren();
 	}
 
 	public onUpdate(): void {
@@ -38,19 +38,19 @@ export class Preferences extends StateFullComponent<{ preferences: typeof Prefer
 
 class UnitInput extends StateLessComponent {
 	constructor() {
-		super({ element: document.createElement("div") })
+		super({ element: document.createElement("div") });
 	}
 
 	public init(): void {
 		const lb = document.createElement("label");
-		lb.innerText = "Unit :"
+		lb.innerText = "Unit :";
 		const select = document.createElement("select");
 		select.name = "unit";
 		const opt1 = document.createElement("option");
-		opt1.innerText = "cm"
+		opt1.innerText = "cm";
 		opt1.value = "cm";
 		const opt2 = document.createElement("option");
-		opt2.innerText = "in"
+		opt2.innerText = "in";
 		opt2.value = "in";
 
 		select.append(opt1);
@@ -63,12 +63,12 @@ class UnitInput extends StateLessComponent {
 
 class DiameterInput extends StateLessComponent {
 	constructor() {
-		super({ element: document.createElement("div") })
+		super({ element: document.createElement("div") });
 	}
 
 	public init(): void {
 		const lb = document.createElement("label");
-		lb.innerText = "Diameter :"
+		lb.innerText = "Diameter :";
 		const input = document.createElement("select");
 		input.name = "diameter";
 
@@ -79,7 +79,7 @@ class DiameterInput extends StateLessComponent {
 
 class Submit extends StateLessComponent {
 	constructor() {
-		super({ element: document.createElement("button") })
+		super({ element: document.createElement("button") });
 	}
 
 	public init(): void {
