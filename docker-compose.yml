@@ -9,7 +9,8 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./ui/dist/:/var/www/wc-nginx/dist/
       - ./assets/:/var/www/wc-nginx/assets/
-      - ./modules/hello-world/dist/:/var/www/wc-nginx/modules/hello-world/
+      - ./modules/wood-cutting-tool/dist/:/var/www/wc-nginx/modules/wood-cutting-tool/
+      - ./modules/references/dist/:/var/www/wc-nginx/modules/references/
     ports:
       - "8080:80"
   wc-auth:

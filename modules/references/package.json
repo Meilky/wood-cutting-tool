@@ -1,7 +1,7 @@
 {
-	"name": "hello-world",
+	"name": "Wood-cutting-tool-module",
 	"version": "1.0.0",
-	"description": "A test module for wood-cuting-tool",
+	"description": "The wood-cutting-tool module for wood-cuting-tool",
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"type": "module",

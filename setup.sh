@@ -9,6 +9,14 @@ DB_PASSWORD="$(openssl rand -base64 32 | sed "s/[^a-zA-Z0-9]//g")"
 DB_NAME="wood_cutting_tool"
 DB_HOST="wcdb"
 
+echo "${GREEN}Generation lib symlinks ..."
+
+if [ -f "modules/wood-cutting-tool/lib" ]; then
+	echo "${RED}Symlink for wood-cutting-tool module already exist${NC}"
+else
+	ln -rs ./ui/lib ./modules/wood-cutting-tool/lib
+fi;
+
 echo "${GREEN}Generating keys folder ...${NC}"
 
 if [ -d "keys" ]; then

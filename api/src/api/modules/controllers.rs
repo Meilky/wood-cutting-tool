@@ -16,21 +16,15 @@ pub async fn get_modules() -> Json<Vec<Module>> {
     let modules = vec![
         Module {
             id: 0,
-            name: "Hello Claude".to_string(),
-            description: "The long description of claude".to_string(),
-            origin: "/modules/hello-world/index.js".to_string(),
+            name: "Wood Cutting Tool".to_string(),
+            description: "This is a module to help you cut a log and get the best wood you want out of it.".to_string(),
+            origin: "/modules/wood-cutting-tool/index.js".to_string(),
         },
         Module {
             id: 1,
-            name: "Test Module 1".to_string(),
-            description: "The long description of the test module 1".to_string(),
-            origin: "/modules/hello-world/index.js".to_string(),
-        },
-        Module {
-            id: 2,
-            name: "Test Module 2".to_string(),
-            description: "The long description of the test module 2".to_string(),
-            origin: "/modules/hello-world/index.js".to_string(),
+            name: "References".to_string(),
+            description: "This is a module to show the refrences I used during the development of the app.".to_string(),
+            origin: "/modules/references/index.js".to_string(),
         },
     ];
 
@@ -54,21 +48,15 @@ pub async fn get_module(id: Path<u32>) -> Result<Json<Module>, MyError> {
     let modules = vec![
         Module {
             id: 0,
-            name: "Hello Claude".to_string(),
-            description: "The long description of claude".to_string(),
-            origin: "/modules/hello-world/index.js".to_string(),
+            name: "Wood Cutting Tool".to_string(),
+            description: "This is a module to help you cut a log and get the best wood you want out of it.".to_string(),
+            origin: "/modules/wood-cutting-tool/index.js".to_string(),
         },
         Module {
             id: 1,
-            name: "Test Module 1".to_string(),
-            description: "The long description of the test module 1".to_string(),
-            origin: "/modules/hello-world/index.js".to_string(),
-        },
-        Module {
-            id: 2,
-            name: "Test Module 2".to_string(),
-            description: "The long description of the test module 2".to_string(),
-            origin: "/modules/hello-world/index.js".to_string(),
+            name: "References".to_string(),
+            description: "This is a module to show the refrences I used during the development of the app.".to_string(),
+            origin: "/modules/references/index.js".to_string(),
         },
     ];
 
