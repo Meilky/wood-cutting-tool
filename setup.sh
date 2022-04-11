@@ -17,6 +17,27 @@ else
 	ln -rs ./ui/lib ./modules/wood-cutting-tool/lib
 fi;
 
+if [ -f "modules/references/lib" ]; then
+	echo "${RED}Symlink for references module already exist${NC}"
+else
+	ln -rs ./ui/lib ./modules/references/lib
+fi;
+
+echo "${GREEN}Installing npm modules ...${NC}"
+
+cd ./modules/wood-cutting-tool
+npm install
+cd ../..
+
+cd ./modules/references
+npm install
+cd ../..
+
+echo "${GREEN}Creating dist folder ...${NC}"
+
+mkdir -p ./modules/wood-cutting-tool/dist
+mkdir -p ./modules/references/dist
+
 echo "${GREEN}Generating keys folder ...${NC}"
 
 if [ -d "keys" ]; then
