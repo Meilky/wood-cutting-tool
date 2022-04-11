@@ -2,7 +2,7 @@ import { StateFullComponent } from "~/lib/components/state-full-component";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 import ReferencesStore from "~/src/stores/references";
 import { Reference } from "~/src/interfaces/reference";
-//import { References as ReferencesStyle,Reference as ReferenceStyle } from "./style.module.css";
+import { References as ReferencesStyle,Reference as ReferenceStyle } from "./style.module.css";
 
 export class References extends StateFullComponent<{ references: typeof ReferencesStore }> {
 	constructor() {
@@ -15,7 +15,7 @@ export class References extends StateFullComponent<{ references: typeof Referenc
 	}
 
 	public init(): void {
-		//		this.element.className = ReferencesStyle;
+		this.element.className = ReferencesStyle;
 		this.update();
 	}
 
@@ -39,7 +39,7 @@ class ReferenceComponent extends StateLessComponent {
 	}
 
 	public init(): void {
-		//		this.element.className = ReferenceStyle;
+		this.element.className = ReferenceStyle;
 
 		this.element.innerHTML = `
 		<a href="${this.reference.link}">${this.reference.name}</a>
