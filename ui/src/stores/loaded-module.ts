@@ -1,19 +1,10 @@
 import { BaseStore } from "~/lib/stores/store";
 import { Module } from "~/src/interfaces/modules/module";
-import { Component } from "~/lib/components/component.I";
+import { module } from "~/src/modules/home/home";
 
 class LoadedModuleStore extends BaseStore<Module> {
 	constructor() {
-		super({
-			id: -100,
-			name: "default module",
-			description: "default module",
-			component: {} as Component,
-			error: {
-				state: "warning",
-				msg: "default module",
-			},
-		});
+		super(module);
 	}
 
 	public init(): void {

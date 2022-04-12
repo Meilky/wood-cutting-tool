@@ -1,22 +1,17 @@
 import { Module } from "~/src/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
-import { Settings } from "~/src/components/settings";
+import { module } from "~/src/modules/home/home";
 import { Component } from "~/lib/components/component.I";
 
 class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
 		super([
-			{
-				id: 0,
-				name: "Settings",
-				description: "The settings for you",
-				component: new Settings(),
-			},
+			module
 		]);
 	}
 
 	public async init(): Promise<void> {
-		const res = await fetch("/api/modules");
+		const res = await fetch("/api/v1/modules");
 		const raw_modules = await res.json();
 
 		let i = this.value.length;
@@ -34,11 +29,10 @@ class ModulesStore extends BaseStore<Module[]> {
 			const mod: Module = {
 				id: i,
 				name: raw_mod.name,
-				description: raw_mod.description,
 				component: {} as Component,
 				fetching: {
 					id: raw_mod.id,
-					origin: "/api/modules",
+					origin: "/api/v1/modules",
 				},
 				error: {
 					state: "warning",
@@ -58,6 +52,17 @@ class ModulesStore extends BaseStore<Module[]> {
 							state: "error",
 							msg: `Unable to find component in module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
 						};
+					}
+
+					if (m.css) {
+						const element = document.createElement("link");
+						element.setAttribute("href", m.css)
+						element.setAttribute("type", "text/css")
+						element.setAttribute("rel", "stylesheet")
+						document.head.append(element)
+						if (mod.fetching) {
+							mod.fetching.css = m.css;
+						}
 					}
 				} catch (e) {
 					mod.error = {

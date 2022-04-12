@@ -14,7 +14,7 @@ class ReferencesStore extends BaseStore<Reference[]> {
 	}
 
 	async init(): Promise<void> {
-		const req = await fetch("/api/references");
+		const req = await fetch("/api/v1/references");
 		const data = await req.json();
 
 		this.value = data;

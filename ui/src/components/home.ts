@@ -1,6 +1,6 @@
 import { StateLessComponent } from "~/lib/components/state-less-component";
 
-export class Settings extends StateLessComponent {
+export class Home extends StateLessComponent {
 	constructor() {
 		super({
 			element: document.createElement("div"),
@@ -10,6 +10,6 @@ export class Settings extends StateLessComponent {
 	}
 
 	public init(): void {
-		this.element.innerText = "my settings";
+		this.element.innerText = "Home page";
 	}
 }
