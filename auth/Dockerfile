@@ -1,44 +1,41 @@
+# ------------------------------------------------------------------------------
+# Cargo Build Stage
+# ------------------------------------------------------------------------------
+
 FROM rust:latest AS builder
 
-RUN update-ca-certificates
-
-ENV USER=wcauth
-ENV UID=10001
-
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nothing" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    "${USER}"
-
-
-WORKDIR /usr/src/wood-cutting-auth
+WORKDIR /usr/src/wcauth
 
 RUN rustup override set nightly
 
-RUN echo "fn main() {}" > dummy.rs
-COPY ./Cargo.toml .
-RUN sed -i 's#src/main.rs#dummy.rs#' Cargo.toml
+COPY Cargo.toml Cargo.toml
+
+RUN mkdir src/
+
+RUN echo "fn main() {println!(\"Man you fucked up so damm bad, this shit doesn't even build!!!\")}" > src/main.rs
+
 RUN cargo build --release
-RUN sed -i 's#dummy.rs#src/main.rs#' Cargo.toml
+
+RUN rm -f target/release/deps/wcauth*
 
 COPY ./src ./src
-COPY ./Cargo.toml .
 
-RUN cargo install --path . --root . --force
+RUN cargo build --release
+
+# ------------------------------------------------------------------------------
+# Final Stage
+# ------------------------------------------------------------------------------
 
 FROM debian:bookworm-slim
 
-COPY --from=builder /etc/passwd /etc/passwd
-COPY --from=builder /etc/group /etc/group
+RUN adduser --disabled-password --shell /bin/sh wcauthuser
 
-WORKDIR /home/wcauth
+WORKDIR /home/wcauthuser/bin/
 
-COPY --from=builder /usr/src/wood-cutting-auth/bin/wcauth /usr/local/bin/wcauth
+COPY --from=builder /usr/src/wcauth/target/release/wcauth .
 
-USER wcauth:wcauth
+RUN chown wcauthuser:wcauthuser wcauth
 
-CMD ["wcauth"]
+USER wcauthuser
+
+CMD ["./wcauth"]

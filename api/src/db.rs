@@ -1,16 +1,17 @@
 use sqlx::mysql::MySqlPool;
-use std::env;
+use dotenv;
 
-pub type DbPool = sqlx::mysql::MySqlPool;
+pub type DBPool = sqlx::mysql::MySqlPool;
+pub type DBRow = sqlx::mysql::MySqlRow;
 
-pub async fn connection_builder() -> Result<DbPool, sqlx::Error> {
+pub async fn connection_builder() -> Result<DBPool, sqlx::Error> {
     let connection_url = format!(
         "mysql://{}:{}@{}/{}",
-        env::var("DB_USER").unwrap(),
-        env::var("DB_PASSWORD").unwrap(),
-        env::var("DB_HOST").unwrap(),
-        env::var("DB_NAME").unwrap()
+        dotenv::var("DB_USER").unwrap(),
+        dotenv::var("DB_PASSWORD").unwrap(),
+        dotenv::var("DB_HOST").unwrap(),
+        dotenv::var("DB_NAME").unwrap()
     );
 
-    MySqlPool::connect(&connection_url.as_str()).await
+    MySqlPool::connect(connection_url.as_str()).await
 }

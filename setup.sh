@@ -6,18 +6,18 @@ NC='\033[0m'
 DB_ROOT_PASSWORD="$(openssl rand -base64 32 | sed "s/[^a-zA-Z0-9]//g")"
 DB_USER="wcuser"
 DB_PASSWORD="$(openssl rand -base64 32 | sed "s/[^a-zA-Z0-9]//g")"
-DB_NAME="wood_cutting_tool"
+DB_NAME="wcdb"
 DB_HOST="wcdb"
 
 echo "${GREEN}Generation lib symlinks ..."
 
-if [ -f "modules/wood-cutting-tool/lib" ]; then
+if [ -L "modules/wood-cutting-tool/lib" ]; then
 	echo "${RED}Symlink for wood-cutting-tool module already exist${NC}"
 else
 	ln -rs ./ui/lib ./modules/wood-cutting-tool/lib
 fi;
 
-if [ -f "modules/references/lib" ]; then
+if [ -L "modules/references/lib" ]; then
 	echo "${RED}Symlink for references module already exist${NC}"
 else
 	ln -rs ./ui/lib ./modules/references/lib
@@ -33,7 +33,11 @@ cd ./modules/references
 npm install
 cd ../..
 
-echo "${GREEN}Creating dist folder ...${NC}"
+echo "${GREEN}Creating mariadb folder ...${NC}"
+
+mkdir -p ./mariadb
+
+echo "${GREEN}Creating dist folders ...${NC}"
 
 mkdir -p ./modules/wood-cutting-tool/dist
 mkdir -p ./modules/references/dist
@@ -90,20 +94,24 @@ else
 	echo "DB_NAME=${DB_NAME}" >> .env
 fi
 
-echo "${GREEN}Generating .env.services file ...${NC}"
+echo "${GREEN}Generating envs folder ...${NC}"
 
-if [ -f ".env.services" ]; then
-	echo "${YELLOW}Removing old .env.services file${NC}"
+mkdir -p ./envs
 
-	rm .env.services
+echo "${GREEN}Generating envs/.env.services file ...${NC}"
+
+if [ -f "envs/.env.services" ]; then
+	echo "${YELLOW}Removing old envs/.env.services file${NC}"
+
+	rm ./envs/.env.services
 fi
 
-touch .env.services
+touch ./envs/.env.services
 
-echo "DB_USER=${DB_USER}" >> .env.services
-echo "DB_PASSWORD=${DB_PASSWORD}" >> .env.services
-echo "DB_NAME=${DB_NAME}" >> .env.services
-echo "DB_HOST=${DB_HOST}" >> .env.services
+echo "DB_USER=${DB_USER}" >> ./envs/.env.services
+echo "DB_PASSWORD=${DB_PASSWORD}" >> ./envs/.env.services
+echo "DB_NAME=${DB_NAME}" >> ./envs/.env.services
+echo "DB_HOST=${DB_HOST}" >> ./envs/.env.services
 
 unset GREEN
 unset RED

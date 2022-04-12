@@ -20,7 +20,7 @@ services:
     volumes:
       - ./keys/public-key.pem:/etc/wc-auth/public-key.pem
       - ./keys/private-key.pem:/etc/wc-auth/private-key.pem
-      - ./.env.services:/etc/wc-auth/.env
+      - ./envs/.env.services:/etc/wc-auth/.env
     build:
       context: ./auth
       dockerfile: Dockerfile
@@ -33,7 +33,7 @@ services:
     restart: on-failure
     volumes:
       - ./keys/public-key.pem:/etc/wc-api/public-key.pem
-      - ./.env.services:/etc/wc-api/.env
+      - ./envs/.env.services:/etc/wc-api/.env
     build:
       context: ./api
       dockerfile: Dockerfile
