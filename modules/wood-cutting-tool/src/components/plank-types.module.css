@@ -1,0 +1,34 @@
+.PlankTypes {
+	flex-grow: 1;
+	padding: 0;
+	margin: 0;
+	background-color: var(--th-gray-700);
+	border: 0.25vw solid var(--th-teal);
+	border-radius: 0.5vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: stretch;
+}
+
+.PlankTypes > .name {
+	margin: 0;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	padding-right: 1vw;
+	padding-left: 1vw;
+	font-size: var(--th-font-size-800);
+	color: var(--th-white);
+	background-color: var(--th-primary);
+	text-decoration: none;
+	border-top-right-radius: 0.5vw;
+	border-top-left-radius: 0.5vw;
+}
+
+.PlanTypes > .inner {
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	margin-right: 1vw;
+	margin-left: 1vw;
+}
+
