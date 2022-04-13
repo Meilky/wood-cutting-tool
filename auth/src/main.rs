@@ -1,23 +1,29 @@
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-use dotenv;
+use actix_web::{
+    web::{scope, Data, ServiceConfig},
+    App, HttpServer,
+};
+
 use std::path::Path;
 
-
-async fn auth() -> impl Responder {
-    HttpResponse::Ok().body("Hello from auth!")
-}
+mod api;
+mod db;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let env_path = Path::new("/etc/wc-auth/.env");
-    dotenv::from_path(env_path).ok();
+    dotenv::from_path(env_path).unwrap();
 
-    HttpServer::new(|| {
+    let pool = db::connection_builder().await.unwrap();
+    let pool_data = Data::new(pool);
+
+    HttpServer::new(move || {
         App::new()
-            .route("/auth", web::get().to(auth))
+            .app_data(Data::clone(&pool_data))
+            .configure(|cfg: &mut ServiceConfig| {
+                cfg.service(scope("/auth/v1").configure(api::v1::register_urls));
+            })
     })
     .bind(("0.0.0.0", 4000))?
     .run()
     .await
 }
-
