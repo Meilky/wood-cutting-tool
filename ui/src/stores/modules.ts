@@ -51,6 +51,17 @@ class ModulesStore extends BaseStore<Module[]> {
 							msg: `Unable to find component in module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
 						};
 					}
+
+					if (m.css) {
+						const element = document.createElement("link");
+						element.setAttribute("href", m.css)
+						element.setAttribute("type", "text/css")
+						element.setAttribute("rel", "stylesheet")
+						document.head.append(element)
+						if (mod.fetching) {
+							mod.fetching.css = m.css;
+						}
+					}
 				} catch (e) {
 					mod.error = {
 						state: "error",
