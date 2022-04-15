@@ -13,7 +13,7 @@ impl AuthMiddleware {
         AuthMiddleware { pub_key }
     }
 
-    pub fn parse(&self, jwt: String) -> TokenData<Claims> {
+    pub fn parse(&self, jwt: &String) -> TokenData<Claims> {
         decode::<Claims>(&jwt, &self.pub_key, &Validation::new(Algorithm::RS256)).unwrap()
     }
 }
