@@ -60,7 +60,6 @@ export abstract class StateLessComponent implements Component {
 
 	protected appenChildren(): void {
 		for (const child of this.children) {
-			child.init()
 			this.element.append(child.get());
 		}
 	}
