@@ -1,6 +1,7 @@
 use actix_web::{self, web};
 
-mod controllers;
+pub mod controllers;
+pub mod models;
 
 pub fn register_urls(cfg: &mut web::ServiceConfig) {
     cfg.route("/login", web::post().to(controllers::login));

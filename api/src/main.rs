@@ -13,9 +13,9 @@ mod middlewares;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let env_path = Path::new("/etc/wc-api/.env");
-    let pub_key_path = Path::new("/etc/wc-api/public-key.pem");
     dotenv::from_path(env_path).unwrap();
 
+    let pub_key_path = Path::new("/etc/wc-api/public-key.pem");
     let pub_key = fs::read_to_string(pub_key_path).expect("Couldn't read public key file!");
 
     let pool = db::connection_builder().await.unwrap();
