@@ -27,7 +27,7 @@ impl PlankType {
 
 #[derive(Deserialize)]
 pub struct Info {
-    jwt: String,
+    token: String,
 }
 
 pub async fn get_planks(
@@ -36,7 +36,7 @@ pub async fn get_planks(
     auth_middleware: Data<AuthMiddleware>,
 ) -> Json<Vec<PlankType>> {
 
-    auth_middleware.get_ref().parse(&info.jwt);
+    auth_middleware.get_ref().parse(&info.token);
 
     let data = sqlx::query("SELECT * FROM `plank_types`;")
         .fetch_all(pool.get_ref())

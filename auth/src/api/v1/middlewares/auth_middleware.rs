@@ -1,5 +1,6 @@
-use jsonwebtoken::{decode, Algorithm, DecodingKey,EncodingKey, TokenData, Validation, encode, Header};
-
+use jsonwebtoken::{
+    decode, encode, Algorithm, DecodingKey, EncodingKey, Header, TokenData, Validation,
+};
 use crate::api::v1::user::models::User;
 
 pub struct AuthMiddleware {
@@ -14,8 +15,12 @@ pub trait AuthMiddlewareTrait<T> {
 }
 
 impl AuthMiddleware {
-    pub fn new(pub_key: DecodingKey,pri_key: EncodingKey, header:Header) -> Self {
-        AuthMiddleware { pub_key, pri_key,header }
+    pub fn new(pub_key: DecodingKey, pri_key: EncodingKey, header: Header) -> Self {
+        AuthMiddleware {
+            pub_key,
+            pri_key,
+            header,
+        }
     }
 }
 
