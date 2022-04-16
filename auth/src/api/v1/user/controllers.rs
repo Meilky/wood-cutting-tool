@@ -23,7 +23,7 @@ pub async fn login(
     auth_middleware: Data<AuthMiddleware>,
 ) -> Json<LoginRes> {
     let inner = info.into_inner();
-    let row = sqlx::query("SELECT * FROM `users` WHERE username=? AND password=?;")
+    let row = sqlx::query("SELECT * FROM `users` WHERE username=? AND password_hash=?;")
         .bind(&inner.username)
         .bind(&inner.password)
         .fetch_one(pool.get_ref())

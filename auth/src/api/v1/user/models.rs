@@ -7,6 +7,8 @@ use crate::db::DBRow;
 pub struct User {
     id: i32,
     username: String,
+    email: String,
+    password_hash: String,
 }
 
 impl User {
@@ -14,6 +16,8 @@ impl User {
         User {
             id: row.get::<i32, &str>("id"),
             username: row.get::<String, &str>("name"),
+            email: row.get::<String, &str>("email"),
+            password_hash: row.get::<String, &str>("password_hash"),
         }
     }
 }

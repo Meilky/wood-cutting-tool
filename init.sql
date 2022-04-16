@@ -6,6 +6,10 @@ CREATE TABLE `users` (
 	PRIMARY KEY (`id`)
 );
 
+INSERT INTO `users` VALUES 
+	(null, "admin", "admin@gmail.com", "admin"),
+;
+
 CREATE TABLE `references` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
