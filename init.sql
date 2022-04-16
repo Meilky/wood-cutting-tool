@@ -7,7 +7,7 @@ CREATE TABLE `users` (
 );
 
 INSERT INTO `users` VALUES 
-	(null, "admin", "admin@gmail.com", "admin"),
+	(null, "admin", "admin@gmail.com", "admin")
 ;
 
 CREATE TABLE `references` (
