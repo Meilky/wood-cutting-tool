@@ -12,11 +12,6 @@ export class TopBar extends StateFullComponent<{ loadedModule: typeof LoadedModu
 		});
 
 		this.element.className = TopBarStyle;
-		this.init();
-	}
-
-	public init(): void {
-		this.update();
 	}
 
 	protected beforeUpdate(): void {

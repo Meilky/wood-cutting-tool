@@ -6,6 +6,8 @@ import { Component } from "~/lib/components/component.I";
 class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
 		super([module]);
+
+		this.init()
 	}
 
 	public async init(): Promise<void> {
@@ -71,14 +73,14 @@ class ModulesStore extends BaseStore<Module[]> {
 			}
 
 			this.value.push(mod);
-			this.refresh();
 
 			i++;
 		}
+
+		this.refresh();
 	}
 }
 
 const s = new ModulesStore();
-s.init();
 
 export default s;

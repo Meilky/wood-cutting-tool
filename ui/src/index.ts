@@ -8,4 +8,6 @@ if (!app) {
 
 const appComponent = new App();
 
+appComponent.update()
+
 app.appendChild(appComponent.get());

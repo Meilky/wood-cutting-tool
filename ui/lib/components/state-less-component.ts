@@ -7,7 +7,7 @@ const defaultProps: DefaultProps = {
 	},
 };
 
-export abstract class StateLessComponent implements Component {
+export class StateLessComponent implements Component {
 	protected element: HTMLElement;
 	protected children: Component[];
 	protected isMobile: boolean;
@@ -19,35 +19,37 @@ export abstract class StateLessComponent implements Component {
 		this.children = [];
 		this.element = props.element;
 		this.propreties = { ...props, ...defaultProps };
-		this.init = this.init.bind(this);
-		this.remove = this.remove.bind(this);
+
+		this.update = this.update.bind(this);
+		this.removeChildren = this.removeChildren.bind(this);
 	}
 
-	public abstract init(): void;
+	protected beforeUpdate(): void {
+		return;
+	}
+
+	public update(): void {
+		this.beforeUpdate();
+		this.onUpdate();
+		this.afterUpdate();
+	}
+
+	protected afterUpdate(): void {
+		return;
+	}
+
+	protected onUpdate(): void {
+		return;
+	}
 
 	protected beforeRemove(): void {
 		return;
 	}
 
-	public remove(): void {
-		this.beforeRemove();
-		this.removeChildren();
-		this.removeElement();
-		this.afterRemove();
-	}
-
-	protected removeChildren(): void {
-		for (const child of this.children) child.remove();
-	}
-
-	protected removeElement(): void {
-		if (this.element.parentNode) {
-			this.element.parentNode.removeChild(this.element);
+	public removeChildren(): void {
+		for (const child of this.children) {
+			this.element.removeChild(child.get())
 		}
-	}
-
-	protected afterRemove(): void {
-		return;
 	}
 
 	public get(): HTMLElement {
@@ -60,7 +62,7 @@ export abstract class StateLessComponent implements Component {
 
 	protected appenChildren(): void {
 		for (const child of this.children) {
-			child.init()
+			child.update()
 			this.element.append(child.get());
 		}
 	}

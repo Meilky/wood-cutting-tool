@@ -9,14 +9,10 @@ export class App extends StateLessComponent {
 	constructor() {
 		super({ element: document.createElement("div") });
 
-		this.init();
-	}
-
-	public init(): void {
 		this.element.className = AppStyle;
 
 		this.children = [new TopBar(), new NavBar(), new LoadedModule()];
 
-		this.appenChildren();
+		this.appenChildren()
 	}
 }

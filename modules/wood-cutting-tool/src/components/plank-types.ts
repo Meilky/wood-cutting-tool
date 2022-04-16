@@ -12,12 +12,9 @@ export class PlankTypes extends StateFullComponent<{ plankTypes: typeof PlankTyp
 			element: document.createElement("ul"),
 			stores: { plankTypes: PlankTypesStore },
 		});
-	}
 
-	public init(): void {
 		this.element.className = PlankTypesStyle;
 		this.children = [new Name("Plank Types"), this.holder];
-		this.update();
 	}
 
 	public onUpdate(): void {
@@ -47,9 +44,7 @@ class List extends StateLessComponent {
 		super({
 			element: document.createElement("ul"),
 		});
-	}
 
-	public init(): void {
 		this.element.className = this.props.className;
 	}
 

@@ -2,7 +2,7 @@ import { Store } from "./store.I";
 
 export abstract class BaseStore<T> implements Store<T> {
 	protected _value: T;
-	protected listeners: ((value: any) => void)[];
+	protected listeners: (() => void)[];
 
 	public get value(): T {
 		return this._value;
@@ -10,6 +10,7 @@ export abstract class BaseStore<T> implements Store<T> {
 
 	public set value(v: T) {
 		this._value = v;
+
 		this.refresh();
 	}
 
@@ -27,12 +28,14 @@ export abstract class BaseStore<T> implements Store<T> {
 	public removeListener(callback: () => void): void {
 		const index = this.listeners.indexOf(callback);
 
-		if (index !== -1) this.listeners.splice(index, 1);
+		if (index !== -1) {
+			this.listeners.splice(index, 1);
+		}
 	}
 
 	public refresh(): void {
 		for (const callback of this.listeners) {
-			callback(this._value);
+			callback();
 		}
 	}
 }

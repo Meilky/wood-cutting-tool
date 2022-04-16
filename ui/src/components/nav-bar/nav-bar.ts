@@ -18,22 +18,19 @@ export class NavBar extends StateFullComponent<{
 			},
 		});
 
-		this.init();
-	}
-
-	public init(): void {
 		this.element.className = NavBarStyle;
-
-		this.update();
 	}
 
 	protected beforeUpdate(): void {
+		this.removeChildren()
+
 		this.children = [];
 	}
 
-	public onUpdate(): void {
+	protected onUpdate(): void {
 		const modules = this.stores.modules.value;
 		const loadedMod = this.stores.loadedModule.value;
+
 
 		for (const mod of modules) {
 			let isLoaded = false;
@@ -44,6 +41,10 @@ export class NavBar extends StateFullComponent<{
 
 			this.children.push(new NavBarItem({ module: mod, isLoaded, loadedModule: this.stores.loadedModule }));
 		}
+	}
+
+	protected afterUpdate(): void {
+		this.appenChildren()
 	}
 }
 
@@ -60,10 +61,9 @@ class NavBarItem extends StateLessComponent {
 		});
 
 		this.onClick = this.onClick.bind(this);
-		this.init();
 	}
 
-	public init(): void {
+	protected onUpdate(): void {
 		const html = `<span><p>${this.props.module.name}</p></span>`;
 
 		this.element.className = NavBarItemStyle;

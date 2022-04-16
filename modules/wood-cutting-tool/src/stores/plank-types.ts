@@ -4,6 +4,7 @@ import { PlankType } from "~/src/interfaces/plank-type";
 class PlantTypesStore extends BaseStore<PlankType[]> {
 	constructor() {
 		super([]);
+		this.init()
 	}
 
 	async init(): Promise<void> {
@@ -15,6 +16,5 @@ class PlantTypesStore extends BaseStore<PlankType[]> {
 }
 
 const store = new PlantTypesStore();
-store.init();
 
 export default store;

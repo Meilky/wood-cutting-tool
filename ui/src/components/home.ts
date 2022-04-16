@@ -6,10 +6,6 @@ export class Home extends StateLessComponent {
 			element: document.createElement("div"),
 		});
 
-		this.init();
-	}
-
-	public init(): void {
 		this.element.innerText = "Home page";
 	}
 }

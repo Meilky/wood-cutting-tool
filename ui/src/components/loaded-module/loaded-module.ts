@@ -14,12 +14,11 @@ export class LoadedModule extends StateFullComponent<{
 			},
 		});
 
-		this.init();
+		this.element.className = LoadedModuleStyle;
 	}
 
-	public init(): void {
-		this.element.className = LoadedModuleStyle;
-		this.update();
+	protected beforeUpdate(): void {
+		this.removeChildren()
 	}
 
 	protected onUpdate(): void {
@@ -31,6 +30,10 @@ export class LoadedModule extends StateFullComponent<{
 		}
 
 		this.children = [mod.component];
+	}
+
+	protected afterUpdate(): void {
+		this.appenChildren()
 	}
 }
 
@@ -44,10 +47,6 @@ class ErrorModule extends StateLessComponent {
 			element: document.createElement("p"),
 		});
 
-		this.init();
-	}
-
-	public init(): void {
 		this.element.className = LoadedModuleStyle;
 		this.element.innerText = `${this.props.msg}`;
 	}

@@ -11,6 +11,8 @@ class ReferencesStore extends BaseStore<Reference[]> {
 				link: "",
 			},
 		]);
+
+		this.init()
 	}
 
 	async init(): Promise<void> {
@@ -22,6 +24,5 @@ class ReferencesStore extends BaseStore<Reference[]> {
 }
 
 const st = new ReferencesStore();
-st.init();
 
 export default st;
