@@ -12,7 +12,5 @@ export class App extends StateLessComponent {
 		this.element.className = AppStyle;
 
 		this.children = [new TopBar(), new NavBar(), new LoadedModule()];
-
-		this.appenChildren()
 	}
 }

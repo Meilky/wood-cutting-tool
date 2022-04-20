@@ -22,8 +22,6 @@ export class NavBar extends StateFullComponent<{
 	}
 
 	protected beforeUpdate(): void {
-		this.removeChildren()
-
 		this.children = [];
 	}
 
@@ -42,10 +40,6 @@ export class NavBar extends StateFullComponent<{
 			this.children.push(new NavBarItem({ module: mod, isLoaded, loadedModule: this.stores.loadedModule }));
 		}
 	}
-
-	protected afterUpdate(): void {
-		this.appenChildren()
-	}
 }
 
 interface NavBarItemProps {
@@ -61,9 +55,7 @@ class NavBarItem extends StateLessComponent {
 		});
 
 		this.onClick = this.onClick.bind(this);
-	}
 
-	protected onUpdate(): void {
 		const html = `<span><p>${this.props.module.name}</p></span>`;
 
 		this.element.className = NavBarItemStyle;

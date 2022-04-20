@@ -3,9 +3,7 @@ import { LoadedModule as LoadedModuleStyle } from "./style.module.css";
 import LoadedModuleStore from "~/src/stores/loaded-module";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 
-export class LoadedModule extends StateFullComponent<{
-	loadedModule: typeof LoadedModuleStore;
-}> {
+export class LoadedModule extends StateFullComponent<{ loadedModule: typeof LoadedModuleStore; }> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
@@ -17,10 +15,6 @@ export class LoadedModule extends StateFullComponent<{
 		this.element.className = LoadedModuleStyle;
 	}
 
-	protected beforeUpdate(): void {
-		this.removeChildren()
-	}
-
 	protected onUpdate(): void {
 		const mod = this.stores.loadedModule.value;
 
@@ -30,10 +24,6 @@ export class LoadedModule extends StateFullComponent<{
 		}
 
 		this.children = [mod.component];
-	}
-
-	protected afterUpdate(): void {
-		this.appenChildren()
 	}
 }
 
