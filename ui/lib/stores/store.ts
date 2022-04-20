@@ -19,7 +19,7 @@ export abstract class BaseStore<T> implements Store<T> {
 		this.listeners = [];
 	}
 
-	public abstract init(): void;
+	public abstract init(): Promise<void>;
 
 	public addListener(callback: () => void): void {
 		this.listeners.push(callback);

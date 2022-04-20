@@ -7,7 +7,7 @@ class LoadedModuleStore extends BaseStore<Module> {
 		super(module);
 	}
 
-	public init(): void {
+	public async init(): Promise<void> {
 		return;
 	}
 }

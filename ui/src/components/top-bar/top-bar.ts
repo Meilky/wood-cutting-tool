@@ -7,7 +7,10 @@ export class TopBar extends StateFullComponent<{ loadedModule: typeof LoadedModu
 		super({
 			element: document.createElement("div"),
 			stores: {
-				loadedModule: LoadedModuleStore,
+				loadedModule: {
+					store: LoadedModuleStore,
+					bind: true,
+				}
 			},
 		});
 

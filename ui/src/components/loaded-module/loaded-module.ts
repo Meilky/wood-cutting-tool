@@ -8,7 +8,10 @@ export class LoadedModule extends StateFullComponent<{ loadedModule: typeof Load
 		super({
 			element: document.createElement("div"),
 			stores: {
-				loadedModule: LoadedModuleStore,
+				loadedModule: {
+					store: LoadedModuleStore,
+					bind: true,
+				}
 			},
 		});
 

@@ -11,7 +11,7 @@ class ConfigStore extends BaseStore<Config> {
 		this.init();
 	}
 
-	public init(): void {
+	public async init(): Promise<void> {
 		this.value = config;
 
 		const link = document.createElement("link");
