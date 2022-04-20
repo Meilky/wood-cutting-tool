@@ -9,12 +9,11 @@ class PreferencesStore extends BaseStore<Preference> {
 		});
 	}
 
-	public init(): void {
+	public async init(): Promise<void> {
 		return;
 	}
 }
 
 const store = new PreferencesStore();
-store.init();
 
 export default store;

@@ -3,28 +3,27 @@ import { StateLessComponent } from "~/lib/components/state-less-component";
 import PlankTypesStore from "~/src/stores/plank-types";
 //import { PlankType } from "~/src/interfaces/plank-type";
 import { PlanTypes as PlankTypesStyle } from "./plank-types.module.css"
-import { Component } from "~lib/components/component.I";
+import { Component } from "~/lib/components/component.I";
 
-export class PlankTypes extends StateFullComponent<{ plankTypes: typeof PlankTypesStore }> {
-	protected holder: List = new List({ className: "none" });
+export class PlankTypes extends StateLessComponent {
 	constructor() {
 		super({
-			element: document.createElement("ul"),
-			stores: { plankTypes: PlankTypesStore },
+			element: document.createElement("div"),
 		});
 
 		this.element.className = PlankTypesStyle;
-		this.children = [new Name("Plank Types"), this.holder];
+		this.children = [new Name("Plank Types"), new List({ className: "idk" })];
 	}
+}
 
-	public onUpdate(): void {
-		const listItems: ListItemProps[] = [];
+class Name extends StateLessComponent {
+	constructor(protected name: string) {
+		super({
+			element: document.createElement("div"),
+		});
 
-		for (const plank of this.stores.plankTypes.value) {
-			listItems.push({ item: plank.name })
-		}
-
-		this.holder.set(listItems);
+		this.element.className = "name";
+		this.element.innerText = this.name;
 	}
 }
 
@@ -37,12 +36,11 @@ interface ListProps {
 	className: string,
 }
 
-class List extends StateLessComponent {
-	protected items: ListItemProps[] = [];
-
+class List extends StateFullComponent<{ plankTypes: typeof PlankTypesStore }> {
 	constructor(protected props: ListProps) {
 		super({
 			element: document.createElement("ul"),
+			stores: { plankTypes: { store: PlankTypesStore, bind: true } },
 		});
 
 		this.element.className = this.props.className;
@@ -53,51 +51,23 @@ class List extends StateLessComponent {
 	}
 
 	protected onUpdate(): void {
-		for (const item of this.items) {
-			const e = new ListItem(item);
+		for (const plank of this.stores.plankTypes.value) {
+			const e = new ListItem({ item: plank.name });
 			this.children.push(e);
 		}
 	}
-
-	public update(): void {
-		this.removeChildren()
-		this.beforeUpdate()
-		this.onUpdate()
-		this.appenChildren()
-	}
-
-	public set(items: ListItemProps[]): void {
-		this.items = items;
-		this.update();
-	}
 }
 
-class Name extends StateLessComponent {
-	constructor(protected name: string) {
-		super({
-			element: document.createElement("div"),
-		});
-	}
-
-	public init(): void {
-		this.element.className = "name";
-		this.element.innerText = this.name;
-	}
-}
 
 class ListItem extends StateLessComponent {
 	constructor(protected props: ListItemProps) {
 		super({
 			element: document.createElement("li"),
 		});
-	}
 
-	public init(): void {
 		if (this.props.className) this.element.className = this.props.className;
 
 		if (typeof this.props.item === "string") this.element.innerText = this.props.item;
 		else this.children = [this.props.item];
-
-		this.appenChildren();
 	}
 }

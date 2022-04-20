@@ -7,11 +7,6 @@ export class WoodCuttingTool extends StateLessComponent {
 	constructor() {
 		super({ element: document.createElement("div") });
 
-		this.init();
-	}
-
-	public init(): void {
 		this.children = [new Preferences(), new Canvas(), new PlankTypes()];
-		this.appenChildren();
 	}
 }

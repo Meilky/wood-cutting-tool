@@ -8,15 +8,10 @@ export class Canvas extends StateFullComponent<{
 	protected element: HTMLCanvasElement;
 
 	constructor() {
-		super({ element: document.createElement("canvas"), stores: { preferences: PreferencesStore } });
+		super({ element: document.createElement("canvas"), stores: { preferences: { store: PreferencesStore, bind: true } } });
 		this.element = document.createElement("canvas");
 
-		this.init();
-	}
-
-	public init(): void {
 		this.ctx = this.element.getContext("2d") || undefined;
-		this.update();
 	}
 
 	public beforeUpdate(): void {
@@ -26,19 +21,19 @@ export class Canvas extends StateFullComponent<{
 	}
 
 	public onUpdate(): void {
-		const centerx = this.element.width / 2;
-		const centery = this.element.height / 2;
-		const logDiameter = this.stores.preferences.value.diameter;
-
-		let radius = centerx;
-		let space = (radius * 2) / logDiameter;
-
-		if (centerx > centery) {
-			radius = centery;
-			space = (radius * 2) / logDiameter;
-		}
-
 		if (this.ctx) {
+			const centerx = this.element.width / 2;
+			const centery = this.element.height / 2;
+			const logDiameter = this.stores.preferences.value.diameter;
+
+			let radius = centerx;
+			let space = (radius * 2) / logDiameter;
+
+			if (centerx > centery) {
+				radius = centery;
+				space = (radius * 2) / logDiameter;
+			}
+
 			this.ctx.beginPath();
 			this.ctx.arc(centerx, centery, radius, 0, 2 * Math.PI);
 			this.ctx.moveTo(centerx - radius, centery);

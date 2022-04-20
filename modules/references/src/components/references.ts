@@ -8,15 +8,13 @@ export class References extends StateFullComponent<{ references: typeof Referenc
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			stores: { references: ReferencesStore },
+			stores: { references: { store: ReferencesStore, bind: true } },
 		});
 
 		this.element.className = ReferencesStyle;
 	}
 
 	public beforeUpdate(): void {
-		this.removeChildren()
-
 		this.children = [];
 	}
 
@@ -25,10 +23,6 @@ export class References extends StateFullComponent<{ references: typeof Referenc
 			const e = new ReferenceComponent(ref);
 			this.children.push(e);
 		}
-	}
-
-	protected afterUpdate(): void {
-		this.appenChildren()
 	}
 }
 
