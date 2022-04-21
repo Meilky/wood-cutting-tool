@@ -1,4 +1,4 @@
-import { Home } from "~/src/components/home"
+import { Home } from "~/src/modules/home/components/home"
 import { Module } from "~/src/interfaces/modules/module"
 
 export const module: Module = {

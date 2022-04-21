@@ -1,7 +1,7 @@
-import { Config } from "./src/stores/config.I";
+import { PartialConfig } from "./src/stores/config.I";
 
-class config implements Config {
-	public theme = "default.css"
+class config implements PartialConfig {
+	public login = true;
 }
 
 export default new config();

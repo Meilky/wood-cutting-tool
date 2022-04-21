@@ -14,8 +14,8 @@ export abstract class BaseStore<T> implements Store<T> {
 		this.refresh();
 	}
 
-	constructor(defaultValue: T) {
-		this._value = defaultValue;
+	constructor(public readonly defaults: T) {
+		this._value = defaults;
 		this.listeners = [];
 	}
 
