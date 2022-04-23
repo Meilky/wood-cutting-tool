@@ -15,6 +15,10 @@ class ModulesStore extends BaseStore<Module[]> {
 		const raw_modules = await res.json();
 
 		let i = this.value.length;
+
+		const modules: Module[] = [];
+		const promisesModules: (Promise<any> | undefined)[] = [];
+
 		for (const raw_mod of raw_modules) {
 			if (raw_mod.id === undefined) {
 				continue;
@@ -40,41 +44,62 @@ class ModulesStore extends BaseStore<Module[]> {
 				},
 			};
 
+			modules.push(mod);
+
 			if (raw_mod.origin) {
-				try {
-					const m = await import(raw_mod.origin);
-
-					if (m.component) {
-						mod.error = undefined;
-						mod.component = m.component;
-					} else {
-						mod.error = {
-							state: "error",
-							msg: `Unable to find component in module "${raw_mod.name}" from origin "${raw_mod.origin}"!`,
-						};
-					}
-
-					if (m.css) {
-						const element = document.createElement("link");
-						element.setAttribute("href", m.css)
-						element.setAttribute("type", "text/css")
-						element.setAttribute("rel", "stylesheet")
-						document.head.append(element)
-						if (mod.fetching) {
-							mod.fetching.css = m.css;
-						}
-					}
-				} catch (e) {
-					mod.error = {
-						state: "error",
-						msg: `Unable to load module "${raw_mod.name}" from origin "${raw_mod.origin}" with error: ${e}`,
-					};
+				if (!mod.fetching) mod.fetching = {
+					id: raw_mod.id,
+					origin: "n/a"
 				}
+
+				mod.fetching.origin = raw_mod.origin;
+
+				promisesModules.push(import(raw_mod.origin));
+			} else {
+				promisesModules.push(undefined);
 			}
 
-			this.value.push(mod);
-
 			i++;
+		}
+
+		const results = await Promise.allSettled(promisesModules);
+
+		for (let i = 0; i < results.length; i++) {
+			const result = results[i];
+			const mod = modules[i];
+
+			if (result.status === "rejected") {
+				mod.error = {
+					state: "error",
+					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin}" with error: ${result.reason}`,
+				};
+				continue;
+			}
+
+			const m = result.value;
+
+			if (m.component) {
+				mod.error = undefined;
+				mod.component = m.component;
+
+				if (m.css) {
+					const element = document.createElement("link");
+					element.setAttribute("href", m.css)
+					element.setAttribute("type", "text/css")
+					element.setAttribute("rel", "stylesheet")
+					document.head.append(element)
+					if (mod.fetching) {
+						mod.fetching.css = m.css;
+					}
+				}
+			} else {
+				if (m !== undefined) mod.error = {
+					state: "error",
+					msg: `Unable to find component in module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin}"!`,
+				};
+			}
+
+			this._value.push(mod);
 		}
 
 		this.refresh();

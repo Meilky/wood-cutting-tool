@@ -14,7 +14,7 @@ export class NavBar extends StateFullComponent<{
 			element: document.createElement("div"),
 			stores: {
 				modules: { store: ModulesStore, bind: true },
-				loadedModule: { store: LoadedModuleStore, bind: false },
+				loadedModule: { store: LoadedModuleStore, bind: true },
 			},
 		});
 
