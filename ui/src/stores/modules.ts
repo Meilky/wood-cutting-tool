@@ -3,11 +3,9 @@ import { BaseStore } from "~/lib/stores/store";
 import { module } from "~/src/modules/home/home";
 import { Component } from "~/lib/components/component.I";
 
-class ModulesStore extends BaseStore<Module[]> {
+export class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
 		super([module]);
-
-		this.init()
 	}
 
 	public async init(): Promise<void> {
@@ -105,7 +103,3 @@ class ModulesStore extends BaseStore<Module[]> {
 		this.refresh();
 	}
 }
-
-const s = new ModulesStore();
-
-export default s;
