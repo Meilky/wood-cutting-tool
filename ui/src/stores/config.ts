@@ -3,7 +3,7 @@ import { BaseStore } from "~/lib/stores/store";
 import config from "~/config";
 import { Checker } from "~/lib/utils";
 
-class ConfigStore extends BaseStore<Config> {
+export class ConfigStore extends BaseStore<Config> {
 	protected checker: Checker;
 	constructor() {
 		super({
@@ -15,8 +15,6 @@ class ConfigStore extends BaseStore<Config> {
 			"theme": "string",
 			"loging": "boolean"
 		});
-
-		this.init();
 	}
 
 	public async init(): Promise<void> {
@@ -37,5 +35,3 @@ class ConfigStore extends BaseStore<Config> {
 		document.getElementsByTagName("HEAD")[0].appendChild(link);
 	}
 }
-
-export default new ConfigStore();

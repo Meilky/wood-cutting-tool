@@ -1,21 +1,11 @@
 import { Store } from "./store.I";
 
 export abstract class BaseStore<T> implements Store<T> {
-	protected _value: T;
+	protected value: T;
 	protected listeners: (() => void)[];
 
-	public get value(): T {
-		return this._value;
-	}
-
-	public set value(v: T) {
-		this._value = v;
-
-		this.refresh();
-	}
-
 	constructor(public readonly defaults: T) {
-		this._value = defaults;
+		this.value = defaults;
 		this.listeners = [];
 	}
 
@@ -37,5 +27,15 @@ export abstract class BaseStore<T> implements Store<T> {
 		for (const callback of this.listeners) {
 			callback();
 		}
+	}
+
+	public get(): T {
+		return this.value;
+	}
+
+	public set(value: T): void {
+		this.value = value;
+
+		this.refresh();
 	}
 }

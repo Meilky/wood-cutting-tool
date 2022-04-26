@@ -1,11 +1,7 @@
-import { Store } from "../stores/store.I";
 import { Props } from "./component.I";
+import {StoreManager} from "~/lib/interfaces/store-manager"
 
-export interface StateFullPropreties<T extends { [key: string]: Store<any> }> extends Props {
-	stores: {
-		[K in keyof T]: {
-			store: T[K];
-			bind?: boolean;
-		}
-	}
+export interface StateFullPropreties<T extends StoreManager<any>> extends Props {
+	storeManager: T["stores"],
+	binds: (keyof T["stores"])[]
 }

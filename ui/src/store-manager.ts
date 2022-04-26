@@ -1,12 +1,26 @@
 import { ModulesStore } from "./stores/modules"
-import {StoreManager} from "~/lib/interfaces/store-manager"
+import { StoreManager } from "~/lib/interfaces/store-manager"
+import { ConfigStore } from "~/src/stores/config"
+import { LoadedModuleStore } from "~/src/stores/loaded-module"
 
-export class MainStoreManager implements StoreManager {
-	public modules = new ModulesStore();
-}
+export class MainStoreManager implements StoreManager<{
+	modules: ModulesStore,
+	config: ConfigStore,
+	loadedModule: LoadedModuleStore
+}> {
+	public readonly stores = {
+		modules: new ModulesStore(),
+		config: new ConfigStore(),
+		loadedModule: new LoadedModuleStore()
+	}
 
-export const MainStoreManagerFactory = async (): Promise<MainStoreManager> => {
-	const sm = new MainStoreManager();
+	public async init(): Promise<void> {
+		const promises = []
 
-	return sm
+		for (const store in this.stores) {
+			promises.push(this.stores[store].init())
+		}
+
+		await Promise.allSettled(promises);
+	}
 }
