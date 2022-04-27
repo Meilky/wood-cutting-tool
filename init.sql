@@ -24,10 +24,11 @@ INSERT INTO `references` VALUES
 	(null, "Css flex box", "Utilis&#xE9; pour la nav bar, la page des r&#xE9;f&#xE9;rences et la page d'accueil.", "https://www.w3schools.com/css/css3_flexbox_container.asp"),
 	(null, "Html form event", "Utilis&#xE9; pour que la page ne 'reload' pas lorsque nous cliquons sur le boutton soumettre dans la page d'accueil.", "https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event"),
 	(null, "Github repo", "Lien à la 'repo' Github.", "https://github.com/Meilky/wood-cutting-tool"),
-	(null, "Project hiearchy", "Utilis&#xE9; pour sructur&#xE9; tout la structure de fichier de l'api.", "https://medium.com/geekculture/backend-design-actix-web-project-hierarchy-7fc229bd830c"),
+	(null, "Rust project hiearchy", "Utilis&#xE9; pour sructur&#xE9; tout la structure de fichier de l'api.", "https://medium.com/geekculture/backend-design-actix-web-project-hierarchy-7fc229bd830c"),
 	(null, "Rust .env", "Librarie rust utiliser pour acc&#xE9;d&#xE9; aux variables d'environement.", "https://github.com/dotenv-rs/dotenv"),
 	(null, "Rust sqlx", "Library rust utilis&#xE9; pour cr&#xE9;er la connection a la db.", "https://github.com/launchbadge/sqlx"),
-	(null, "Promise.allSettled", "Utilis&#xE9; pour 'fetch' tout les modules sans que tout les 'promise' sois rejet&#xE9; si une 'promise' est rejet&#xE9;.", "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled")
+	(null, "Promise.allSettled", "Utilis&#xE9; pour 'fetch' tout les modules sans que tout les 'promise' sois rejet&#xE9; si une 'promise' est rejet&#xE9;.", "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled"),
+	(null, "Flux architecture", "Utilis&#xE9; pour le 'flow' du 'data' dans le 'frontend'.", "https://www.freecodecamp.org/news/an-introduction-to-the-flux-architectural-pattern-674ea74775c9/")
 ;
 
 CREATE TABLE `modules` (
