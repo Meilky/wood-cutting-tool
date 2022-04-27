@@ -1,25 +1,21 @@
 import { StateFullComponent } from "~/lib/components/state-full-component";
 import { LoadedModule as LoadedModuleStyle } from "./style.module.css";
-import LoadedModuleStore from "~/src/stores/loaded-module";
 import { StateLessComponent } from "~/lib/components/state-less-component";
+import defaultStoreManager, { DefaultStoreManager } from "~/lib/default-store-manager";
 
-export class LoadedModule extends StateFullComponent<{ loadedModule: typeof LoadedModuleStore; }> {
+export class LoadedModule extends StateFullComponent<DefaultStoreManager> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			stores: {
-				loadedModule: {
-					store: LoadedModuleStore,
-					bind: true,
-				}
-			},
+			storeManager: defaultStoreManager,
+			binds: ["loadedModule"]
 		});
 
 		this.element.className = LoadedModuleStyle;
 	}
 
 	protected onUpdate(): void {
-		const mod = this.stores.loadedModule.value;
+		const mod = this.stores.loadedModule.get();
 
 		if (mod.error) {
 			this.children = [new ErrorModule({ msg: mod.error.msg })];

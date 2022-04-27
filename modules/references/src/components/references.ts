@@ -1,14 +1,15 @@
 import { StateFullComponent } from "~/lib/components/state-full-component";
 import { StateLessComponent } from "~/lib/components/state-less-component";
-import ReferencesStore from "~/src/stores/references";
 import { Reference } from "~/src/interfaces/reference";
 import { References as ReferencesStyle, Reference as ReferenceStyle } from "./style.module.css";
+import moduleStoreManager, { ModuleStoreManager } from "~src/modules-store-manager";
 
-export class References extends StateFullComponent<{ references: typeof ReferencesStore }> {
+export class References extends StateFullComponent<ModuleStoreManager> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			stores: { references: { store: ReferencesStore, bind: true } },
+			storeManager: moduleStoreManager,
+			binds: ["references"]
 		});
 
 		this.element.className = ReferencesStyle;
@@ -19,7 +20,7 @@ export class References extends StateFullComponent<{ references: typeof Referenc
 	}
 
 	protected onUpdate(): void {
-		for (const ref of this.stores.references.value) {
+		for (const ref of this.stores.references.get()) {
 			const e = new ReferenceComponent(ref);
 			this.children.push(e);
 		}

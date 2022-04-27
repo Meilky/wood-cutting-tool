@@ -1,6 +1,6 @@
-import { Module } from "~/src/interfaces/modules/module";
+import { Module } from "~/lib/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
-import { module } from "~/src/integrated-modules/home/home";
+import { module } from "~/lib/integrated-modules/home/home";
 import { Component } from "~/lib/components/component.I";
 
 export class ModulesStore extends BaseStore<Module[]> {

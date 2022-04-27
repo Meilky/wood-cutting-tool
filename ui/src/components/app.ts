@@ -3,7 +3,6 @@ import { NavBar } from "./nav-bar/nav-bar";
 import { TopBar } from "./top-bar/top-bar";
 import { LoadedModule } from "./loaded-module/loaded-module";
 import { App as AppStyle } from "./style.module.css";
-import "~/src/stores/config";
 
 export class App extends StateLessComponent {
 	constructor() {

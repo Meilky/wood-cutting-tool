@@ -1,21 +1,15 @@
 import { StateFullComponent } from "~/lib/components/state-full-component";
-import ModulesStore from "~/src/stores/modules";
-import { Module } from "~/src/interfaces/modules/module";
+import { Module } from "~/lib/interfaces/modules/module";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
-import LoadedModuleStore from "~/src/stores/loaded-module";
+import defaultStoreManager, { DefaultStoreManager, DefaultStores } from "~/lib/default-store-manager";
 
-export class NavBar extends StateFullComponent<{
-	modules: typeof ModulesStore;
-	loadedModule: typeof LoadedModuleStore;
-}> {
+export class NavBar extends StateFullComponent<DefaultStoreManager> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			stores: {
-				modules: { store: ModulesStore, bind: true },
-				loadedModule: { store: LoadedModuleStore, bind: true },
-			},
+			storeManager: defaultStoreManager,
+			binds: ["loadedModule", "modules"],
 		});
 
 		this.element.className = NavBarStyle;
@@ -26,8 +20,8 @@ export class NavBar extends StateFullComponent<{
 	}
 
 	protected onUpdate(): void {
-		const modules = this.stores.modules.value;
-		const loadedMod = this.stores.loadedModule.value;
+		const modules = this.stores.modules.get();
+		const loadedMod = this.stores.loadedModule.get();
 
 
 		for (const mod of modules) {
@@ -37,7 +31,7 @@ export class NavBar extends StateFullComponent<{
 				isLoaded = true;
 			}
 
-			this.children.push(new NavBarItem({ module: mod, isLoaded, loadedModule: this.stores.loadedModule }));
+			this.children.push(new NavBarItem({ module: mod, isLoaded, stores: this.stores }));
 		}
 	}
 }
@@ -45,7 +39,7 @@ export class NavBar extends StateFullComponent<{
 interface NavBarItemProps {
 	module: Module;
 	isLoaded?: boolean;
-	loadedModule: typeof LoadedModuleStore;
+	stores: DefaultStores;
 }
 
 class NavBarItem extends StateLessComponent {
@@ -81,6 +75,6 @@ class NavBarItem extends StateLessComponent {
 	}
 
 	protected onClick(): void {
-		this.props.loadedModule.value = this.props.module;
+		this.props.stores.loadedModule.set(this.props.module);
 	}
 }

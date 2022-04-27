@@ -1,12 +1,12 @@
 import { TopBar as TopBarStyle } from "./style.module.css";
 import { StateFullComponent } from "~/lib/components/state-full-component";
-import { MainStoreManager } from "~/src/store-manager";
+import defaultStoreManager, { DefaultStoreManager } from "~/lib/default-store-manager";
 
-export class TopBar extends StateFullComponent<typeof MainStoreManager> {
+export class TopBar extends StateFullComponent<DefaultStoreManager> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			storeManager: MainStoreManager,
+			storeManager: defaultStoreManager,
 			binds: ["loadedModule"]
 		});
 

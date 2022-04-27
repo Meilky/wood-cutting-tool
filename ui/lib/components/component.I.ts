@@ -1,4 +1,4 @@
-import { DeepPartial } from "../utils";
+import { DeepPartial } from "~/lib/utils";
 
 export interface Component {
 	readonly propreties: Propreties;

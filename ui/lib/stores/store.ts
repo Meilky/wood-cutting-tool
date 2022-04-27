@@ -1,4 +1,4 @@
-import { Store } from "./store.I";
+import { Store } from "~/lib/interfaces/stores/store";
 
 export abstract class BaseStore<T> implements Store<T> {
 	protected value: T;
