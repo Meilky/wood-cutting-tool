@@ -12,7 +12,7 @@ export abstract class StateFullComponent<T extends StoreManager<any>> extends St
 		this.storeManager = props.storeManager;
 
 		for (const store of props.binds) {
-			this.stores[store].addListener(this.update);
+			this.stores[store].bind(this.update);
 		}
 
 		this.update = this.update.bind(this);
