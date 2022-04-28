@@ -23,6 +23,12 @@ else
 	ln -rs ./ui/lib ./modules/references/lib
 fi;
 
+if [ -L "modules/login/lib" ]; then
+	echo "${RED}Symlink for lib module already exist${NC}"
+else
+	ln -rs ./ui/lib ./modules/login/lib
+fi;
+
 echo "${GREEN}Installing npm modules ...${NC}"
 
 cd ./modules/wood-cutting-tool
@@ -33,14 +39,19 @@ cd ./modules/references
 npm install
 cd ../..
 
+cd ./modules/login
+npm install
+cd ../..
+
 echo "${GREEN}Creating mariadb folder ...${NC}"
 
 mkdir -p ./mariadb
 
-echo "${GREEN}Creating dist folders ...${NC}"
+echo "${GREEN}Creating dists folders ...${NC}"
 
 mkdir -p ./modules/wood-cutting-tool/dist
 mkdir -p ./modules/references/dist
+mkdir -p ./modules/login/dist
 
 echo "${GREEN}Generating keys folder ...${NC}"
 

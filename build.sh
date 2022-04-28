@@ -16,3 +16,8 @@ cd ./modules/wood-cutting-tool
 npm run clean
 npm run build
 cd ../..
+
+cd ./modules/login
+npm run clean
+npm run build
+cd ../..
