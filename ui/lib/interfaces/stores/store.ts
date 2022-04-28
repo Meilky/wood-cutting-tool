@@ -1,9 +1,9 @@
-export interface Store<T> {
-	readonly defaults: T;
+export interface Store<G,S = G> {
+	readonly defaults: G;
 
-	init(): void;
-	addListener(c: () => void): void;
-	removeListener(c: () => void): void;
-	get(): T;
-	set(value: T): void;
+	init(): Promise<void>;
+	bind(callback: () => void): void;
+	unbind(callback: () => void): void;
+	get(): G;
+	set(value: S): void;
 }

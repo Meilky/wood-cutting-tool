@@ -1,0 +1,29 @@
+{
+	"name": "Wood-cutting-tool-module",
+	"version": "1.0.0",
+	"description": "The wood-cutting-tool module for wood-cuting-tool",
+	"main": "dist/index.js",
+	"source": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"build": "npm run clean:dist && parcel build --dist-dir dist --cache-dir .cache && ./removeCssImport.sh",
+		"clean": "npm run clean:dist && npm run clean:cache",
+		"clean:dist": "rm -rf dist/*",
+		"clean:cache": "rm -rf .cache",
+		"lint": "eslint --ignore-path .eslintignore --ext .ts .",
+		"lint:fix": "eslint --ignore-path .eslintignore --ext .ts . --fix",
+		"format": "prettier --write \"src/**/*.+(ts)\""
+	},
+	"keywords": [],
+	"author": "Meilky",
+	"license": "GPL-3.0-or-later",
+	"devDependencies": {
+		"parcel": "^2.4.1",
+		"typescript-plugin-css-modules": "^3.4.0",
+		"@typescript-eslint/eslint-plugin": "^5.10.1",
+		"eslint": "^8.7.0",
+		"eslint-config-prettier": "^8.3.0",
+		"prettier": "^2.5.1",
+		"typescript": "^4.5.4"
+	}
+}

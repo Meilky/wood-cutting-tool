@@ -47,3 +47,49 @@ export class Checker {
 		return { ok: type === subConf, errors: [] }
 	}
 }
+
+export const deepCopy = (obj: any): any => {
+	if (!obj || typeof obj !== "object") return obj;
+
+	const copy: any = {};
+
+	for (const attr in obj) {
+		const type = obj[attr];
+
+		switch (true) {
+			case (type instanceof Date): {
+				const date: Date = new Date();
+				date.setDate(type.getDate())
+				copy[attr] = date;
+				break;
+			}
+
+			case (type instanceof Function):
+				copy[attr] = obj[attr];
+				break;
+
+			case (type instanceof Array): {
+				const arr: any = [];
+				for (const e of type) {
+					arr.push(deepCopy(e));
+				}
+				copy[attr] = arr;
+				break;
+			}
+
+			case (type instanceof Object): {
+				const object: any = {};
+				for (const e in type) {
+					object[e] = deepCopy(type[e]);
+				}
+				copy[attr] = object;
+				break;
+			}
+
+			default:
+				copy[attr] = obj[attr];
+		}
+	}
+
+	return copy;
+}

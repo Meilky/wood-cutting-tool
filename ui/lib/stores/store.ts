@@ -11,11 +11,11 @@ export abstract class BaseStore<T> implements Store<T> {
 
 	public abstract init(): Promise<void>;
 
-	public addListener(callback: () => void): void {
+	public bind(callback: () => void): void {
 		this.listeners.push(callback);
 	}
 
-	public removeListener(callback: () => void): void {
+	public unbind(callback: () => void): void {
 		const index = this.listeners.indexOf(callback);
 
 		if (index !== -1) {
