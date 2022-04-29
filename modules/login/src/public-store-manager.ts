@@ -2,12 +2,12 @@ import { StoreManager } from "~/lib/interfaces/store-manager";
 import moduleStoreManager from "./store-manager";
 import { UserStore } from "./stores/user-store";
 
-interface PublicStores {
+interface PublicModuleStores {
 	user: UserStore;
 }
 
-export class PublicStoreManager implements StoreManager<PublicStores> {
-	public readonly stores: PublicStores;
+export class PublicModuleStoreManager implements StoreManager<PublicModuleStores> {
+	public readonly stores: PublicModuleStores;
 
 	constructor() {
 		this.stores = {
@@ -16,6 +16,6 @@ export class PublicStoreManager implements StoreManager<PublicStores> {
 	}
 
 	public async init(): Promise<void> {
-		return moduleStoreManager.init()
+		return moduleStoreManager.init();
 	}
 }

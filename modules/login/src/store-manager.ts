@@ -1,5 +1,5 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import userDispatcher from "./dispatcher";
+import moduleDispatcher from "./dispatcher";
 import { UserStore } from "./stores/user-store";
 
 interface Stores {
@@ -11,7 +11,7 @@ export class ModuleStoreManager implements StoreManager<Stores> {
 
 	constructor() {
 		this.stores = {
-			user: new UserStore(userDispatcher),
+			user: new UserStore(moduleDispatcher),
 		};
 	}
 

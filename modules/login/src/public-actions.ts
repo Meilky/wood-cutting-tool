@@ -1,22 +1,18 @@
 import userDispatcher from "./dispatcher";
-import { UserActions } from "./interfaces/actions";
+import { PublicModuleActions } from "./interfaces/actions";
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { ActionCreator } from "~/lib/interfaces/action-creator";
 import userActionCreator from "./actions";
 
-interface PublicActions extends UserActions {
-	test: string
-}
-
-export class PublicActionCreator implements ActionCreator<PublicActions> {
-	constructor(protected dispatcher: Dispatcher<UserActions>) {
+export class PublicModuleActionCreator implements ActionCreator<PublicModuleActions> {
+	constructor(protected dispatcher: Dispatcher<PublicModuleActions>) {
 		this.call = this.call.bind(this);
 	}
 
-	public call<K extends keyof PublicActions>(action: K, data: PublicActions[K]): void {
+	public call<K extends keyof PublicModuleActions>(action: K, data: PublicModuleActions[K]): void {
 		switch (action) {
-			case "login":
-				userActionCreator.call("login", data as PublicActions["login"]);
+			case "test":
+				userActionCreator.call("test", data as PublicModuleActions["test"]);
 				break;
 			default:
 				break;
@@ -24,4 +20,4 @@ export class PublicActionCreator implements ActionCreator<PublicActions> {
 	}
 }
 
-export default new PublicActionCreator(userDispatcher);
+export default new PublicModuleActionCreator(userDispatcher);

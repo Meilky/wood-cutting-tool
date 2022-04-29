@@ -1,11 +1,11 @@
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
-import { UserActions } from "./interfaces/actions";
+import { ModuleActions } from "./interfaces/actions";
 
-export class UserDispatcher implements Dispatcher<UserActions> {
-	protected actions: { [K in keyof UserActions]: (value: UserActions[K]) => void };
+export class ModuleDispatcher implements Dispatcher<ModuleActions> {
+	protected actions: { [K in keyof ModuleActions]: (value: ModuleActions[K]) => void };
 
 	constructor() {
-		this.actions = { login: this.naCallback };
+		this.actions = { login: this.naCallback, test: this.naCallback };
 
 		this.bind = this.bind.bind(this);
 		this.dispatch = this.dispatch.bind(this);
@@ -15,17 +15,17 @@ export class UserDispatcher implements Dispatcher<UserActions> {
 		return;
 	}
 
-	public bind(actions: {
-		[K in keyof UserActions]: (value: UserActions[K]) => void;
-	}): void {
-		this.actions = { ...this.actions, ...actions };
+	public bind<K extends keyof ModuleActions>(action: K, callback: (value: ModuleActions[K]) => void): void {
+		if (this.actions[action]) {
+			this.actions[action] = callback as any;
+		}
 	}
 
-	public dispatch<K extends keyof UserActions>(action: { type: K; data: UserActions[K] }): void {
+	public dispatch<K extends keyof ModuleActions>(action: { type: K; data: ModuleActions[K] }): void {
 		if (this.actions[action.type]) {
 			this.actions[action.type](action.data);
 		}
 	}
 }
 
-export default new UserDispatcher();
+export default new ModuleDispatcher();
