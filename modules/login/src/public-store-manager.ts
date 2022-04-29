@@ -1,32 +1,21 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import userStore, { UserStore } from "./store";
+import moduleStoreManager from "./store-manager";
+import { UserStore } from "./stores/user-store";
 
-interface Stores {
+interface PublicStores {
 	user: UserStore;
 }
 
-export class PublicStoreManager implements StoreManager<Stores> {
-	public readonly stores: Stores;
+export class PublicStoreManager implements StoreManager<PublicStores> {
+	public readonly stores: PublicStores;
 
 	constructor() {
 		this.stores = {
-			user: userStore,
+			user: moduleStoreManager.stores.user,
 		};
 	}
 
 	public async init(): Promise<void> {
-		const promises = [];
-
-		for (const store in this.stores) {
-			promises.push(this.stores[store as keyof Stores].init());
-		}
-
-		const result = await Promise.allSettled(promises);
-
-		for (const res of result) {
-			if (res.status === "rejected") {
-				console.error("Error loding a store in main login store manager: ", res.reason);
-			}
-		}
+		return moduleStoreManager.init()
 	}
 }

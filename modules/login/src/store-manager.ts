@@ -31,3 +31,5 @@ export class ModuleStoreManager implements StoreManager<Stores> {
 		}
 	}
 }
+
+export default new ModuleStoreManager();
