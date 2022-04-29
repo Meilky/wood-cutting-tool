@@ -1,7 +1,7 @@
 import { App } from "./components/app";
-import defaultStoreManager from "~/lib/default-store-manager"
+import appStoreManager from "./store-manager"
 
-await defaultStoreManager.init();
+await appStoreManager.init();
 
 const app = document.getElementById("root");
 

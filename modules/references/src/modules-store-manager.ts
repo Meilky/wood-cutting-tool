@@ -1,11 +1,7 @@
 import { StoreManager } from "~/lib/interfaces/store-manager"
-import { DefaultStoreManager } from "~/lib/default-store-manager";
 import { ReferencesStore } from "./stores/references";
-import { ModulesStore } from "~lib/stores/modules";
-import { ConfigStore } from "~lib/stores/config";
-import { LoadedModuleStore } from "~lib/stores/loaded-module";
 
-export interface ModuleStores extends DefaultStoreManager {
+export interface ModuleStores {
 	references: ReferencesStore
 }
 
@@ -14,9 +10,6 @@ export class ModuleStoreManager implements StoreManager<ModuleStores> {
 
 	constructor() {
 		this.stores = {
-			modules: new ModulesStore(),
-			config: new ConfigStore(),
-			loadedModule: new LoadedModuleStore(),
 			references: new ReferencesStore()
 		}
 	}

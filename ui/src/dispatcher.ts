@@ -15,10 +15,10 @@ export class AppDispatcher implements Dispatcher<AppActions> {
 		return;
 	}
 
-	public bind(actions: {
-		[K in keyof AppActions]: (value: AppActions[K]) => void;
-	}): void {
-		this.actions = { ...this.actions, ...actions };
+	public bind<K extends keyof AppActions>(action: K, callback: (value: AppActions[K]) => void): void {
+		if (this.actions[action]) {
+			this.actions[action] = callback as any;
+		}
 	}
 
 	public dispatch<K extends keyof AppActions>(action: { type: K; data: AppActions[K] }): void {

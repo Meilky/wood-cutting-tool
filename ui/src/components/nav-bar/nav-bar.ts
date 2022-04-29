@@ -2,13 +2,13 @@ import { StateFullComponent } from "~/lib/components/state-full-component";
 import { Module } from "~/lib/interfaces/modules/module";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
-import defaultStoreManager, { DefaultStoreManager, DefaultStores } from "~/lib/default-store-manager";
+import appStoreManager, { AppStoreManager, AppStores } from "~/src/store-manager";
 
-export class NavBar extends StateFullComponent<DefaultStoreManager> {
+export class NavBar extends StateFullComponent<AppStoreManager> {
 	constructor() {
 		super({
 			element: document.createElement("div"),
-			storeManager: defaultStoreManager,
+			storeManager: appStoreManager,
 			binds: ["loadedModule", "modules"],
 		});
 
@@ -39,7 +39,7 @@ export class NavBar extends StateFullComponent<DefaultStoreManager> {
 interface NavBarItemProps {
 	module: Module;
 	isLoaded?: boolean;
-	stores: DefaultStores;
+	stores: AppStores;
 }
 
 class NavBarItem extends StateLessComponent {

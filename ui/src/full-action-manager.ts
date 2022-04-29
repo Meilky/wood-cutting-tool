@@ -4,7 +4,6 @@ import publicAppActionCreator from "./public-actions"
 
 interface Actions {
 	app: ActionCreator<PublicAppActions>,
-	[key: string]: ActionCreator<any>
 }
 
 export class FullActionManager {

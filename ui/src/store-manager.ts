@@ -1,19 +1,22 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
 import { ConfigStore } from "./stores/config";
+import { LoadedModuleStore } from "./stores/loaded-module";
 import { ModulesStore } from "./stores/modules";
 
-interface Stores {
+export interface AppStores {
 	config: ConfigStore;
 	modules: ModulesStore;
+	loadedModule: LoadedModuleStore
 }
 
-export class ModuleStoreManager implements StoreManager<Stores> {
-	public readonly stores: Stores;
+export class AppStoreManager implements StoreManager<AppStores> {
+	public readonly stores: AppStores;
 
 	constructor() {
 		this.stores = {
 			config: new ConfigStore(),
 			modules: new ModulesStore(),
+			loadedModule: new LoadedModuleStore(),
 		};
 	}
 
@@ -21,7 +24,7 @@ export class ModuleStoreManager implements StoreManager<Stores> {
 		const promises = [];
 
 		for (const store in this.stores) {
-			promises.push(this.stores[store as keyof Stores].init());
+			promises.push(this.stores[store as keyof AppStores].init());
 		}
 
 		const result = await Promise.allSettled(promises);
@@ -34,4 +37,4 @@ export class ModuleStoreManager implements StoreManager<Stores> {
 	}
 }
 
-export default new ModuleStoreManager();
+export default new AppStoreManager();
