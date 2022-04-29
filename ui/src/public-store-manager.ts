@@ -11,7 +11,7 @@ export class PublicStoreManager implements StoreManager<PublicStores> {
 
 	constructor() {
 		this.stores = {
-			config: appStoreManager.stores.user,
+			config: appStoreManager.stores.config,
 		};
 	}
 
@@ -19,3 +19,5 @@ export class PublicStoreManager implements StoreManager<PublicStores> {
 		return appStoreManager.init();
 	}
 }
+
+export default new PublicStoreManager();
