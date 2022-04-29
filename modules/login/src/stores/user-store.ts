@@ -1,9 +1,8 @@
 import { deepCopy } from "~/lib/utils";
-import { UserData } from "./interfaces/user-data";
+import { UserData } from "~/src/interfaces/user-data";
 import { Store } from "~/lib/interfaces/stores/store";
-import { Dispatcher } from "./interfaces/dispatcher";
-import { UserActions } from "./interfaces/actions";
-import userDispatcher from "./dispatcher";
+import { Dispatcher } from "~/lib/interfaces/dispatcher";
+import { UserActions } from "~/src/interfaces/actions";
 
 export class UserStore implements Store<Partial<UserData>, UserData> {
 	public readonly defaults: Partial<UserData>;
@@ -55,5 +54,3 @@ export class UserStore implements Store<Partial<UserData>, UserData> {
 		}
 	}
 }
-
-export default new UserStore(userDispatcher);

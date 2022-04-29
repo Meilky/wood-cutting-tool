@@ -27,7 +27,13 @@ export class DefaultStoreManager implements StoreManager<DefaultStores> {
 			promises.push(this.stores[store as keyof DefaultStores].init())
 		}
 
-		await Promise.allSettled(promises);
+		const result = await Promise.allSettled(promises);
+
+		for (const res of result) {
+			if (res.status === "rejected") {
+				console.error("Error loding a store in default store manager : ", res.reason)
+			}
+		}
 	}
 }
 

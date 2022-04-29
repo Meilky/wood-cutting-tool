@@ -1,4 +1,4 @@
-import { Dispatcher } from "./interfaces/dispatcher";
+import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { UserActions } from "./interfaces/actions";
 
 export class UserDispatcher implements Dispatcher<UserActions> {
@@ -6,6 +6,9 @@ export class UserDispatcher implements Dispatcher<UserActions> {
 
 	constructor() {
 		this.actions = { login: this.naCallback };
+
+		this.bind = this.bind.bind(this);
+		this.dispatch = this.dispatch.bind(this);
 	}
 
 	protected naCallback(_: any): void {
