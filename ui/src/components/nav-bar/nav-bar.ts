@@ -24,7 +24,6 @@ export class NavBar extends StateFullComponent<AppStoreManager> {
 		const modules = this.stores.modules.get();
 		const loadedMod = this.stores.loadedModule.get();
 
-
 		for (const mod of modules) {
 			let isLoaded = false;
 
@@ -76,6 +75,6 @@ class NavBarItem extends StateLessComponent {
 	}
 
 	protected onClick(): void {
-		appActionCreator.call("select_module", this.props.module)
+		appActionCreator.call("select_module", this.props.module);
 	}
 }

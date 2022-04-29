@@ -5,4 +5,4 @@ export interface Config {
 	login: boolean;
 }
 
-export type PartialConfig  = DeepPartial<Config>;
+export type PartialConfig = DeepPartial<Config>;

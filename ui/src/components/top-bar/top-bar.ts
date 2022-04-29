@@ -7,7 +7,7 @@ export class TopBar extends StateFullComponent<AppStoreManager> {
 		super({
 			element: document.createElement("div"),
 			storeManager: appStoreManager,
-			binds: ["loadedModule"]
+			binds: ["loadedModule"],
 		});
 
 		this.element.className = TopBarStyle;

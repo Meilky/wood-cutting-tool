@@ -1,5 +1,5 @@
 import { App } from "./components/app";
-import appStoreManager from "./store-manager"
+import appStoreManager from "./store-manager";
 
 await appStoreManager.init();
 
@@ -11,6 +11,6 @@ if (!app) {
 
 const appComponent = new App();
 
-appComponent.update()
+appComponent.update();
 
 app.appendChild(appComponent.get());

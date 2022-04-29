@@ -11,11 +11,11 @@ export class PublicStoreManager implements StoreManager<PublicStores> {
 
 	constructor() {
 		this.stores = {
-		config: appStoreManager.stores.user,
+			config: appStoreManager.stores.user,
 		};
 	}
 
 	public async init(): Promise<void> {
-		return appStoreManager.init()
+		return appStoreManager.init();
 	}
 }

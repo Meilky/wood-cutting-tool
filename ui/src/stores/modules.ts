@@ -45,10 +45,11 @@ export class ModulesStore extends BaseStore<Module[]> {
 			modules.push(mod);
 
 			if (raw_mod.origin) {
-				if (!mod.fetching) mod.fetching = {
-					id: raw_mod.id,
-					origin: "n/a"
-				}
+				if (!mod.fetching)
+					mod.fetching = {
+						id: raw_mod.id,
+						origin: "n/a",
+					};
 
 				mod.fetching.origin = raw_mod.origin;
 
@@ -69,7 +70,9 @@ export class ModulesStore extends BaseStore<Module[]> {
 			if (result.status === "rejected") {
 				mod.error = {
 					state: "error",
-					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin}" with error: ${result.reason}`,
+					msg: `Unable to load module "${mod.name}" from origin "${
+						(mod.fetching || { origin: "n/a" }).origin
+					}" with error: ${result.reason}`,
 				};
 				continue;
 			}
@@ -82,19 +85,22 @@ export class ModulesStore extends BaseStore<Module[]> {
 
 				if (m.css) {
 					const element = document.createElement("link");
-					element.setAttribute("href", m.css)
-					element.setAttribute("type", "text/css")
-					element.setAttribute("rel", "stylesheet")
-					document.head.append(element)
+					element.setAttribute("href", m.css);
+					element.setAttribute("type", "text/css");
+					element.setAttribute("rel", "stylesheet");
+					document.head.append(element);
 					if (mod.fetching) {
 						mod.fetching.css = m.css;
 					}
 				}
 			} else {
-				if (m !== undefined) mod.error = {
-					state: "error",
-					msg: `Unable to find component in module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin}"!`,
-				};
+				if (m !== undefined)
+					mod.error = {
+						state: "error",
+						msg: `Unable to find component in module "${mod.name}" from origin "${
+							(mod.fetching || { origin: "n/a" }).origin
+						}"!`,
+					};
 			}
 
 			this.value.push(mod);

@@ -1,8 +1,7 @@
-import { Module } from "~lib/interfaces/modules/module"
+import { Module } from "~lib/interfaces/modules/module";
 
-export interface AppActions extends PublicAppActions {
-}
+export type AppActions = PublicAppActions;
 
 export interface PublicAppActions {
-	select_module: Module
+	select_module: Module;
 }

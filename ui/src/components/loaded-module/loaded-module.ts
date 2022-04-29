@@ -8,7 +8,7 @@ export class LoadedModule extends StateFullComponent<AppStoreManager> {
 		super({
 			element: document.createElement("div"),
 			storeManager: appStoreManager,
-			binds: ["loadedModule"]
+			binds: ["loadedModule"],
 		});
 
 		this.element.className = LoadedModuleStyle;

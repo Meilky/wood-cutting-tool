@@ -11,7 +11,7 @@ export class PublicActionCreator implements ActionCreator<PublicAppActions> {
 	public call<K extends keyof PublicAppActions>(action: K, data: PublicAppActions[K]): void {
 		switch (action) {
 			case "test":
-				this.dispatcher.dispatch({ type: "test", data })
+				this.dispatcher.dispatch({ type: "test", data });
 				break;
 			default:
 				break;

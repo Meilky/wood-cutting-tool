@@ -13,17 +13,17 @@ export class ConfigStore extends BaseStore<Config> {
 		});
 
 		this.checker = new Checker({
-			"theme": "string",
-			"loging": "boolean"
+			theme: "string",
+			loging: "boolean",
 		});
 	}
 
 	public async init(): Promise<void> {
-		const check = this.checker.check(config)
+		const check = this.checker.check(config);
 
 		if (!check.ok) {
 			for (const err of check.errors) {
-				console.error(err)
+				console.error(err);
 			}
 		}
 

@@ -6,7 +6,7 @@ import { ModulesStore } from "./stores/modules";
 export interface AppStores {
 	config: ConfigStore;
 	modules: ModulesStore;
-	loadedModule: LoadedModuleStore
+	loadedModule: LoadedModuleStore;
 }
 
 export class AppStoreManager implements StoreManager<AppStores> {

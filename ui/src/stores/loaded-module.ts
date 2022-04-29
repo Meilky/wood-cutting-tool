@@ -6,7 +6,7 @@ import appDispatcher from "~src/dispatcher";
 export class LoadedModuleStore extends BaseStore<Module> {
 	constructor() {
 		super(module);
-		appDispatcher.bind("select_module", this.set)
+		appDispatcher.bind("select_module", this.set);
 	}
 
 	public async init(): Promise<void> {
