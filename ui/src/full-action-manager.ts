@@ -1,17 +1,15 @@
-import { PublicAppActions } from "./interfaces/actions"
-import { ActionCreator } from "~/lib/interfaces/action-creator"
 import publicAppActionCreator from "./public-actions"
 
-interface Actions {
-	app: ActionCreator<PublicAppActions>,
-}
-
 export class FullActionManager {
-	public readonly actions: Actions
+	public readonly actions: any;
 
 	constructor() {
-		this.actions = {
-			app: publicAppActionCreator,
-		}
+		this.actions = {}
+
+		this.bind("app", publicAppActionCreator)
+	}
+
+	public bind(name: string, actions: any): void {
+		this.actions[name] = actions;
 	}
 }

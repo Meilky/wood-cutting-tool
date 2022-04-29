@@ -11,6 +11,7 @@ services:
       - ./assets/:/var/www/wc-nginx/assets/
       - ./modules/wood-cutting-tool/dist/:/var/www/wc-nginx/modules/wood-cutting-tool/
       - ./modules/references/dist/:/var/www/wc-nginx/modules/references/
+      - ./modules/login/dist/:/var/www/wc-nginx/modules/login/
     ports:
       - "8080:80"
   wc-auth:

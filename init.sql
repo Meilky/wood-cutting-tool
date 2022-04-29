@@ -39,6 +39,7 @@ CREATE TABLE `modules` (
 );
 
 INSERT INTO `modules` VALUES
+	(null, "Login", "/modules/login/index.js"),
 	(null, "Wood Cutting Tool", "/modules/wood-cutting-tool/index.js"),
 	(null, "References", "/modules/references/index.js")
 ;
