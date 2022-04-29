@@ -19,3 +19,5 @@ export class PublicModuleStoreManager implements StoreManager<PublicModuleStores
 		return moduleStoreManager.init();
 	}
 }
+
+export default new PublicModuleStoreManager();
