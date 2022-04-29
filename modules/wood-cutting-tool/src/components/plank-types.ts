@@ -1,9 +1,8 @@
 import { StateFullComponent } from "~/lib/components/state-full-component";
 import { StateLessComponent } from "~/lib/components/state-less-component";
-import PlankTypesStore from "~/src/stores/plank-types";
-//import { PlankType } from "~/src/interfaces/plank-type";
 import { PlanTypes as PlankTypesStyle } from "./plank-types.module.css"
 import { Component } from "~/lib/components/component.I";
+import moduleStoreManager, { ModuleStoreManager } from "~src/store-manager";
 
 export class PlankTypes extends StateLessComponent {
 	constructor() {
@@ -36,11 +35,12 @@ interface ListProps {
 	className: string,
 }
 
-class List extends StateFullComponent<{ plankTypes: typeof PlankTypesStore }> {
+class List extends StateFullComponent<ModuleStoreManager> {
 	constructor(protected props: ListProps) {
 		super({
 			element: document.createElement("ul"),
-			stores: { plankTypes: { store: PlankTypesStore, bind: true } },
+			storeManager: moduleStoreManager,
+			binds: ["plankTypes"]
 		});
 
 		this.element.className = this.props.className;
@@ -51,7 +51,7 @@ class List extends StateFullComponent<{ plankTypes: typeof PlankTypesStore }> {
 	}
 
 	protected onUpdate(): void {
-		for (const plank of this.stores.plankTypes.value) {
+		for (const plank of this.stores.plankTypes.get()) {
 			const e = new ListItem({ item: plank.name });
 			this.children.push(e);
 		}

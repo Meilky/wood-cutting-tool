@@ -3,6 +3,7 @@ import { Module } from "~/lib/interfaces/modules/module";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
 import appStoreManager, { AppStoreManager, AppStores } from "~/src/store-manager";
+import appActionCreator from "~src/actions";
 
 export class NavBar extends StateFullComponent<AppStoreManager> {
 	constructor() {
@@ -75,6 +76,6 @@ class NavBarItem extends StateLessComponent {
 	}
 
 	protected onClick(): void {
-		this.props.stores.loadedModule.set(this.props.module);
+		appActionCreator.call("select_module", this.props.module)
 	}
 }

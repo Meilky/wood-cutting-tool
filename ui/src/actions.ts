@@ -10,23 +10,16 @@ export class AppActionCreator implements ActionCreator<AppActions> {
 
 	public call<K extends keyof AppActions>(action: K, data: AppActions[K]): void {
 		switch (action) {
-			case "test":
-				this.test(data as AppActions["test"]);
-				break;
-			case "refresh_modules":
-				this.refresh_module(data as AppActions["refresh_modules"]);
+			case "select_module":
+				this.select_module(data as AppActions["select_module"]);
 				break;
 			default:
 				break;
 		}
 	}
 
-	public test(data: AppActions["test"]): void {
-		this.dispatcher.dispatch({ type: "test", data });
-	}
-
-	public refresh_module(data: AppActions["refresh_modules"]): void {
-		this.dispatcher.dispatch({ type: "refresh_modules", data });
+	public select_module(data: AppActions["select_module"]): void {
+		this.dispatcher.dispatch("select_module", data);
 	}
 }
 

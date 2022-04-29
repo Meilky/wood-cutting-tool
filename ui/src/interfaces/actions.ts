@@ -1,7 +1,8 @@
+import { Module } from "~lib/interfaces/modules/module"
+
 export interface AppActions extends PublicAppActions {
-	refresh_modules: undefined
 }
 
 export interface PublicAppActions {
-	test: string
+	select_module: Module
 }

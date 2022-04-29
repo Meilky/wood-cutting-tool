@@ -1,11 +1,12 @@
 import { StateFullComponent } from "~/lib/components/state-full-component";
-import PreferencesStore from "~/src/stores/preferences";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 import { Preference } from "~/src/interfaces/preference";
+import moduleActionCreator from "~src/actions";
+import moduleStoreManager, { ModuleStoreManager } from "~src/store-manager";
 
-export class Preferences extends StateFullComponent<{ preferences: typeof PreferencesStore }> {
+export class Preferences extends StateFullComponent<ModuleStoreManager> {
 	constructor() {
-		super({ element: document.createElement("form"), stores: { preferences: { store: PreferencesStore, bind: false } } });
+		super({ element: document.createElement("form"), storeManager: moduleStoreManager, binds: ["preferences"] });
 
 		this.onSubmit = this.onSubmit.bind(this);
 
@@ -24,7 +25,7 @@ export class Preferences extends StateFullComponent<{ preferences: typeof Prefer
 			diameter: Number(form.get("diameter")),
 		};
 
-		this.stores.preferences.value = newData;
+		moduleActionCreator.call("set_preferences", newData)
 	}
 }
 

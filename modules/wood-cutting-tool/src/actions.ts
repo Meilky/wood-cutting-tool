@@ -10,16 +10,16 @@ export class ModuleActionCreator implements ActionCreator<ModuleActions> {
 
 	public call<K extends keyof ModuleActions>(action: K, data: ModuleActions[K]): void {
 		switch (action) {
-			case "login":
-				this.login(data as ModuleActions["login"]);
+			case "set_preferences":
+				this.set_preferences(data as ModuleActions["set_preferences"]);
 				break;
 			default:
 				break;
 		}
 	}
 
-	public login(data: ModuleActions["login"]): void {
-		this.dispatcher.dispatch("login", data);
+	public set_preferences(data: ModuleActions["set_preferences"]): void {
+		this.dispatcher.dispatch("set_preferences", data);
 	}
 }
 

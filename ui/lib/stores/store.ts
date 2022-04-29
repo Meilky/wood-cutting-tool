@@ -7,6 +7,11 @@ export abstract class BaseStore<T> implements Store<T> {
 	constructor(public readonly defaults: T) {
 		this.value = defaults;
 		this.listeners = [];
+
+		this.set = this.set.bind(this)
+		this.bind = this.bind.bind(this)
+		this.unbind = this.unbind.bind(this)
+		this.refresh = this.refresh.bind(this)
 	}
 
 	public abstract init(): Promise<void>;

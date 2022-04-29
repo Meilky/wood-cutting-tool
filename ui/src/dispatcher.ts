@@ -5,7 +5,7 @@ export class AppDispatcher implements Dispatcher<AppActions> {
 	protected actions: { [K in keyof AppActions]: (value: AppActions[K]) => void };
 
 	constructor() {
-		this.actions = { test: this.naCallback, refresh_modules: this.naCallback };
+		this.actions = { select_module: this.naCallback };
 
 		this.bind = this.bind.bind(this);
 		this.dispatch = this.dispatch.bind(this);
@@ -21,9 +21,9 @@ export class AppDispatcher implements Dispatcher<AppActions> {
 		}
 	}
 
-	public dispatch<K extends keyof AppActions>(action: { type: K; data: AppActions[K] }): void {
-		if (this.actions[action.type]) {
-			this.actions[action.type](action.data);
+	public dispatch<K extends keyof AppActions>(action: K, data: AppActions[K]): void {
+		if (this.actions[action]) {
+			this.actions[action](data);
 		}
 	}
 }
