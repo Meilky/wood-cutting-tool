@@ -1,14 +1,25 @@
-import publicStoreManager,{ PublicStoreManager } from "./public-store-manager";
+import publicStoreManager from "./public-store-manager";
 
 export class FullStoreManager {
-	public readonly actions: {
-		app: PublicStoreManager
-	};
+	protected storeManagers: {[key: string]: any};
 
 	constructor() {
-		this.actions = {
+		this.storeManagers = {
 			app: publicStoreManager
 		};
+	}
+
+	public set(name: string, storeManager: any): void {
+		if (this.storeManagers[name]) {
+			console.error(`There is already a storeManager defiend to this name "${name}"!`)
+			return;
+		}
+
+		this.storeManagers[name] = storeManager;
+	}
+
+	public get(): { [key: string]: any } {
+		return this.storeManagers;
 	}
 }
 

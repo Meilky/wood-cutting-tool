@@ -2,6 +2,8 @@ import { Module } from "~/lib/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
 import { module } from "~/lib/integrated-modules/home/home";
 import { Component } from "~/lib/components/component.I";
+import fullStoreManager from "~src/full-store-manager";
+import fullActionManager from "~src/full-action-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
 	constructor() {
@@ -70,37 +72,50 @@ export class ModulesStore extends BaseStore<Module[]> {
 			if (result.status === "rejected") {
 				mod.error = {
 					state: "error",
-					msg: `Unable to load module "${mod.name}" from origin "${
-						(mod.fetching || { origin: "n/a" }).origin
-					}" with error: ${result.reason}`,
+					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin
+						}" with error: ${result.reason}`,
 				};
 				continue;
 			}
 
 			const m = result.value;
 
-			if (m.component) {
-				mod.error = undefined;
-				mod.component = m.component;
+			if (m.init) {
+				const initResult = m.init(fullActionManager, fullStoreManager);
 
-				if (m.css) {
-					const element = document.createElement("link");
-					element.setAttribute("href", m.css);
-					element.setAttribute("type", "text/css");
-					element.setAttribute("rel", "stylesheet");
-					document.head.append(element);
-					if (mod.fetching) {
-						mod.fetching.css = m.css;
+				if (initResult.component) {
+
+					mod.component = initResult.component;
+
+					if (m.css) {
+						const element = document.createElement("link");
+
+						element.setAttribute("href", m.css);
+						element.setAttribute("type", "text/css");
+						element.setAttribute("rel", "stylesheet");
+
+						document.head.append(element);
+
+						if (mod.fetching) {
+							mod.fetching.css = m.css;
+						}
 					}
 				}
+
+				if (initResult.actionCreator) {
+					fullActionManager.set(mod.name, initResult.actionCreator);
+				}
+
+				if (initResult.storeManager) {
+					fullStoreManager.set(mod.name, initResult.storeManager);
+				}
 			} else {
-				if (m !== undefined)
+				if (m !== undefined) {
 					mod.error = {
 						state: "error",
-						msg: `Unable to find component in module "${mod.name}" from origin "${
-							(mod.fetching || { origin: "n/a" }).origin
-						}"!`,
+						msg: `Unable to find init function in module "${mod.name}"!`,
 					};
+				}
 			}
 
 			this.value.push(mod);

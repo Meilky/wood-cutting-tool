@@ -1,17 +1,35 @@
-import appActions from "./app-actions";
-import appStores from "./app-stores";
+import { Component } from "~lib/components/component.I";
+import { ActionCreator } from "~lib/interfaces/action-creator";
+import { StoreManager } from "~lib/interfaces/store-manager";
 import { App } from "./components/app";
+import { PublicModuleActions } from "./interfaces/actions";
+import { PublicModuleStores } from "./interfaces/stores";
 import publicModuleActionCreator from "./public-actions";
 import publicModuleStoreManager from "./public-store-manager";
 
-const appComponent = new App();
+interface FullStores {
+	app: StoreManager<any>;
+}
 
-appComponent.update();
+interface FullActions {
+	app: StoreManager<any>;
+}
 
-export const moduleActionCreator = publicModuleActionCreator;
-export const moduleStoreManager = publicModuleStoreManager;
+export const init = (
+	fullActions: FullActions,
+	fullStores: FullStores
+): {
+	component: Component;
+	actionCreator: ActionCreator<PublicModuleActions>;
+	storeManager: StoreManager<PublicModuleStores>;
+} => {
+	const appComponent = new App();
 
-export const appActionCreator = appActions;
-export const appStoreManager = appStores;
+	appComponent.update();
 
-export const component = appComponent;
+	return {
+		component: appComponent,
+		actionCreator: publicModuleActionCreator,
+		storeManager: publicModuleStoreManager,
+	};
+};
