@@ -78,6 +78,6 @@ class NavBarItem extends StateLessComponent {
 	}
 
 	protected onClick(): void {
-		appActionCreator.call("select_module", this.props.module);
+		this.props.actions.call("select_module", this.props.module);
 	}
 }

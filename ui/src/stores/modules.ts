@@ -81,12 +81,12 @@ export class ModulesStore extends BaseStore<Module[]> {
 			const m = result.value;
 
 			if (m.init) {
-				const initResult = m.init(this.fullActionManager, this.fullStoreManager);
+				const initResult = await m.init(this.fullActionManager, this.fullStoreManager);
 
 				if (initResult.component) {
-
 					mod.component = initResult.component;
 
+					mod.error = undefined;
 					if (m.css) {
 						const element = document.createElement("link");
 

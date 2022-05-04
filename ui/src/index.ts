@@ -18,7 +18,6 @@ const publicStoresManager = new PublicStoreManager(privateStoresManager);
 const privateActions = new PrivateActionCreator(appDispatcher);
 const publicActions = new PublicActionCreator(appDispatcher);
 
-
 fullStoresManager.set("app", publicStoresManager)
 fullActionManager.set("app", publicActions)
 
