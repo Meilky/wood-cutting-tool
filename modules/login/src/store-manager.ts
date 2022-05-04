@@ -1,17 +1,15 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import moduleDispatcher from "./dispatcher";
+import { Dispatcher } from "~lib/interfaces/dispatcher";
+import { PrivateActions } from "./interfaces/actions";
+import { PrivateStores } from "./interfaces/stores";
 import { UserStore } from "./stores/user-store";
 
-interface Stores {
-	user: UserStore;
-}
+export class PrivateStoreManager implements StoreManager<PrivateStores> {
+	public readonly stores: PrivateStores;
 
-export class ModuleStoreManager implements StoreManager<Stores> {
-	public readonly stores: Stores;
-
-	constructor() {
+	constructor(protected dispatcher: Dispatcher<PrivateActions>) {
 		this.stores = {
-			user: new UserStore(moduleDispatcher),
+			user: new UserStore(dispatcher),
 		};
 	}
 
@@ -19,7 +17,7 @@ export class ModuleStoreManager implements StoreManager<Stores> {
 		const promises = [];
 
 		for (const store in this.stores) {
-			promises.push(this.stores[store as keyof Stores].init());
+			promises.push(this.stores[store as keyof PrivateStores].init());
 		}
 
 		const result = await Promise.allSettled(promises);
@@ -31,5 +29,3 @@ export class ModuleStoreManager implements StoreManager<Stores> {
 		}
 	}
 }
-
-export default new ModuleStoreManager();

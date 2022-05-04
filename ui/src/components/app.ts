@@ -14,6 +14,10 @@ export class App extends StateLessComponent {
 
 		this.element.className = AppStyle;
 
-		this.children = [new TopBar(privateStoresManager), new NavBar(privateStoresManager, privateActions), new LoadedModule(privateStoresManager)];
+		this.children = [
+			new TopBar(privateStoresManager),
+			new NavBar(privateStoresManager, privateActions),
+			new LoadedModule(privateStoresManager),
+		];
 	}
 }

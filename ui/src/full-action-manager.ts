@@ -1,20 +1,22 @@
-export class FullActionManager {
-	protected actions: { [key: string]: any };
+import { FullManager } from "~/lib/interfaces/full-manager";
+
+export class FullAppActionsManager implements FullManager<{ [key: string]: any }> {
+	protected actionManager: { [key: string]: any };
 
 	constructor() {
-		this.actions = {};
+		this.actionManager = {};
 	}
 
-	public set(name: string, actionCreator: any): void {
-		if (this.actions[name]) {
-			console.error(`There is already an actionCreator defiend to this name "${name}"!`)
+	public set<K extends keyof { [key: string]: any }>(name: K, actionManager: { [key: string]: any }[K]): void {
+		if (this.actionManager[name]) {
+			console.error(`There is already a storeManager defiend to this name "${name}"!`);
 			return;
 		}
 
-		this.actions[name] = actionCreator;
+		this.actionManager[name] = actionManager;
 	}
 
 	public get(): { [key: string]: any } {
-		return this.actions;
+		return this.actionManager;
 	}
 }

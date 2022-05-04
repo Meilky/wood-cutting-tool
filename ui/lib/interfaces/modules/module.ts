@@ -18,8 +18,8 @@ export interface Module {
 }
 
 export interface ExportedModules {
-	component: Component,
-	css?: string,
-	actions?: Enumerator,
-	stores?: { [key: string]: Store<any> },
+	component: Component;
+	css?: string;
+	actions?: Enumerator;
+	stores?: { [key: string]: Store<any> };
 }

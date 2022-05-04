@@ -1,9 +1,9 @@
 import { UserData } from "./user-data";
 
-export interface ModuleActions extends PublicModuleActions {
+export interface PrivateActions extends PublicActions {
 	login: UserData;
 }
 
-export interface PublicModuleActions {
+export interface PublicActions {
 	test: string;
 }

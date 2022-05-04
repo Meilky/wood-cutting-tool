@@ -1,19 +1,16 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import moduleStoreManager from "./store-manager";
-import { PublicModuleStores } from "./interfaces/stores";
+import { PublicStores } from "./interfaces/stores";
 
-export class PublicModuleStoreManager implements StoreManager<PublicModuleStores> {
-	public readonly stores: PublicModuleStores;
+export class PublicStoreManager implements StoreManager<PublicStores> {
+	public readonly stores: PublicStores;
 
-	constructor() {
+	constructor(protected storeManager: StoreManager<PublicStores>) {
 		this.stores = {
-			user: moduleStoreManager.stores.user,
+			user: this.storeManager.stores.user,
 		};
 	}
 
 	public async init(): Promise<void> {
-		return moduleStoreManager.init();
+		return;
 	}
 }
-
-export default new PublicModuleStoreManager();

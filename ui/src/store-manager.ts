@@ -1,7 +1,7 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
 import { Dispatcher } from "~lib/interfaces/dispatcher";
 import { FullActionManager } from "./full-action-manager";
-import { FullStoresManager } from "./full-store-manager";
+import { FullAppStoresManager } from "./full-store-manager";
 import { PrivateActions } from "./interfaces/actions";
 import { ConfigStore } from "./stores/config";
 import { LoadedModuleStore } from "./stores/loaded-module";
@@ -16,7 +16,11 @@ export interface PrivateStores {
 export class PrivateStoreManager implements StoreManager<PrivateStores> {
 	public readonly stores: PrivateStores;
 
-	constructor(fullActionManager: FullActionManager, fullStoreManager: FullStoresManager, dispatcher: Dispatcher<PrivateActions>) {
+	constructor(
+		fullActionManager: FullActionManager,
+		fullStoreManager: FullAppStoresManager,
+		dispatcher: Dispatcher<PrivateActions>
+	) {
 		this.stores = {
 			config: new ConfigStore(),
 			modules: new ModulesStore(fullActionManager, fullStoreManager),

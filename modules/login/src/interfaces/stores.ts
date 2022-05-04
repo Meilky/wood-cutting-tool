@@ -1,5 +1,7 @@
 import { UserStore } from "~/src/stores/user-store";
 
-export interface PublicModuleStores {
+export interface PrivateStores extends PublicStores {}
+
+export interface PublicStores {
 	user: UserStore;
 }

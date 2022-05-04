@@ -2,7 +2,7 @@ import { deepCopy } from "~/lib/utils";
 import { UserData } from "~/src/interfaces/user-data";
 import { Store } from "~/lib/interfaces/stores/store";
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
-import { ModuleActions } from "~/src/interfaces/actions";
+import { PrivateActions } from "~/src/interfaces/actions";
 
 export class UserStore implements Store<Partial<UserData>, UserData> {
 	public readonly defaults: Partial<UserData>;
@@ -10,16 +10,12 @@ export class UserStore implements Store<Partial<UserData>, UserData> {
 	protected value: Partial<UserData>;
 	protected listeners: (() => void)[];
 
-	constructor(protected dispatcher: Dispatcher<ModuleActions>) {
+	constructor(protected dispatcher: Dispatcher<PrivateActions>) {
 		this.value = {};
 		this.defaults = {};
 		this.listeners = [];
 
-		this.dispatcher.bind("login", this.login);
-	}
-
-	protected login(value: UserData): void {
-		console.log(value);
+		this.dispatcher.bind("login", this.set);
 	}
 
 	public async init(): Promise<void> {

@@ -9,42 +9,53 @@ export const DeepCopy = (object: any): any => {
 	for (const key in object) {
 		value = object[key];
 
-		obj[key] = (typeof value === "object") ? DeepCopy(value) : value;
+		obj[key] = typeof value === "object" ? DeepCopy(value) : value;
 	}
 
 	return obj;
-}
+};
 
-type AllTypes = "string" | "object" | "function" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | { [key: string]: AllTypes };
+type AllTypes =
+	| "string"
+	| "object"
+	| "function"
+	| "number"
+	| "bigint"
+	| "boolean"
+	| "symbol"
+	| "undefined"
+	| { [key: string]: AllTypes };
 
 export class Checker {
-	constructor(protected config: { [key: string]: AllTypes }) { }
+	constructor(protected config: { [key: string]: AllTypes }) {}
 
-	public check(obj: any, subConf: AllTypes = this.config): { ok: boolean, errors: string[] } {
+	public check(obj: any, subConf: AllTypes = this.config): { ok: boolean; errors: string[] } {
 		if (typeof subConf === "object") {
-			const errors: string[] = []
+			const errors: string[] = [];
 			let ok = true;
 
 			for (const conf in subConf) {
 				const result = this.check(obj[conf], subConf[conf]);
 
 				if (!result.ok) {
-					errors.push(`Key "${conf}" should be typeof "${subConf[conf]}" but is typeof "${typeof obj[conf]}"`);
-					errors.concat(result.errors)
-					ok = false
+					errors.push(
+						`Key "${conf}" should be typeof "${subConf[conf]}" but is typeof "${typeof obj[conf]}"`
+					);
+					errors.concat(result.errors);
+					ok = false;
 				}
 			}
 
-			return { ok, errors }
+			return { ok, errors };
 		}
 
 		const type = typeof obj;
 
 		if (type === "undefined" && subConf === "boolean") {
-			return { ok: true, errors: [] }
+			return { ok: true, errors: [] };
 		}
 
-		return { ok: type === subConf, errors: [] }
+		return { ok: type === subConf, errors: [] };
 	}
 }
 
@@ -57,18 +68,18 @@ export const deepCopy = (obj: any): any => {
 		const type = obj[attr];
 
 		switch (true) {
-			case (type instanceof Date): {
+			case type instanceof Date: {
 				const date: Date = new Date();
-				date.setDate(type.getDate())
+				date.setDate(type.getDate());
 				copy[attr] = date;
 				break;
 			}
 
-			case (type instanceof Function):
+			case type instanceof Function:
 				copy[attr] = obj[attr];
 				break;
 
-			case (type instanceof Array): {
+			case type instanceof Array: {
 				const arr: any = [];
 				for (const e of type) {
 					arr.push(deepCopy(e));
@@ -77,7 +88,7 @@ export const deepCopy = (obj: any): any => {
 				break;
 			}
 
-			case (type instanceof Object): {
+			case type instanceof Object: {
 				const object: any = {};
 				for (const e in type) {
 					object[e] = deepCopy(type[e]);
@@ -92,4 +103,4 @@ export const deepCopy = (obj: any): any => {
 	}
 
 	return copy;
-}
+};

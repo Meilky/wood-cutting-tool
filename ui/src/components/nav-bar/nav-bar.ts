@@ -8,7 +8,10 @@ import { ActionCreator } from "~lib/interfaces/action-creator";
 import { PrivateActions } from "~src/interfaces/actions";
 
 export class NavBar extends StateFullComponent<StoreManager<PrivateStores>> {
-	constructor(privateStoresManager: StoreManager<PrivateStores>, protected privateActions: ActionCreator<PrivateActions>) {
+	constructor(
+		privateStoresManager: StoreManager<PrivateStores>,
+		protected privateActions: ActionCreator<PrivateActions>
+	) {
 		super({
 			element: document.createElement("div"),
 			storeManager: privateStoresManager,
@@ -33,7 +36,9 @@ export class NavBar extends StateFullComponent<StoreManager<PrivateStores>> {
 				isLoaded = true;
 			}
 
-			this.children.push(new NavBarItem({ module: mod, isLoaded, stores: this.stores, actions: this.privateActions }));
+			this.children.push(
+				new NavBarItem({ module: mod, isLoaded, stores: this.stores, actions: this.privateActions })
+			);
 		}
 	}
 }
@@ -42,7 +47,7 @@ interface NavBarItemProps {
 	module: Module;
 	isLoaded?: boolean;
 	stores: PrivateStores;
-	actions: ActionCreator<PrivateActions>
+	actions: ActionCreator<PrivateActions>;
 }
 
 class NavBarItem extends StateLessComponent {

@@ -29,11 +29,11 @@ export class StateLessComponent implements Component {
 	}
 
 	public update(): void {
-		this.removeChildren()
+		this.removeChildren();
 		this.beforeUpdate();
 		this.onUpdate();
 		this.afterUpdate();
-		this.appenChildren()
+		this.appenChildren();
 	}
 
 	protected afterUpdate(): void {
@@ -50,7 +50,7 @@ export class StateLessComponent implements Component {
 
 	public removeChildren(): void {
 		for (const child of this.children) {
-			if (this.element.contains(child.get())) this.element.removeChild(child.get())
+			if (this.element.contains(child.get())) this.element.removeChild(child.get());
 		}
 	}
 
@@ -64,7 +64,7 @@ export class StateLessComponent implements Component {
 
 	protected appenChildren(): void {
 		for (const child of this.children) {
-			child.update()
+			child.update();
 			this.element.append(child.get());
 		}
 	}

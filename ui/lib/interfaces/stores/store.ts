@@ -1,4 +1,4 @@
-export interface Store<G,S = G> {
+export interface Store<G, S = G> {
 	readonly defaults: G;
 
 	init(): Promise<void>;
