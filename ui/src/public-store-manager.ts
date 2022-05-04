@@ -1,23 +1,20 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import appStoreManager from "./store-manager";
 import { ConfigStore } from "./stores/config";
 
-interface PublicStores {
+export interface PublicStores {
 	config: ConfigStore;
 }
 
 export class PublicStoreManager implements StoreManager<PublicStores> {
 	public readonly stores: PublicStores;
 
-	constructor() {
+	constructor(protected privateStore: StoreManager<PublicStores>) {
 		this.stores = {
-			config: appStoreManager.stores.config,
+			config: this.privateStore.stores.config,
 		};
 	}
 
 	public async init(): Promise<void> {
-		return appStoreManager.init();
+		return;
 	}
 }
-
-export default new PublicStoreManager();

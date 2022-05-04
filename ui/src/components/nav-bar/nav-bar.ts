@@ -2,14 +2,16 @@ import { StateFullComponent } from "~/lib/components/state-full-component";
 import { Module } from "~/lib/interfaces/modules/module";
 import { StateLessComponent } from "~/lib/components/state-less-component";
 import { NavBar as NavBarStyle, NavBarItem as NavBarItemStyle } from "./style.module.css";
-import appStoreManager, { AppStoreManager, AppStores } from "~/src/store-manager";
-import appActionCreator from "~src/actions";
+import { PrivateStores } from "~/src/store-manager";
+import { StoreManager } from "~lib/interfaces/store-manager";
+import { ActionCreator } from "~lib/interfaces/action-creator";
+import { PrivateActions } from "~src/interfaces/actions";
 
-export class NavBar extends StateFullComponent<AppStoreManager> {
-	constructor() {
+export class NavBar extends StateFullComponent<StoreManager<PrivateStores>> {
+	constructor(privateStoresManager: StoreManager<PrivateStores>, protected privateActions: ActionCreator<PrivateActions>) {
 		super({
 			element: document.createElement("div"),
-			storeManager: appStoreManager,
+			storeManager: privateStoresManager,
 			binds: ["loadedModule", "modules"],
 		});
 
@@ -31,7 +33,7 @@ export class NavBar extends StateFullComponent<AppStoreManager> {
 				isLoaded = true;
 			}
 
-			this.children.push(new NavBarItem({ module: mod, isLoaded, stores: this.stores }));
+			this.children.push(new NavBarItem({ module: mod, isLoaded, stores: this.stores, actions: this.privateActions }));
 		}
 	}
 }
@@ -39,7 +41,8 @@ export class NavBar extends StateFullComponent<AppStoreManager> {
 interface NavBarItemProps {
 	module: Module;
 	isLoaded?: boolean;
-	stores: AppStores;
+	stores: PrivateStores;
+	actions: ActionCreator<PrivateActions>
 }
 
 class NavBarItem extends StateLessComponent {

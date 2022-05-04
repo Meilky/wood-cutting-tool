@@ -1,7 +1,7 @@
 import { Module } from "~lib/interfaces/modules/module";
 
-export type AppActions = PublicAppActions;
+export interface PrivateActions extends PublicActions {};
 
-export interface PublicAppActions {
+export interface PublicActions {
 	select_module: Module;
 }

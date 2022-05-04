@@ -2,11 +2,11 @@ import { Module } from "~/lib/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
 import { module } from "~/lib/integrated-modules/home/home";
 import { Component } from "~/lib/components/component.I";
-import fullStoreManager from "~src/full-store-manager";
-import fullActionManager from "~src/full-action-manager";
+import { FullStoresManager } from "~src/full-store-manager";
+import { FullActionManager } from "~src/full-action-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor() {
+	constructor(protected fullActionManager: FullActionManager, protected fullStoreManager: FullStoresManager) {
 		super([module]);
 	}
 
@@ -81,7 +81,7 @@ export class ModulesStore extends BaseStore<Module[]> {
 			const m = result.value;
 
 			if (m.init) {
-				const initResult = m.init(fullActionManager, fullStoreManager);
+				const initResult = m.init(this.fullActionManager, this.fullStoreManager);
 
 				if (initResult.component) {
 
@@ -103,11 +103,11 @@ export class ModulesStore extends BaseStore<Module[]> {
 				}
 
 				if (initResult.actionCreator) {
-					fullActionManager.set(mod.name, initResult.actionCreator);
+					this.fullActionManager.set(mod.name, initResult.actionCreator);
 				}
 
 				if (initResult.storeManager) {
-					fullStoreManager.set(mod.name, initResult.storeManager);
+					this.fullStoreManager.set(mod.name, initResult.storeManager);
 				}
 			} else {
 				if (m !== undefined) {

@@ -1,13 +1,14 @@
 import { StateFullComponent } from "~/lib/components/state-full-component";
 import { LoadedModule as LoadedModuleStyle } from "./style.module.css";
 import { StateLessComponent } from "~/lib/components/state-less-component";
-import appStoreManager, { AppStoreManager } from "~/src/store-manager";
+import { PrivateStores } from "~/src/store-manager";
+import { StoreManager } from "~lib/interfaces/store-manager";
 
-export class LoadedModule extends StateFullComponent<AppStoreManager> {
-	constructor() {
+export class LoadedModule extends StateFullComponent<StoreManager<PrivateStores>> {
+	constructor(privateStoresManager: StoreManager<PrivateStores>) {
 		super({
 			element: document.createElement("div"),
-			storeManager: appStoreManager,
+			storeManager: privateStoresManager,
 			binds: ["loadedModule"],
 		});
 

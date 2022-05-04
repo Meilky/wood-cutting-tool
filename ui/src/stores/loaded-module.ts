@@ -1,12 +1,13 @@
 import { BaseStore } from "~/lib/stores/store";
 import { Module } from "~/lib/interfaces/modules/module";
 import { module } from "~/lib/integrated-modules/home/home";
-import appDispatcher from "~src/dispatcher";
+import { Dispatcher } from "~lib/interfaces/dispatcher";
+import { PrivateActions } from "~src/interfaces/actions";
 
 export class LoadedModuleStore extends BaseStore<Module> {
-	constructor() {
+	constructor(dispatcher: Dispatcher<PrivateActions>) {
 		super(module);
-		appDispatcher.bind("select_module", this.set);
+		dispatcher.bind("select_module", this.set);
 	}
 
 	public async init(): Promise<void> {

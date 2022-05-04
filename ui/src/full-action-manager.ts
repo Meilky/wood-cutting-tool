@@ -1,12 +1,8 @@
-import publicAppActionCreator from "./public-actions";
-
 export class FullActionManager {
 	protected actions: { [key: string]: any };
 
 	constructor() {
-		this.actions = {
-			app: publicAppActionCreator
-		};
+		this.actions = {};
 	}
 
 	public set(name: string, actionCreator: any): void {
@@ -22,5 +18,3 @@ export class FullActionManager {
 		return this.actions;
 	}
 }
-
-export default new FullActionManager();

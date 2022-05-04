@@ -1,22 +1,26 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
+import { Dispatcher } from "~lib/interfaces/dispatcher";
+import { FullActionManager } from "./full-action-manager";
+import { FullStoresManager } from "./full-store-manager";
+import { PrivateActions } from "./interfaces/actions";
 import { ConfigStore } from "./stores/config";
 import { LoadedModuleStore } from "./stores/loaded-module";
 import { ModulesStore } from "./stores/modules";
 
-export interface AppStores {
+export interface PrivateStores {
 	config: ConfigStore;
 	modules: ModulesStore;
 	loadedModule: LoadedModuleStore;
 }
 
-export class AppStoreManager implements StoreManager<AppStores> {
-	public readonly stores: AppStores;
+export class PrivateStoreManager implements StoreManager<PrivateStores> {
+	public readonly stores: PrivateStores;
 
-	constructor() {
+	constructor(fullActionManager: FullActionManager, fullStoreManager: FullStoresManager, dispatcher: Dispatcher<PrivateActions>) {
 		this.stores = {
 			config: new ConfigStore(),
-			modules: new ModulesStore(),
-			loadedModule: new LoadedModuleStore(),
+			modules: new ModulesStore(fullActionManager, fullStoreManager),
+			loadedModule: new LoadedModuleStore(dispatcher),
 		};
 	}
 
@@ -24,7 +28,7 @@ export class AppStoreManager implements StoreManager<AppStores> {
 		const promises = [];
 
 		for (const store in this.stores) {
-			promises.push(this.stores[store as keyof AppStores].init());
+			promises.push(this.stores[store as keyof PrivateStores].init());
 		}
 
 		const result = await Promise.allSettled(promises);
@@ -36,5 +40,3 @@ export class AppStoreManager implements StoreManager<AppStores> {
 		}
 	}
 }
-
-export default new AppStoreManager();

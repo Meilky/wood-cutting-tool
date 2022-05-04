@@ -1,22 +1,19 @@
-import appDispatcher from "./dispatcher";
-import { PublicAppActions } from "./interfaces/actions";
+import { PublicActions } from "./interfaces/actions";
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { ActionCreator } from "~/lib/interfaces/action-creator";
 
-export class PublicActionCreator implements ActionCreator<PublicAppActions> {
-	constructor(protected dispatcher: Dispatcher<PublicAppActions>) {
+export class PublicActionCreator implements ActionCreator<PublicActions> {
+	constructor(protected dispatcher: Dispatcher<PublicActions>) {
 		this.call = this.call.bind(this);
 	}
 
-	public call<K extends keyof PublicAppActions>(action: K, data: PublicAppActions[K]): void {
+	public call<K extends keyof PublicActions>(action: K, data: PublicActions[K]): void {
 		switch (action) {
-			case "test":
-				this.dispatcher.dispatch({ type: "test", data });
+			case "select_module":
+				this.dispatcher.dispatch("select_module", data);
 				break;
 			default:
 				break;
 		}
 	}
 }
-
-export default new PublicActionCreator(appDispatcher);

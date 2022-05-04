@@ -1,12 +1,8 @@
-import publicStoreManager from "./public-store-manager";
-
-export class FullStoreManager {
+export class FullStoresManager {
 	protected storeManagers: {[key: string]: any};
 
 	constructor() {
-		this.storeManagers = {
-			app: publicStoreManager
-		};
+		this.storeManagers = {};
 	}
 
 	public set(name: string, storeManager: any): void {
@@ -22,5 +18,3 @@ export class FullStoreManager {
 		return this.storeManagers;
 	}
 }
-
-export default new FullStoreManager();

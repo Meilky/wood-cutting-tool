@@ -1,8 +1,8 @@
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
-import { AppActions } from "./interfaces/actions";
+import { PrivateActions } from "./interfaces/actions";
 
-export class AppDispatcher implements Dispatcher<AppActions> {
-	protected actions: { [K in keyof AppActions]: (value: AppActions[K]) => void };
+export class AppDispatcher implements Dispatcher<PrivateActions> {
+	protected actions: { [K in keyof PrivateActions]: (value: PrivateActions[K]) => void };
 
 	constructor() {
 		this.actions = { select_module: this.naCallback };
@@ -15,17 +15,15 @@ export class AppDispatcher implements Dispatcher<AppActions> {
 		return;
 	}
 
-	public bind<K extends keyof AppActions>(action: K, callback: (value: AppActions[K]) => void): void {
+	public bind<K extends keyof PrivateActions>(action: K, callback: (value: PrivateActions[K]) => void): void {
 		if (this.actions[action]) {
 			this.actions[action] = callback as any;
 		}
 	}
 
-	public dispatch<K extends keyof AppActions>(action: K, data: AppActions[K]): void {
+	public dispatch<K extends keyof PrivateActions>(action: K, data: PrivateActions[K]): void {
 		if (this.actions[action]) {
 			this.actions[action](data);
 		}
 	}
 }
-
-export default new AppDispatcher();
