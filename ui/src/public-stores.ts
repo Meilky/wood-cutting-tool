@@ -1,13 +1,7 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import { ConfigStore } from "./stores/config";
-import { ModulesStore } from "./stores/modules";
+import { PublicStores } from "./interfaces/stores";
 
-export interface PublicStores {
-	config: ConfigStore;
-	modules: ModulesStore;
-}
-
-export class PublicStoreManager implements StoreManager<PublicStores> {
+export class PublicStoresManager implements StoreManager<PublicStores> {
 	public readonly stores: PublicStores;
 
 	constructor(privateStore: StoreManager<PublicStores>) {

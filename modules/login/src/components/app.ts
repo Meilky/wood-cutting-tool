@@ -23,7 +23,7 @@ export class App extends StateLessComponent {
 		this.onClick = this.onClick.bind(this);
 
 		this.element.onclick = this.onClick;
-		this.element.innerText = "Click me";
+		this.element.innerText = "Reselect the home page";
 	}
 
 	protected onClick(): void {

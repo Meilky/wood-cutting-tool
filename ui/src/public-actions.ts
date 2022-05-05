@@ -2,7 +2,7 @@ import { PublicActions } from "./interfaces/actions";
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { ActionCreator } from "~/lib/interfaces/action-creator";
 
-export class PublicActionCreator implements ActionCreator<PublicActions> {
+export class PublicActionsCreator implements ActionCreator<PublicActions> {
 	constructor(protected dispatcher: Dispatcher<PublicActions>) {
 		this.call = this.call.bind(this);
 	}

@@ -1,38 +1,34 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
 import { Dispatcher } from "~lib/interfaces/dispatcher";
-import { FullAppActionsManager } from "./full-action-manager";
-import { FullAppStoresManager } from "./full-store-manager";
 import { PrivateActions } from "./interfaces/actions";
 import { ConfigStore } from "./stores/config";
 import { LoadedModuleStore } from "./stores/loaded-module";
 import { ModulesStore } from "./stores/modules";
+import { PrivateStores } from "./interfaces/stores";
+import { FullManager } from "~lib/interfaces/full-manager";
+import { Module } from "~lib/interfaces/modules/module";
 import { Home } from "~/src/integrated-modules/home/components/home";
-import { Module } from "~/lib/interfaces/modules/module";
 
-export interface PrivateStores {
-	config: ConfigStore;
-	modules: ModulesStore;
-	loadedModule: LoadedModuleStore;
-}
-
-export class PrivateStoreManager implements StoreManager<PrivateStores> {
+export class PrivateStoresManager implements StoreManager<PrivateStores> {
 	public readonly stores: PrivateStores;
 
 	constructor(
-		fullActionManager: FullAppActionsManager,
-		fullStoreManager: FullAppStoresManager,
+		fullActions: FullManager<{ [key: string]: any }>,
+		fullStores: FullManager<{ [key: string]: any }>,
 		dispatcher: Dispatcher<PrivateActions>
 	) {
-		const home: Module = {
-			id: 0,
-			name: "Home",
-			component: new Home(),
-		};
+		const integratedModules: Module[] = [
+			{
+				id: 0,
+				name: "Home",
+				component: new Home(),
+			},
+		];
 
 		this.stores = {
 			config: new ConfigStore(),
-			modules: new ModulesStore(fullActionManager, fullStoreManager),
-			loadedModule: new LoadedModuleStore(dispatcher),
+			modules: new ModulesStore(fullActions, fullStores, integratedModules),
+			loadedModule: new LoadedModuleStore(dispatcher, integratedModules[0]),
 		};
 	}
 

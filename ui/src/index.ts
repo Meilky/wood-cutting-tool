@@ -1,29 +1,29 @@
-import { PrivateActionCreator } from "./actions";
+import { PrivateActionsCreator } from "./private-actions";
+import { PrivateStoresManager } from "./private-stores";
 import { App } from "./components/app";
 import { AppDispatcher } from "./dispatcher";
-import { FullAppActionsManager } from "./full-action-manager";
-import { FullAppStoresManager } from "./full-store-manager";
-import { PublicActionCreator } from "./public-actions";
-import { PublicStoreManager } from "./public-store-manager";
-import { PrivateStoreManager } from "./store-manager";
+import { FullActions } from "./full-actions";
+import { FullStores } from "./full-stores";
+import { PublicActionsCreator } from "./public-actions";
+import { PublicStoresManager } from "./public-stores";
 
-const fullStoresManager = new FullAppStoresManager();
-const fullActionManager = new FullAppActionsManager();
+const fullStores = new FullStores();
+const fullActions = new FullActions();
 
 const appDispatcher = new AppDispatcher();
 
-const privateStoresManager = new PrivateStoreManager(fullActionManager, fullStoresManager, appDispatcher);
-const publicStoresManager = new PublicStoreManager(privateStoresManager);
+const privateStores = new PrivateStoresManager(fullActions, fullStores, appDispatcher);
+const publicStores = new PublicStoresManager(privateStores);
 
-const privateActions = new PrivateActionCreator(appDispatcher);
-const publicActions = new PublicActionCreator(appDispatcher);
+const privateActions = new PrivateActionsCreator(appDispatcher);
+const publicActions = new PublicActionsCreator(appDispatcher);
 
-fullStoresManager.set("app", publicStoresManager);
-fullActionManager.set("app", publicActions);
+fullStores.set("app", publicStores);
+fullActions.set("app", publicActions);
 
-await privateStoresManager.init();
+privateStores.init();
 
-const appComponent = new App(privateStoresManager, privateActions);
+const appComponent = new App(privateStores, privateActions);
 
 appComponent.update();
 

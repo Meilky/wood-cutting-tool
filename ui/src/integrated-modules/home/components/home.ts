@@ -6,6 +6,7 @@ export class Home extends StateLessComponent {
 			element: document.createElement("div"),
 		});
 
-		this.element.innerText = "Home";
+		this.element.innerText =
+			"This is the home module, go in the login module, it should have a button that will use one of the app actions. The action will reselect the home page, so you will see this message once again.";
 	}
 }

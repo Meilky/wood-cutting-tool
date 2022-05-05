@@ -1,12 +1,12 @@
 import { Module } from "~/lib/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
 import { Component } from "~/lib/components/component.I";
-import { FullAppStoresManager } from "~src/full-store-manager";
-import { FullAppActionsManager } from "~src/full-action-manager";
+import { FullStores } from "~src/full-stores";
+import { FullActions } from "~src/full-actions";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor(protected fullActionManager: FullAppActionsManager, protected fullStoreManager: FullAppStoresManager) {
-		super([]);
+	constructor(protected fullActions: FullActions, protected fullStores: FullStores, integratedModules: Module[]) {
+		super(integratedModules);
 	}
 
 	public async init(): Promise<void> {
@@ -81,7 +81,7 @@ export class ModulesStore extends BaseStore<Module[]> {
 			const m = result.value;
 
 			if (m.init) {
-				const initResult = await m.init(this.fullActionManager, this.fullStoreManager);
+				const initResult = await m.init(this.fullActions, this.fullStores);
 
 				if (initResult.component) {
 					mod.component = initResult.component;
@@ -103,11 +103,11 @@ export class ModulesStore extends BaseStore<Module[]> {
 				}
 
 				if (initResult.actionCreator) {
-					this.fullActionManager.set(mod.name, initResult.actionCreator);
+					this.fullActions.set(mod.name, initResult.actionCreator);
 				}
 
 				if (initResult.storeManager) {
-					this.fullStoreManager.set(mod.name, initResult.storeManager);
+					this.fullStores.set(mod.name, initResult.storeManager);
 				}
 			} else {
 				if (m !== undefined) {

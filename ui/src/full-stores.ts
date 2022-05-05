@@ -1,6 +1,6 @@
 import { FullManager } from "~/lib/interfaces/full-manager";
 
-export class FullAppStoresManager implements FullManager<{ [key: string]: any }> {
+export class FullStores implements FullManager<{ [key: string]: any }> {
 	protected storeManagers: { [key: string]: any };
 
 	constructor() {

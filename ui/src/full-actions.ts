@@ -1,6 +1,6 @@
 import { FullManager } from "~/lib/interfaces/full-manager";
 
-export class FullAppActionsManager implements FullManager<{ [key: string]: any }> {
+export class FullActions implements FullManager<{ [key: string]: any }> {
 	protected actionManager: { [key: string]: any };
 
 	constructor() {
