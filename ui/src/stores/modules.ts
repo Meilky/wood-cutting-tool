@@ -87,17 +87,17 @@ export class ModulesStore extends BaseStore<Module[]> {
 					mod.component = initResult.component;
 
 					mod.error = undefined;
-					if (m.css) {
+					if (initResult.css) {
 						const element = document.createElement("link");
 
-						element.setAttribute("href", m.css);
+						element.setAttribute("href", initResult.css);
 						element.setAttribute("type", "text/css");
 						element.setAttribute("rel", "stylesheet");
 
 						document.head.append(element);
 
 						if (mod.fetching) {
-							mod.fetching.css = m.css;
+							mod.fetching.css = initResult.css;
 						}
 					}
 				}
