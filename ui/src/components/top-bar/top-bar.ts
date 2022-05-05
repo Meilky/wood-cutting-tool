@@ -20,17 +20,18 @@ export class TopBar extends StateFullComponent<StoreManager<PrivateStores>> {
 
 	protected onUpdate(): void {
 		const mod = this.stores.loadedModule.get();
+		if (mod) {
+			this.element.innerText = mod.name;
 
-		this.element.innerText = mod.name;
-
-		if (mod.error) {
-			switch (mod.error.state) {
-				case "error":
-					this.element.style.color = "var(--th-danger)";
-					break;
-				case "warning":
-					this.element.style.color = "var(--th-warning)";
-					break;
+			if (mod.error) {
+				switch (mod.error.state) {
+					case "error":
+						this.element.style.color = "var(--th-danger)";
+						break;
+					case "warning":
+						this.element.style.color = "var(--th-warning)";
+						break;
+				}
 			}
 		}
 	}

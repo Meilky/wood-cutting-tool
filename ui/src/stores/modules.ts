@@ -1,13 +1,12 @@
 import { Module } from "~/lib/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
-import { module } from "~/lib/integrated-modules/home/home";
 import { Component } from "~/lib/components/component.I";
 import { FullAppStoresManager } from "~src/full-store-manager";
-import { FullActionManager } from "~src/full-action-manager";
+import { FullAppActionsManager } from "~src/full-action-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor(protected fullActionManager: FullActionManager, protected fullStoreManager: FullAppStoresManager) {
-		super([module]);
+	constructor(protected fullActionManager: FullAppActionsManager, protected fullStoreManager: FullAppStoresManager) {
+		super([]);
 	}
 
 	public async init(): Promise<void> {

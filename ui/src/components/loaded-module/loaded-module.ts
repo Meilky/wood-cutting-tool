@@ -17,13 +17,14 @@ export class LoadedModule extends StateFullComponent<StoreManager<PrivateStores>
 
 	protected onUpdate(): void {
 		const mod = this.stores.loadedModule.get();
+		if (mod) {
+			if (mod.error) {
+				this.children = [new ErrorModule({ msg: mod.error.msg })];
+				return;
+			}
 
-		if (mod.error) {
-			this.children = [new ErrorModule({ msg: mod.error.msg })];
-			return;
+			this.children = [mod.component];
 		}
-
-		this.children = [mod.component];
 	}
 }
 

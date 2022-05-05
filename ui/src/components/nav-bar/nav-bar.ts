@@ -32,7 +32,7 @@ export class NavBar extends StateFullComponent<StoreManager<PrivateStores>> {
 		for (const mod of modules) {
 			let isLoaded = false;
 
-			if (mod.id == loadedMod.id) {
+			if (loadedMod && mod.id === loadedMod.id) {
 				isLoaded = true;
 			}
 

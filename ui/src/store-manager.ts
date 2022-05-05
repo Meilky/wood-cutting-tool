@@ -1,11 +1,13 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
 import { Dispatcher } from "~lib/interfaces/dispatcher";
-import { FullActionManager } from "./full-action-manager";
+import { FullAppActionsManager } from "./full-action-manager";
 import { FullAppStoresManager } from "./full-store-manager";
 import { PrivateActions } from "./interfaces/actions";
 import { ConfigStore } from "./stores/config";
 import { LoadedModuleStore } from "./stores/loaded-module";
 import { ModulesStore } from "./stores/modules";
+import { Home } from "~/src/integrated-modules/home/components/home";
+import { Module } from "~/lib/interfaces/modules/module";
 
 export interface PrivateStores {
 	config: ConfigStore;
@@ -17,10 +19,16 @@ export class PrivateStoreManager implements StoreManager<PrivateStores> {
 	public readonly stores: PrivateStores;
 
 	constructor(
-		fullActionManager: FullActionManager,
+		fullActionManager: FullAppActionsManager,
 		fullStoreManager: FullAppStoresManager,
 		dispatcher: Dispatcher<PrivateActions>
 	) {
+		const home: Module = {
+			id: 0,
+			name: "Home",
+			component: new Home(),
+		};
+
 		this.stores = {
 			config: new ConfigStore(),
 			modules: new ModulesStore(fullActionManager, fullStoreManager),
