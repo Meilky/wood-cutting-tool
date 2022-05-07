@@ -42,9 +42,27 @@ pub struct CreateRes {
     msg: String,
 }
 
-pub async fn create(_pool: Data<DBPool>) -> Json<CreateRes> {
+pub async fn create(
+    info: Json<Info>,
+    pool: Data<DBPool>,
+    _auth_middleware: Data<AuthMiddleware>,
+) -> Json<CreateRes> {
+    let inner = info.into_inner();
+
+    let row = sqlx::query("SELECT * FROM `users` WHERE username=?;")
+        .bind(&inner.username)
+        .fetch_all(pool.get_ref())
+        .await
+        .unwrap();
+
+    if !row.is_empty() {
+        return Json(CreateRes {
+            msg: "User already exist".to_string(),
+        });
+    }
+
     Json(CreateRes {
-        msg: "create working".to_string(),
+        msg: "User doenst exist".to_string(),
     })
 }
 
