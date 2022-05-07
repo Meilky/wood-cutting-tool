@@ -4,15 +4,15 @@ import { Store } from "~/lib/interfaces/stores/store";
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { PrivateActions } from "~/src/interfaces/actions";
 
-export class UserStore implements Store<Partial<UserData>, UserData> {
-	public readonly defaults: Partial<UserData>;
+export class UserStore implements Store<UserData | undefined> {
+	public readonly defaults: UserData | undefined;
 
-	protected value: Partial<UserData>;
+	protected value: UserData | undefined;
 	protected listeners: (() => void)[];
 
 	constructor(protected dispatcher: Dispatcher<PrivateActions>) {
-		this.value = {};
-		this.defaults = {};
+		this.value = undefined;
+		this.defaults = undefined;
 		this.listeners = [];
 
 		this.dispatcher.bind("login", this.set);
@@ -22,7 +22,7 @@ export class UserStore implements Store<Partial<UserData>, UserData> {
 		return;
 	}
 
-	public get(): Partial<UserData> {
+	public get(): UserData | undefined {
 		return this.value;
 	}
 
