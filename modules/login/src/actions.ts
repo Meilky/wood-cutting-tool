@@ -12,12 +12,19 @@ export class PrivateActionCreator implements ActionCreator<PrivateActions> {
 			case "login":
 				this.login(data as PrivateActions["login"]);
 				break;
+			case "signup":
+				this.signup(data as PrivateActions["signup"]);
+				break;
 			default:
 				break;
 		}
 	}
 
-	public login(data: PrivateActions["login"]): void {
+	protected async signup(data: PrivateActions["signup"]): Promise<void> {
+		this.dispatcher.dispatch("signup", data);
+	}
+
+	protected login(data: PrivateActions["login"]): void {
 		this.dispatcher.dispatch("login", data);
 	}
 }

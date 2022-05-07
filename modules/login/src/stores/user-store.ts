@@ -1,5 +1,5 @@
 import { deepCopy } from "~/lib/utils";
-import { UserData } from "~/src/interfaces/user-data";
+import { LoginData, SignupData, UserData } from "~/src/interfaces/user-data";
 import { Store } from "~/lib/interfaces/stores/store";
 import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { PrivateActions } from "~/src/interfaces/actions";
@@ -15,10 +15,21 @@ export class UserStore implements Store<UserData | undefined> {
 		this.defaults = undefined;
 		this.listeners = [];
 
-		this.dispatcher.bind("login", this.set);
+		this.dispatcher.bind("login", this.login);
+		this.dispatcher.bind("signup", this.signup);
 	}
 
 	public async init(): Promise<void> {
+		return;
+	}
+
+	protected async login(value: LoginData): Promise<void> {
+		console.log(value)
+		return;
+	}
+
+	protected async signup(value: SignupData): Promise<void> {
+		console.log(value)
 		return;
 	}
 

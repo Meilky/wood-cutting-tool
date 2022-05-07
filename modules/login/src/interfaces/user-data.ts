@@ -3,3 +3,14 @@ export interface UserData {
 	email: string;
 	token: string;
 }
+
+export interface LoginData {
+	usernameOrEmail?: string;
+	password: string;
+}
+
+export interface SignupData {
+	username: string;
+	email: string;
+	password: string;
+}

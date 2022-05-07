@@ -5,7 +5,7 @@ export class ModuleDispatcher implements Dispatcher<PrivateActions> {
 	protected actions: { [K in keyof PrivateActions]: (value: PrivateActions[K]) => void };
 
 	constructor() {
-		this.actions = { login: this.naCallback, test: this.naCallback };
+		this.actions = { login: this.naCallback, signup: this.naCallback, test: this.naCallback };
 
 		this.bind = this.bind.bind(this);
 		this.dispatch = this.dispatch.bind(this);

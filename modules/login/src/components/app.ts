@@ -18,11 +18,26 @@ export class App extends StateLessComponent {
 		protected fullActions: FullManager<FullActions>,
 		protected fullStores: FullManager<FullStores>
 	) {
+		super({ element: document.createElement("div") });
+
+		this.children = [
+			new LoginForm(actions, fullActions, fullStores),
+			new SignupForm(actions, fullActions, fullStores),
+		];
+	}
+}
+
+class LoginForm extends StateLessComponent {
+	constructor(
+		protected actions: ActionCreator<PrivateActions>,
+		protected fullActions: FullManager<FullActions>,
+		protected fullStores: FullManager<FullStores>
+	) {
 		super({ element: document.createElement("form") });
 
 		this.children = [
-			new Label({ inner: "Username:", for: "username" }),
-			new Input({ name: "username", type: "text" }),
+			new Label({ inner: "Username or Email:", for: "usernameOrEmail" }),
+			new Input({ name: "usernameOrEmail", type: "text" }),
 			new BR(),
 			new Label({ inner: "Password:", for: "password" }),
 			new Input({ name: "password", type: "password" }),
@@ -35,8 +50,75 @@ export class App extends StateLessComponent {
 		this.element.onsubmit = this.onSubmit;
 	}
 
-	protected onSubmit(): void {
-		this.fullActions.get().app.call("select_module", this.fullStores.get().app.stores.modules.get()[0]);
+	protected onSubmit(e: SubmitEvent): void {
+		e.preventDefault();
+
+		const rawData = new FormData(e.target as HTMLFormElement);
+
+		const loginData: any = {}
+
+		for (const [key, value] of rawData) {
+			loginData[key] = value
+		}
+
+		this.actions.call("login", loginData)
+	}
+}
+
+class SignupForm extends StateLessComponent {
+	constructor(
+		protected actions: ActionCreator<PrivateActions>,
+		protected fullActions: FullManager<FullActions>,
+		protected fullStores: FullManager<FullStores>
+	) {
+		super({ element: document.createElement("form") });
+
+		this.children = [
+			new Title({ inner: "Signup" }),
+			new Label({ inner: "Username:", for: "username" }),
+			new Input({ name: "username", type: "text" }),
+			new BR(),
+			new Label({ inner: "Email:", for: "email" }),
+			new Input({ name: "email", type: "email" }),
+			new BR(),
+			new Label({ inner: "Password:", for: "password" }),
+			new Input({ name: "password", type: "password" }),
+			new BR(),
+			new Button({ inner: "Submit", type: "submit" }),
+		];
+
+		this.onSubmit = this.onSubmit.bind(this);
+
+		this.element.onsubmit = this.onSubmit;
+	}
+
+	protected onSubmit(e: SubmitEvent): void {
+		e.preventDefault();
+
+		const rawData = new FormData(e.target as HTMLFormElement);
+
+		const signupData: any = {}
+
+		for (const [key, value] of rawData) {
+			signupData[key] = value
+		}
+
+		this.actions.call("signup", signupData)
+	}
+}
+
+interface TitleProps {
+	inner: string;
+	className?: string;
+}
+
+class Title extends StateLessComponent {
+	constructor(props: TitleProps) {
+		super({ element: document.createElement("h1") });
+
+		this.element.innerText = props.inner;
+
+		if (props.className) this.element.className = props.className;
 	}
 }
 
