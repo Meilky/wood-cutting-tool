@@ -6,7 +6,7 @@
 	"source": "src/index.ts",
 	"type": "module",
 	"scripts": {
-		"build": "npm run clean:dist && parcel build --dist-dir dist --cache-dir .cache",
+		"build": "npm run clean:dist && parcel build --dist-dir dist --cache-dir .cache && ./removeCssImport.sh",
 		"clean": "npm run clean:dist && npm run clean:cache",
 		"clean:dist": "rm -rf dist/*",
 		"clean:cache": "rm -rf .cache",

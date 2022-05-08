@@ -9,23 +9,12 @@ import { PublicStores } from "./interfaces/stores";
 import { PublicActionCreator } from "./public-actions";
 import { PublicStoreManager } from "./public-store-manager";
 import { PrivateStoreManager } from "./store-manager";
-import { FullManager } from "~/lib/interfaces/full-manager";
 
-interface FullStores {
-	app: StoreManager<any>;
-}
-
-interface FullActions {
-	app: ActionCreator<any>;
-}
-
-export const init = async (
-	fullActions: FullManager<FullActions>,
-	fullStores: FullManager<FullStores>
-): Promise<{
+export const init = async (): Promise<{
 	component: Component;
 	actionCreator: ActionCreator<PublicActions>;
 	storeManager: StoreManager<PublicStores>;
+	css: string;
 }> => {
 	const dispatcher = new ModuleDispatcher();
 
@@ -37,7 +26,7 @@ export const init = async (
 	const privateActions = new PrivateActionCreator(dispatcher);
 	const publicActions = new PublicActionCreator(privateActions, dispatcher);
 
-	const appComponent = new App(privateActions, fullActions, fullStores);
+	const appComponent = new App(privateActions, privateStoreManager);
 
 	appComponent.update();
 
@@ -45,5 +34,6 @@ export const init = async (
 		component: appComponent,
 		actionCreator: publicActions,
 		storeManager: publicStoreManager,
+		css: "/modules/login/index.css"
 	};
 };

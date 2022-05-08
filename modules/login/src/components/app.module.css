@@ -1,0 +1,29 @@
+.Form {
+	display: grid;
+	grid-template-columns: minmax(35%, max-content) auto;
+	row-gap: 1vh;
+	column-gap: 1vw;
+	max-width: 25vw;
+	margin: auto;
+}
+
+.Title {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	margin: auto;
+}
+
+.Label {
+	grid-column: 1;
+}
+
+.Input {
+	grid-column: 2;
+}
+
+.Submit {
+	grid-column-start: 1;
+	grid-column-end: 3;
+	width: 50%;
+	margin: auto;
+}

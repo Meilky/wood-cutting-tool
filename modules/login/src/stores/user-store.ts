@@ -5,14 +5,14 @@ import { Dispatcher } from "~/lib/interfaces/dispatcher";
 import { PrivateActions } from "~/src/interfaces/actions";
 
 export class UserStore implements Store<UserData | undefined> {
-	public readonly defaults: UserData | undefined;
+	public readonly default: UserData | undefined;
 
 	protected value: UserData | undefined;
 	protected listeners: (() => void)[];
 
 	constructor(protected dispatcher: Dispatcher<PrivateActions>) {
 		this.value = undefined;
-		this.defaults = undefined;
+		this.default = undefined;
 		this.listeners = [];
 
 		this.dispatcher.bind("login", this.login);

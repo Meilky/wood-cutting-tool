@@ -1,5 +1,5 @@
 export interface Store<G, S = G> {
-	readonly defaults: G;
+	readonly base: G;
 
 	init(): Promise<void>;
 	bind(callback: () => void): void;

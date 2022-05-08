@@ -2,6 +2,7 @@ import { StoreManager } from "~/lib/interfaces/store-manager";
 import { Dispatcher } from "~lib/interfaces/dispatcher";
 import { PrivateActions } from "./interfaces/actions";
 import { PrivateStores } from "./interfaces/stores";
+import { LoadedFormStore } from "./stores/loaded-form";
 import { UserStore } from "./stores/user-store";
 
 export class PrivateStoreManager implements StoreManager<PrivateStores> {
@@ -10,6 +11,7 @@ export class PrivateStoreManager implements StoreManager<PrivateStores> {
 	constructor(protected dispatcher: Dispatcher<PrivateActions>) {
 		this.stores = {
 			user: new UserStore(dispatcher),
+			loadedForm: new LoadedFormStore(dispatcher)
 		};
 	}
 

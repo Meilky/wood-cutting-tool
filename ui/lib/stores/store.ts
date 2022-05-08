@@ -1,11 +1,14 @@
 import { Store } from "~/lib/interfaces/stores/store";
 
 export abstract class BaseStore<T> implements Store<T> {
+	public readonly base: Readonly<T>;
+
 	protected value: T;
 	protected listeners: (() => void)[];
 
-	constructor(public readonly defaults: T) {
-		this.value = defaults;
+	constructor(base: T) {
+		this.base = base;
+		this.value = base;
 		this.listeners = [];
 
 		this.set = this.set.bind(this);
@@ -39,7 +42,7 @@ export abstract class BaseStore<T> implements Store<T> {
 	}
 
 	public set(value: T): void {
-		this.value = value;
+		this.value = Object.freeze(value);
 
 		this.refresh();
 	}
