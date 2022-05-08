@@ -8,7 +8,7 @@ use crate::api::v1::user::models::User;
 
 #[derive(Deserialize, Serialize)]
 pub struct Info {
-    username: String,
+    username_or_email: String,
     password: String,
 }
 
@@ -24,12 +24,14 @@ pub async fn login(
 ) -> Json<LoginRes> {
     let inner = info.into_inner();
 
-    let row = sqlx::query("SELECT * FROM `users` WHERE username=? AND password_hash=?;")
-        .bind(&inner.username)
-        .bind(&inner.password)
-        .fetch_one(pool.get_ref())
-        .await
-        .unwrap();
+    let row =
+        sqlx::query("SELECT * FROM `users` WHERE (username=? OR email=?) AND password_hash=?;")
+            .bind(&inner.username_or_email)
+            .bind(&inner.username_or_email)
+            .bind(&inner.password)
+            .fetch_one(pool.get_ref())
+            .await
+            .unwrap();
     let user: User = User::from_row(row);
 
     let token = auth_middleware.get_ref().encode(&user);
@@ -49,8 +51,8 @@ pub async fn create(
 ) -> Json<CreateRes> {
     let inner = info.into_inner();
 
-    let row = sqlx::query("SELECT * FROM `users` WHERE username=?;")
-        .bind(&inner.username)
+    let row = sqlx::query("SELECT * FROM `users` WHERE (username=? OR email=?);")
+        .bind(&inner.username_or_email)
         .fetch_all(pool.get_ref())
         .await
         .unwrap();
