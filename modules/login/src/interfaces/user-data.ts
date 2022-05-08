@@ -5,7 +5,7 @@ export interface UserData {
 }
 
 export interface LoginData {
-	usernameOrEmail?: string;
+	usernameOrEmail: string;
 	password: string;
 }
 

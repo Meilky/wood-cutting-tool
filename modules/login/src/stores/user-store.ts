@@ -24,13 +24,43 @@ export class UserStore implements Store<UserData | undefined> {
 	}
 
 	protected async login(value: LoginData): Promise<void> {
-		console.log(value)
-		return;
+		try {
+			const response = await fetch("auth/v1/user/login", {
+				method: "POST",
+				body: JSON.stringify(value)
+			});
+
+			if(response.status !== 200){
+				return;
+			}
+
+			const result = await response.json();
+
+			console.log(result);
+		}
+		catch (e: any) {
+			console.error(e)
+		}
 	}
 
 	protected async signup(value: SignupData): Promise<void> {
-		console.log(value)
-		return;
+		try {
+			const response = await fetch("auth/v1/user/create", {
+				method: "POST",
+				body: JSON.stringify(value)
+			});
+
+			if(response.status !== 200){
+				return;
+			}
+
+			const result = await response.json();
+
+			console.log(result);
+		}
+		catch (e: any) {
+			console.error(e)
+		}
 	}
 
 	public get(): UserData | undefined {
