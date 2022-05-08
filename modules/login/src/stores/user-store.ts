@@ -25,12 +25,19 @@ export class UserStore implements Store<UserData | undefined> {
 
 	protected async login(value: LoginData): Promise<void> {
 		try {
-			const response = await fetch("auth/v1/user/login", {
+			const response = await fetch("/auth/v1/user/login", {
 				method: "POST",
-				body: JSON.stringify(value)
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				cache: "no-cache",
+				body: JSON.stringify({
+					username_or_email: value.usernameOrEmail,
+					password: value.password
+				})
 			});
 
-			if(response.status !== 200){
+			if (response.status !== 200) {
 				return;
 			}
 
@@ -47,10 +54,13 @@ export class UserStore implements Store<UserData | undefined> {
 		try {
 			const response = await fetch("auth/v1/user/create", {
 				method: "POST",
+				headers: {
+					'Content-Type': 'application/json'
+				},
 				body: JSON.stringify(value)
 			});
 
-			if(response.status !== 200){
+			if (response.status !== 200) {
 				return;
 			}
 
