@@ -2,7 +2,7 @@ import { StateLessComponent } from "~lib/components/state-less-component";
 import { ActionCreator } from "~lib/interfaces/action-creator";
 import { PrivateActions } from "~src/interfaces/actions";
 import { StoreManager } from "~lib/interfaces/store-manager";
-import { Form as FormStyle, Input as InputStyle, Submit as SubmitStyle, Title as TitleStyle, Label as LabelStyle } from "./app.module.css"
+import { Form as FormStyle, Input as InputStyle, Submit as SubmitStyle, Title as TitleStyle, Label as LabelStyle, Tab as TabStyle, TabItem as TabItemStyle, App as AppStyle } from "./app.module.css"
 import { StateFullComponent } from "~lib/components/state-full-component";
 import { PrivateStores } from "~src/interfaces/stores";
 import { Forms } from "~src/interfaces/forms";
@@ -17,10 +17,13 @@ export class App extends StateFullComponent<StoreManager<PrivateStores>> {
 	) {
 		super({ element: document.createElement("div"), storeManager, binds: ["loadedForm"] });
 
-		const tabs = new Tabs(actions);
+		this.element.className = AppStyle;
+
+		const tab = new Tab(actions);
+
 		this.namedChildren = {
-			login: [tabs, new LoginForm(actions)],
-			signup: [tabs, new SignupForm(actions)]
+			login: [tab, new LoginForm(actions)],
+			signup: [tab, new SignupForm(actions)]
 		}
 	}
 
@@ -38,7 +41,7 @@ export class App extends StateFullComponent<StoreManager<PrivateStores>> {
 	}
 }
 
-class Tabs extends StateLessComponent {
+class Tab extends StateLessComponent {
 	constructor(
 		protected actions: ActionCreator<PrivateActions>,
 	) {
@@ -46,10 +49,11 @@ class Tabs extends StateLessComponent {
 
 		this.onClickLogin = this.onClickLogin.bind(this);
 		this.onClickSignup = this.onClickSignup.bind(this);
+		this.element.className = TabStyle;
 
 		this.children = [
-			new Button({ inner: "Login", onClick: this.onClickLogin }),
-			new Button({ inner: "Signup", onClick: this.onClickSignup }),
+			new Button({ inner: "Login", onClick: this.onClickLogin, className: TabItemStyle }),
+			new Button({ inner: "Signup", onClick: this.onClickSignup, className: TabItemStyle }),
 		];
 	}
 
@@ -71,6 +75,7 @@ class LoginForm extends StateLessComponent {
 		this.element.className = FormStyle;
 
 		this.children = [
+			new Title({ inner: "Login", className: TitleStyle }),
 			new Label({ inner: "Username or Email:", for: "usernameOrEmail", className: LabelStyle }),
 			new Input({ name: "usernameOrEmail", type: "text", className: InputStyle }),
 			new Label({ inner: "Password:", for: "password", className: LabelStyle }),

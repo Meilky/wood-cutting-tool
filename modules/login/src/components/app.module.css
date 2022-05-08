@@ -1,16 +1,25 @@
 .Form {
+	border: 2px solid black;
+	border-radius: 5px;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	padding-left: 1vw;
+	padding-right: 1vw;
 	display: grid;
 	grid-template-columns: minmax(35%, max-content) auto;
 	row-gap: 1vh;
 	column-gap: 1vw;
-	max-width: 25vw;
-	margin: auto;
+	background-color: var(--th-gray-700);
 }
 
 .Title {
 	grid-column-start: 1;
 	grid-column-end: 3;
-	margin: auto;
+	text-align: center;
+	margin: 0;
+	padding: 0;
 }
 
 .Label {
@@ -25,5 +34,27 @@
 	grid-column-start: 1;
 	grid-column-end: 3;
 	width: 50%;
+	margin: auto;
+}
+
+.Tab {
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	column-gap: 1vw;
+}
+
+.TabItem {
+	border: 2px solid black;
+	border-radius: 5px;
+	flex-grow: 1;
+	font-size: 1.25rem;
+}
+
+.App {
+	max-width: 30vw;
 	margin: auto;
 }
