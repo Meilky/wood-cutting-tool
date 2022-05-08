@@ -5,10 +5,10 @@ use crate::db::DBRow;
 
 #[derive(Deserialize, Serialize)]
 pub struct User {
-    id: i32,
-    username: String,
-    email: String,
-    password_hash: String,
+    pub id: i32,
+    pub username: String,
+    pub email: String,
+    pub password_hash: String,
 }
 
 impl User {

@@ -2,13 +2,14 @@ use actix_web::{
     web::{scope, Data, ServiceConfig},
     App, HttpServer,
 };
+use argon2::{self, Config};
 use jsonwebtoken::{Algorithm, DecodingKey, EncodingKey, Header};
 use std::{fs, path::Path};
 
 mod api;
 mod db;
 
-use api::v1::middlewares::auth_middleware::AuthMiddleware;
+use api::v1::middlewares::{auth_middleware::AuthMiddleware, encrypt_middleware::EncryptMiddleware};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -26,15 +27,18 @@ async fn main() -> std::io::Result<()> {
         EncodingKey::from_rsa_pem(pri_key.as_bytes()).unwrap(),
         Header::new(Algorithm::RS256),
     );
+    let encrypt_mid: EncryptMiddleware = EncryptMiddleware::new(Config::default());
 
     let pool = db::connection_builder().await.unwrap();
     let pool_data = Data::new(pool);
     let auth_mid_data = Data::new(auth_mid);
+    let encrypt_mid_data = Data::new(encrypt_mid);
 
     HttpServer::new(move || {
         App::new()
             .app_data(Data::clone(&pool_data))
             .app_data(Data::clone(&auth_mid_data))
+            .app_data(Data::clone(&encrypt_mid_data))
             .configure(|cfg: &mut ServiceConfig| {
                 cfg.service(scope("/auth/v1").configure(api::v1::register_urls));
             })
