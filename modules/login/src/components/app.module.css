@@ -58,3 +58,14 @@
 	max-width: 30vw;
 	margin: auto;
 }
+
+.StatusBar {
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	align-items: center;
+	justify-content: center;
+	border: 2px solid black;
+	border-radius: 5px;
+	grid-column-start: 1;
+	grid-column-end: 3;
+}

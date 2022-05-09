@@ -2,11 +2,13 @@ import { StateLessComponent } from "~lib/components/state-less-component";
 import { ActionCreator } from "~lib/interfaces/action-creator";
 import { PrivateActions } from "~src/interfaces/actions";
 import { StoreManager } from "~lib/interfaces/store-manager";
-import { Form as FormStyle, Input as InputStyle, Submit as SubmitStyle, Title as TitleStyle, Label as LabelStyle, Tab as TabStyle, TabItem as TabItemStyle, App as AppStyle } from "./app.module.css"
+import { Form as FormStyle, Input as InputStyle, Submit as SubmitStyle, Title as TitleStyle, Label as LabelStyle, Tab as TabStyle, TabItem as TabItemStyle, App as AppStyle, StatusBar as StatusBarStyle } from "./app.module.css"
 import { StateFullComponent } from "~lib/components/state-full-component";
 import { PrivateStores } from "~src/interfaces/stores";
 import { Forms } from "~src/interfaces/forms";
 import { Component } from "~/lib/components/component.I"
+import { LoginStates } from "~src/interfaces/login";
+import { SignupStates } from "~src/interfaces/signup";
 
 export class App extends StateFullComponent<StoreManager<PrivateStores>> {
 	protected namedChildren: { login: Component[], signup: Component[] }
@@ -22,8 +24,8 @@ export class App extends StateFullComponent<StoreManager<PrivateStores>> {
 		const tab = new Tab(actions);
 
 		this.namedChildren = {
-			login: [tab, new LoginForm(actions)],
-			signup: [tab, new SignupForm(actions)]
+			login: [tab, new LoginForm(actions, storeManager)],
+			signup: [tab, new SignupForm(actions, storeManager)]
 		}
 	}
 
@@ -69,6 +71,7 @@ class Tab extends StateLessComponent {
 class LoginForm extends StateLessComponent {
 	constructor(
 		protected actions: ActionCreator<PrivateActions>,
+		storeManager: StoreManager<PrivateStores>,
 	) {
 		super({ element: document.createElement("form") });
 
@@ -81,6 +84,7 @@ class LoginForm extends StateLessComponent {
 			new Label({ inner: "Password:", for: "password", className: LabelStyle }),
 			new Input({ name: "password", type: "password", className: InputStyle }),
 			new Button({ inner: "Submit", type: "submit", className: SubmitStyle }),
+			new LoginStatusBar(storeManager)
 		];
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -106,6 +110,7 @@ class LoginForm extends StateLessComponent {
 class SignupForm extends StateLessComponent {
 	constructor(
 		protected actions: ActionCreator<PrivateActions>,
+		storeManager: StoreManager<PrivateStores>,
 	) {
 		super({ element: document.createElement("form") });
 
@@ -120,6 +125,7 @@ class SignupForm extends StateLessComponent {
 			new Label({ inner: "Password:", for: "password", className: LabelStyle }),
 			new Input({ name: "password", type: "password", className: InputStyle }),
 			new Button({ inner: "Submit", type: "submit", className: SubmitStyle }),
+			new SignupStatusBar(storeManager)
 		];
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -139,6 +145,83 @@ class SignupForm extends StateLessComponent {
 		}
 
 		this.actions.call("signup", signupData)
+	}
+}
+
+class SignupStatusBar extends StateFullComponent<StoreManager<PrivateStores>>{
+	constructor(storeManager: StoreManager<PrivateStores>) {
+		super({
+			element: document.createElement("div"),
+			storeManager,
+			binds: ["signup"]
+		})
+
+		this.element.className = StatusBarStyle
+	}
+	protected onUpdate(): void {
+		const data = this.stores.signup.get();
+		const e = this.element;
+
+		if (data.state == SignupStates.NA) {
+			e.style.display = "none";
+			return;
+		}
+
+		switch (data.state) {
+			case SignupStates.SUCCESS:
+				e.style.backgroundColor = "var(--th-success)"
+				break;
+			case SignupStates.LOADING:
+				e.style.backgroundColor = "var(--th-warning)"
+				break;
+			case SignupStates.ERROR:
+				e.style.backgroundColor = "var(--th-error)"
+				break;
+			default:
+				break;
+		}
+
+		e.innerText = data.msg || ""
+		e.style.display = "flex";
+	}
+}
+
+class LoginStatusBar extends StateFullComponent<StoreManager<PrivateStores>>{
+	constructor(storeManager: StoreManager<PrivateStores>) {
+		super({
+			element: document.createElement("div"),
+			storeManager,
+			binds: ["login"]
+		})
+
+		this.element.className = StatusBarStyle
+	}
+
+	protected onUpdate(): void {
+		const data = this.stores.login.get();
+		const e = this.element;
+
+		if (data.state == LoginStates.NA) {
+			e.style.display = "none";
+			return;
+		}
+
+		switch (data.state) {
+			case LoginStates.SUCCESS:
+				e.style.backgroundColor = "var(--th-success)"
+				break;
+			case LoginStates.LOADING:
+				e.style.backgroundColor = "var(--th-warning)"
+				break;
+			case LoginStates.ERROR:
+				e.style.backgroundColor = "var(--th-error)"
+				break;
+			default:
+				break;
+		}
+
+		e.innerText = data.msg || ""
+		e.style.display = "flex";
 	}
 }
 
