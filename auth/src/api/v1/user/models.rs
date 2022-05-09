@@ -21,3 +21,9 @@ impl User {
         }
     }
 }
+
+#[derive(Deserialize, Serialize)]
+pub struct TokenInnerData {
+    pub user_id: i32,
+    pub fingerprint: String,
+}

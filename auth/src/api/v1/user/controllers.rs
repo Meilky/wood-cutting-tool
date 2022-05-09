@@ -4,12 +4,14 @@ use actix_web::http::header::ContentType;
 use actix_web::http::StatusCode;
 use actix_web::web::{Data, Json};
 use actix_web::{HttpRequest, HttpResponse};
+use cookie::Cookie;
+use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
 
 use crate::api::v1::middlewares::auth_middleware::AuthMiddleware;
 use crate::api::v1::middlewares::auth_middleware::AuthMiddlewareTrait;
-use crate::api::v1::user::models::User;
+use crate::api::v1::user::models::{TokenInnerData, User};
 
 #[derive(Deserialize, Serialize)]
 pub struct Info {
@@ -19,10 +21,10 @@ pub struct Info {
 
 #[derive(Deserialize, Serialize)]
 pub struct LoginRes {
-    token: String,
+    fingerprint: String,
 }
 
-pub async fn login(req: HttpRequest, info: Json<Info>) -> Json<LoginRes> {
+pub async fn login(req: HttpRequest, info: Json<Info>) -> HttpResponse {
     let inner = info.into_inner();
 
     let pool = req.app_data::<Data<DBPool>>().unwrap();
@@ -38,12 +40,32 @@ pub async fn login(req: HttpRequest, info: Json<Info>) -> Json<LoginRes> {
     let user: User = User::from_row(row);
 
     if encrypt_mid.check(&inner.password.as_bytes(), &user.password_hash) {
-        let token = auth_mid.get_ref().encode(&user);
+        let rng = thread_rng();
 
-        return Json(LoginRes { token });
+        let fingerprint: String = rng
+            .sample_iter(&Alphanumeric)
+            .take(16)
+            .map(char::from)
+            .collect();
+
+        let token_data = TokenInnerData {
+            user_id: user.id,
+            fingerprint: fingerprint.clone(),
+        };
+        let token = auth_mid.get_ref().encode(&token_data);
+
+        return HttpResponse::build(StatusCode::OK)
+            .cookie(
+                Cookie::build("token", token)
+                    .path("/")
+                    .secure(true)
+                    .http_only(true)
+                    .finish(),
+            )
+            .body(serde_json::to_string(&LoginRes { fingerprint }).unwrap());
     }
 
-    Json(LoginRes { token: "kdasjfldjkl".to_owned() })
+    HttpResponse::build(StatusCode::BAD_REQUEST).finish()
 }
 
 #[derive(Deserialize, Serialize)]

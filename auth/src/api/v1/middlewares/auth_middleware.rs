@@ -1,7 +1,7 @@
 use jsonwebtoken::{
     decode, encode, Algorithm, DecodingKey, EncodingKey, Header, TokenData, Validation,
 };
-use crate::api::v1::user::models::User;
+use crate::api::v1::user::models::TokenInnerData;
 
 pub struct AuthMiddleware {
     pub_key: DecodingKey,
@@ -24,12 +24,12 @@ impl AuthMiddleware {
     }
 }
 
-impl AuthMiddlewareTrait<User> for AuthMiddleware {
-    fn parse(&self, jwt: &String) -> TokenData<User> {
-        decode::<User>(&jwt, &self.pub_key, &Validation::new(Algorithm::RS256)).unwrap()
+impl AuthMiddlewareTrait<TokenInnerData> for AuthMiddleware {
+    fn parse(&self, jwt: &String) -> TokenData<TokenInnerData> {
+        decode::<TokenInnerData>(&jwt, &self.pub_key, &Validation::new(Algorithm::RS256)).unwrap()
     }
 
-    fn encode(&self, data: &User) -> String {
+    fn encode(&self, data: &TokenInnerData) -> String {
         encode(&self.header, &data, &self.pri_key).unwrap()
     }
 }
