@@ -28,7 +28,7 @@ export class PrivateStoresManager implements StoreManager<PrivateStores> {
 		this.stores = {
 			config: new ConfigStore(),
 			modules: new ModulesStore(fullActions, fullStores, integratedModules),
-			loadedModule: new LoadedModuleStore(dispatcher, integratedModules[0]),
+			loadedModule: new LoadedModuleStore(dispatcher),
 		};
 	}
 

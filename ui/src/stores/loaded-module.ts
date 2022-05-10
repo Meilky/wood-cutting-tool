@@ -4,8 +4,8 @@ import { Dispatcher } from "~lib/interfaces/dispatcher";
 import { PrivateActions } from "~src/interfaces/actions";
 
 export class LoadedModuleStore extends BaseStore<Module | undefined> {
-	constructor(dispatcher: Dispatcher<PrivateActions>, defaultModule: Module) {
-		super(defaultModule);
+	constructor(dispatcher: Dispatcher<PrivateActions>) {
+		super(undefined);
 
 		dispatcher.bind("select_module", this.set);
 	}

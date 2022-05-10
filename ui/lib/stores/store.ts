@@ -1,7 +1,7 @@
 import { Store } from "~/lib/interfaces/stores/store";
 
 export abstract class BaseStore<T> implements Store<T> {
-	public readonly base: Readonly<T>;
+	public readonly base: T;
 
 	protected value: T;
 	protected listeners: (() => void)[];

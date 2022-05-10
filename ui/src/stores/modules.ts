@@ -1,65 +1,42 @@
 import { Module } from "~/lib/interfaces/modules/module";
 import { BaseStore } from "~/lib/stores/store";
 import { Component } from "~/lib/components/component.I";
-import { FullStores } from "~src/full-stores";
-import { FullActions } from "~src/full-actions";
+import { FullManager } from "~lib/interfaces/full-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor(protected fullActions: FullActions, protected fullStores: FullStores, integratedModules: Module[]) {
-		super(integratedModules);
+	constructor(protected fullActions: FullManager<{ [key: string]: any }>, protected fullStores: FullManager<{ [key: string]: any }>, protected integratedModules: Module[]) {
+		super([]);
 	}
 
 	public async init(): Promise<void> {
-		const res = await fetch("/api/v1/modules");
-		const raw_modules = await res.json();
-
 		let i = this.value.length;
 
 		const modules: Module[] = [];
-		const promisesModules: (Promise<any> | undefined)[] = [];
+		const promisesModules: any[] = [];
 
-		for (const raw_mod of raw_modules) {
-			if (raw_mod.id === undefined) {
-				continue;
+		for (const raw_mod of this.integratedModules) {
+			modules.push(raw_mod)
+			promisesModules.push(raw_mod);
+			i++
+		}
+
+		try {
+			const res = await fetch("/api/v1/modules");
+			const raw_modules = await res.json();
+
+
+			for (const raw_mod of raw_modules) {
+				const mod = this.initModule(i, raw_mod);
+
+				if (mod && mod.fetching) {
+					modules.push(mod)
+					promisesModules.push(import(mod.fetching.origin))
+				}
+
+				i++
 			}
-			if (!raw_mod.name === undefined) {
-				continue;
-			}
-			if (!raw_mod.description === undefined) {
-				continue;
-			}
-
-			const mod: Module = {
-				id: i,
-				name: raw_mod.name,
-				component: {} as Component,
-				fetching: {
-					id: raw_mod.id,
-					origin: "/api/v1/modules",
-				},
-				error: {
-					state: "warning",
-					msg: "No origin to load module!",
-				},
-			};
-
-			modules.push(mod);
-
-			if (raw_mod.origin) {
-				if (!mod.fetching)
-					mod.fetching = {
-						id: raw_mod.id,
-						origin: "n/a",
-					};
-
-				mod.fetching.origin = raw_mod.origin;
-
-				promisesModules.push(import(raw_mod.origin));
-			} else {
-				promisesModules.push(undefined);
-			}
-
-			i++;
+		} catch {
+			console.error("Unable to fetch repo origin!")
 		}
 
 		const results = await Promise.allSettled(promisesModules);
@@ -71,56 +48,107 @@ export class ModulesStore extends BaseStore<Module[]> {
 			if (result.status === "rejected") {
 				mod.error = {
 					state: "error",
-					msg: `Unable to load module "${mod.name}" from origin "${
-						(mod.fetching || { origin: "n/a" }).origin
-					}" with error: ${result.reason}`,
+					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin
+						}" with error: ${result.reason}`,
 				};
+
 				continue;
 			}
 
 			const m = result.value;
 
-			if (m.init) {
-				const initResult = await m.init(this.fullActions, this.fullStores);
+			if (m && m.init) {
+				try {
+					const initResult = await m.init(this.fullActions, this.fullStores);
 
-				if (initResult.component) {
-					mod.component = initResult.component;
+					if (initResult.component) {
+						mod.component = initResult.component;
 
-					mod.error = undefined;
-					if (initResult.css) {
-						const element = document.createElement("link");
+						mod.error = undefined;
+						if (initResult.css) {
+							const element = document.createElement("link");
 
-						element.setAttribute("href", initResult.css);
-						element.setAttribute("type", "text/css");
-						element.setAttribute("rel", "stylesheet");
+							element.setAttribute("href", initResult.css);
+							element.setAttribute("type", "text/css");
+							element.setAttribute("rel", "stylesheet");
 
-						document.head.append(element);
+							document.head.append(element);
 
-						if (mod.fetching) {
-							mod.fetching.css = initResult.css;
+							if (mod.fetching) {
+								mod.fetching.css = initResult.css;
+							}
 						}
 					}
+					if (initResult.actionCreator) {
+						this.fullActions.set(mod.name, initResult.actionCreator);
+					}
+
+					if (initResult.storeManager) {
+						this.fullStores.set(mod.name, initResult.storeManager);
+					}
+				} catch (e: any) {
+					mod.error = {
+						state: "error",
+						msg: `Error while loading module "${e}"!`,
+					};
 				}
 
-				if (initResult.actionCreator) {
-					this.fullActions.set(mod.name, initResult.actionCreator);
-				}
-
-				if (initResult.storeManager) {
-					this.fullStores.set(mod.name, initResult.storeManager);
-				}
+				this.value.push(mod);
 			} else {
-				if (m !== undefined) {
+				if (mod !== undefined) {
 					mod.error = {
 						state: "error",
 						msg: `Unable to find init function in module "${mod.name}"!`,
 					};
+
+					this.value.push(mod);
 				}
 			}
-
-			this.value.push(mod);
 		}
 
 		this.refresh();
+	}
+
+	protected initModule(id: number, raw_mod: any): Module | undefined {
+		if (!raw_mod.id === undefined) {
+			return;
+		}
+
+		if (!raw_mod.name === undefined) {
+			return;
+		}
+
+		if (!raw_mod.description === undefined) {
+			return;
+		}
+
+		const mod: Module = {
+			id,
+			name: raw_mod.name,
+			component: {} as Component,
+			fetching: {
+				id: raw_mod.id,
+				origin: "n/a",
+			},
+			error: {
+				state: "warning",
+				msg: "No origin to load module!",
+			},
+		};
+
+		if (!raw_mod.origin) {
+			return;
+		}
+
+		if (!mod.fetching) {
+			mod.fetching = {
+				id: raw_mod.id,
+				origin: "n/a",
+			};
+		}
+
+		mod.fetching.origin = raw_mod.origin;
+
+		return mod;
 	}
 }
