@@ -7,7 +7,7 @@ import { ModulesStore } from "./stores/modules";
 import { PrivateStores } from "./interfaces/stores";
 import { FullManager } from "~lib/interfaces/full-manager";
 import { Module } from "~lib/interfaces/modules/module";
-import { Home } from "~/src/integrated-modules/home/components/home";
+import { module as homeModule, init as homeInit } from "~/src/integrated-modules/home/home";
 
 export class PrivateStoresManager implements StoreManager<PrivateStores> {
 	public readonly stores: PrivateStores;
@@ -17,12 +17,11 @@ export class PrivateStoresManager implements StoreManager<PrivateStores> {
 		fullStores: FullManager<{ [key: string]: any }>,
 		dispatcher: Dispatcher<PrivateActions>
 	) {
-		const integratedModules: Module[] = [
+		const integratedModules: { module: Module, init: () => Promise<any> }[] = [
 			{
-				id: 0,
-				name: "Home",
-				component: new Home(),
-			},
+				module: homeModule,
+				init: homeInit
+			}
 		];
 
 		this.stores = {

@@ -4,7 +4,7 @@ import { Component } from "~/lib/components/component.I";
 import { FullManager } from "~lib/interfaces/full-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor(protected fullActions: FullManager<{ [key: string]: any }>, protected fullStores: FullManager<{ [key: string]: any }>, protected integratedModules: Module[]) {
+	constructor(protected fullActions: FullManager<{ [key: string]: any }>, protected fullStores: FullManager<{ [key: string]: any }>, protected integratedModules: { module: Module, init: () => void }[]) {
 		super([]);
 	}
 
@@ -15,7 +15,7 @@ export class ModulesStore extends BaseStore<Module[]> {
 		const promisesModules: any[] = [];
 
 		for (const raw_mod of this.integratedModules) {
-			modules.push(raw_mod)
+			modules.push(raw_mod.module)
 			promisesModules.push(raw_mod);
 			i++
 		}
@@ -48,8 +48,7 @@ export class ModulesStore extends BaseStore<Module[]> {
 			if (result.status === "rejected") {
 				mod.error = {
 					state: "error",
-					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin
-						}" with error: ${result.reason}`,
+					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin}" with error: ${result.reason}`,
 				};
 
 				continue;
