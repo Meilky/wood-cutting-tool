@@ -4,7 +4,7 @@ import { Component } from "~/lib/components/component.I";
 import { FullManager } from "~lib/interfaces/full-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor(protected fullActions: FullManager<{ [key: string]: any }>, protected fullStores: FullManager<{ [key: string]: any }>, protected integratedModules: { module: Module, init: () => void }[]) {
+	constructor(protected fullActions: FullManager<{ [key: string]: any }>, protected fullStores: FullManager<{ [key: string]: any }>, protected integratedModules: { module: Module, init: (fullActions: FullManager<{ [key: string]: any }>, fullStores: FullManager<{ [key: string]: any }>) => void }[]) {
 		super([]);
 	}
 
@@ -78,6 +78,7 @@ export class ModulesStore extends BaseStore<Module[]> {
 							}
 						}
 					}
+
 					if (initResult.actionCreator) {
 						this.fullActions.set(mod.name, initResult.actionCreator);
 					}

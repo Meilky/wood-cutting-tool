@@ -1,12 +1,25 @@
 import { StateLessComponent } from "~/lib/components/state-less-component";
+import { FullManager } from "~lib/interfaces/full-manager";
 
 export class Home extends StateLessComponent {
-	constructor() {
+	protected appStores: any;
+
+	constructor(protected fullStores: FullManager<{ [key: string]: any }>) {
 		super({
-			element: document.createElement("div"),
+			element: document.createElement("ul"),
 		});
 
-		this.element.innerText =
-			"This is the home module, go in the login module, it should have a button that will use one of the app actions. The action will reselect the home page, so you will see this message once again.";
+		this.appStores = fullStores.get().app.stores;
+		this.appStores.modules.bind(this.update)
+	}
+
+	protected onUpdate(): void {
+		const modules = this.appStores.modules.get();
+
+		for(const mod of modules) {
+			const ul = document.createElement("ul");
+			ul.innerText = mod.name
+			this.element.appendChild(ul)
+		}
 	}
 }

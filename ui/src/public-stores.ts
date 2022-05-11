@@ -1,5 +1,5 @@
 import { StoreManager } from "~/lib/interfaces/store-manager";
-import { PublicStores } from "./interfaces/stores";
+import { PublicStores } from "~/lib/interfaces/modules/app/stores";
 
 export class PublicStoresManager implements StoreManager<PublicStores> {
 	public readonly stores: PublicStores;

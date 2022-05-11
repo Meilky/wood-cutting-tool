@@ -7,7 +7,7 @@ import { ModulesStore } from "./stores/modules";
 import { PrivateStores } from "./interfaces/stores";
 import { FullManager } from "~lib/interfaces/full-manager";
 import { Module } from "~lib/interfaces/modules/module";
-import { module as homeModule, init as homeInit } from "~/src/integrated-modules/home/home";
+import { module as homeModule, init as homeInit } from "~/src/integrated-modules/home/index";
 
 export class PrivateStoresManager implements StoreManager<PrivateStores> {
 	public readonly stores: PrivateStores;
@@ -17,7 +17,7 @@ export class PrivateStoresManager implements StoreManager<PrivateStores> {
 		fullStores: FullManager<{ [key: string]: any }>,
 		dispatcher: Dispatcher<PrivateActions>
 	) {
-		const integratedModules: { module: Module, init: () => Promise<any> }[] = [
+		const integratedModules: { module: Module, init: (fullActions: FullManager<{ [key: string]: any }>, fullStores: FullManager<{ [key: string]: any }>) => Promise<any> }[] = [
 			{
 				module: homeModule,
 				init: homeInit
