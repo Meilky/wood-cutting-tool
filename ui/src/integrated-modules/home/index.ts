@@ -14,6 +14,6 @@ export const init = async (
 	fullStores: FullManager<{ [key: string]: any }>
 ): Promise<{ component: Component }> => {
 	return {
-		component: new Home(fullStores),
+		component: new Home(fullStores, fullActions),
 	};
 };
