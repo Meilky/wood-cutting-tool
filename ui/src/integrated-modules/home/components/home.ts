@@ -10,16 +10,16 @@ export class Home extends StateLessComponent {
 		});
 
 		this.appStores = fullStores.get().app.stores;
-		this.appStores.modules.bind(this.update)
+		this.appStores.modules.bind(this.update);
 	}
 
 	protected onUpdate(): void {
 		const modules = this.appStores.modules.get();
 
-		for(const mod of modules) {
+		for (const mod of modules) {
 			const ul = document.createElement("ul");
-			ul.innerText = mod.name
-			this.element.appendChild(ul)
+			ul.innerText = mod.name;
+			this.element.appendChild(ul);
 		}
 	}
 }

@@ -9,8 +9,11 @@ export const module: Module = {
 	component: {} as Component,
 };
 
-export const init = async (fullActions: FullManager<{ [key: string]: any }>, fullStores: FullManager<{ [key: string]: any }>): Promise<{ component: Component }> => {
+export const init = async (
+	fullActions: FullManager<{ [key: string]: any }>,
+	fullStores: FullManager<{ [key: string]: any }>
+): Promise<{ component: Component }> => {
 	return {
-		component: new Home(fullStores)
-	}
-}
+		component: new Home(fullStores),
+	};
+};

@@ -4,7 +4,17 @@ import { Component } from "~/lib/components/component.I";
 import { FullManager } from "~lib/interfaces/full-manager";
 
 export class ModulesStore extends BaseStore<Module[]> {
-	constructor(protected fullActions: FullManager<{ [key: string]: any }>, protected fullStores: FullManager<{ [key: string]: any }>, protected integratedModules: { module: Module, init: (fullActions: FullManager<{ [key: string]: any }>, fullStores: FullManager<{ [key: string]: any }>) => void }[]) {
+	constructor(
+		protected fullActions: FullManager<{ [key: string]: any }>,
+		protected fullStores: FullManager<{ [key: string]: any }>,
+		protected integratedModules: {
+			module: Module;
+			init: (
+				fullActions: FullManager<{ [key: string]: any }>,
+				fullStores: FullManager<{ [key: string]: any }>
+			) => void;
+		}[]
+	) {
 		super([]);
 	}
 
@@ -15,28 +25,27 @@ export class ModulesStore extends BaseStore<Module[]> {
 		const promisesModules: any[] = [];
 
 		for (const raw_mod of this.integratedModules) {
-			modules.push(raw_mod.module)
+			modules.push(raw_mod.module);
 			promisesModules.push(raw_mod);
-			i++
+			i++;
 		}
 
 		try {
 			const res = await fetch("/api/v1/modules");
 			const raw_modules = await res.json();
 
-
 			for (const raw_mod of raw_modules) {
 				const mod = this.initModule(i, raw_mod);
 
 				if (mod && mod.fetching) {
-					modules.push(mod)
-					promisesModules.push(import(mod.fetching.origin))
+					modules.push(mod);
+					promisesModules.push(import(mod.fetching.origin));
 				}
 
-				i++
+				i++;
 			}
 		} catch {
-			console.error("Unable to fetch repo origin!")
+			console.error("Unable to fetch repo origin!");
 		}
 
 		const results = await Promise.allSettled(promisesModules);
@@ -48,7 +57,9 @@ export class ModulesStore extends BaseStore<Module[]> {
 			if (result.status === "rejected") {
 				mod.error = {
 					state: "error",
-					msg: `Unable to load module "${mod.name}" from origin "${(mod.fetching || { origin: "n/a" }).origin}" with error: ${result.reason}`,
+					msg: `Unable to load module "${mod.name}" from origin "${
+						(mod.fetching || { origin: "n/a" }).origin
+					}" with error: ${result.reason}`,
 				};
 
 				continue;

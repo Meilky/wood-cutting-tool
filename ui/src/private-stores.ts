@@ -17,11 +17,17 @@ export class PrivateStoresManager implements StoreManager<PrivateStores> {
 		fullStores: FullManager<{ [key: string]: any }>,
 		dispatcher: Dispatcher<PrivateActions>
 	) {
-		const integratedModules: { module: Module, init: (fullActions: FullManager<{ [key: string]: any }>, fullStores: FullManager<{ [key: string]: any }>) => Promise<any> }[] = [
+		const integratedModules: {
+			module: Module;
+			init: (
+				fullActions: FullManager<{ [key: string]: any }>,
+				fullStores: FullManager<{ [key: string]: any }>
+			) => Promise<any>;
+		}[] = [
 			{
 				module: homeModule,
-				init: homeInit
-			}
+				init: homeInit,
+			},
 		];
 
 		this.stores = {
