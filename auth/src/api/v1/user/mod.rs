@@ -10,4 +10,6 @@ pub fn register_urls(cfg: &mut web::ServiceConfig) {
     cfg.route("/create/", web::post().to(controllers::create));
     cfg.route("/delete", web::post().to(controllers::delete));
     cfg.route("/delete/", web::post().to(controllers::delete));
+    cfg.route("/info", web::post().to(controllers::info));
+    cfg.route("/info/", web::post().to(controllers::info));
 }

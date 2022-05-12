@@ -46,8 +46,13 @@ export class SignupStore implements Store<Signup> {
 			});
 
 			if (response.status !== 200) {
-				throw response.text;
+				throw await response.text();
 			}
+
+			this.set({
+				state: SignupStates.SUCCESS,
+				msg: "Successfuly created your account!"
+			})
 		}
 		catch (e: any) {
 			this.set({
@@ -55,11 +60,6 @@ export class SignupStore implements Store<Signup> {
 				msg: e
 			})
 		}
-
-		this.set({
-			state: SignupStates.SUCCESS,
-			msg: "Successfuly created your account!"
-		})
 	}
 
 	public get(): Signup {

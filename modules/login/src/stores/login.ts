@@ -50,7 +50,7 @@ export class LoginStore implements Store<Login> {
 			});
 
 			if (response.status !== 200) {
-				throw response.text;
+				throw await response.text();
 			}
 
 			const result = await response.json();
@@ -62,18 +62,18 @@ export class LoginStore implements Store<Login> {
 			sessionStorage.setItem("fingerprint", result.fingerprint)
 
 			this.dispatcher.dispatch("get_user", undefined);
-		}
-		catch (e: any) {
+
+			this.set({
+				state: LoginStates.SUCCESS,
+				msg: "Successfuly created your account!"
+			})
+		} catch (e: any) {
 			this.set({
 				state: LoginStates.ERROR,
 				msg: e
 			})
 		}
 
-		this.set({
-			state: LoginStates.SUCCESS,
-			msg: "Successfuly created your account!"
-		})
 	}
 
 	public get(): Login {

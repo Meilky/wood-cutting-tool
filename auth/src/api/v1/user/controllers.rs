@@ -8,23 +8,89 @@ use cookie::Cookie;
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
+use sqlx::Row;
 
 use crate::api::v1::middlewares::auth_middleware::AuthMiddleware;
 use crate::api::v1::middlewares::auth_middleware::AuthMiddlewareTrait;
 use crate::api::v1::user::models::{TokenInnerData, User};
 
 #[derive(Deserialize, Serialize)]
-pub struct Info {
+pub struct LoginInfo {
     username_or_email: String,
     password: String,
 }
 
 #[derive(Deserialize, Serialize)]
-pub struct LoginRes {
+pub struct LoginResponse {
     fingerprint: String,
 }
 
-pub async fn login(req: HttpRequest, info: Json<Info>) -> HttpResponse {
+#[derive(Deserialize, Serialize)]
+pub struct InfoInfo {
+    fingerprint: String,
+}
+
+#[derive(Deserialize, Serialize)]
+pub struct InfoResponse {
+    username: String,
+    email: String,
+}
+
+pub async fn info(req: HttpRequest, info: Json<InfoInfo>) -> HttpResponse {
+    let pool = req.app_data::<Data<DBPool>>().unwrap();
+    let auth_mid = req.app_data::<Data<AuthMiddleware>>().unwrap();
+
+    let token = match req.cookie("token") {
+        None => {
+            return HttpResponse::build(StatusCode::BAD_REQUEST)
+                .content_type(ContentType::plaintext())
+                .body("No token provided in cookies!");
+        }
+        Some(t) => t,
+    };
+
+    println!("{}",token.value().to_string());
+
+    let token_data: TokenInnerData = match auth_mid.get_ref().parse(&token.value().to_string()) {
+        Ok(data) => data.claims,
+        Err(e) => {
+            return HttpResponse::build(StatusCode::BAD_REQUEST)
+                .content_type(ContentType::plaintext())
+                .body(e.to_string());
+        }
+    };
+
+    if !(token_data.fingerprint == info.fingerprint) {
+        return HttpResponse::build(StatusCode::BAD_REQUEST)
+            .content_type(ContentType::plaintext())
+            .body("Fingerprint from the token isn't the same from the provided fingerprint!");
+    }
+
+    let raw_row = sqlx::query("SELECT * FROM `users` WHERE id=?;")
+        .bind(&token_data.user_id)
+        .fetch_one(pool.get_ref())
+        .await;
+
+    if let Err(err) = raw_row {
+        return HttpResponse::build(StatusCode::BAD_REQUEST)
+            .content_type(ContentType::plaintext())
+            .body(err.to_string());
+    }
+
+    let row = raw_row.unwrap();
+
+    HttpResponse::build(StatusCode::BAD_REQUEST)
+        .content_type(ContentType::plaintext())
+        .body(
+            serde_json::to_string(&InfoResponse {
+                username: row.get::<String, &str>("username"),
+                email: row.get::<String, &str>("email"),
+            })
+            .unwrap(),
+        )
+}
+
+pub async fn login(req: HttpRequest, info: Json<LoginInfo>) -> HttpResponse {
     let inner = info.into_inner();
 
     let pool = req.app_data::<Data<DBPool>>().unwrap();
@@ -35,9 +101,15 @@ pub async fn login(req: HttpRequest, info: Json<Info>) -> HttpResponse {
         .bind(&inner.username_or_email)
         .bind(&inner.username_or_email)
         .fetch_one(pool.get_ref())
-        .await
-        .unwrap();
-    let user: User = User::from_row(row);
+        .await;
+
+    if let Err(err) = row {
+        return HttpResponse::build(StatusCode::BAD_REQUEST)
+            .content_type(ContentType::plaintext())
+            .body(err.to_string());
+    }
+
+    let user: User = User::from_row(row.unwrap());
 
     if encrypt_mid.check(&inner.password.as_bytes(), &user.password_hash) {
         let rng = thread_rng();
@@ -52,6 +124,7 @@ pub async fn login(req: HttpRequest, info: Json<Info>) -> HttpResponse {
             user_id: user.id,
             fingerprint: fingerprint.clone(),
         };
+
         let token = auth_mid.get_ref().encode(&token_data);
 
         return HttpResponse::build(StatusCode::OK)
@@ -62,10 +135,10 @@ pub async fn login(req: HttpRequest, info: Json<Info>) -> HttpResponse {
                     .http_only(true)
                     .finish(),
             )
-            .body(serde_json::to_string(&LoginRes { fingerprint }).unwrap());
+            .body(serde_json::to_string(&LoginResponse { fingerprint }).unwrap());
     }
 
-    HttpResponse::build(StatusCode::BAD_REQUEST).finish()
+    HttpResponse::build(StatusCode::BAD_REQUEST).body("Wrong password!")
 }
 
 #[derive(Deserialize, Serialize)]
@@ -96,13 +169,8 @@ pub async fn create(req: HttpRequest, body: Json<CreateReq>) -> HttpResponse {
 
     if !row.is_empty() {
         return HttpResponse::build(StatusCode::BAD_REQUEST)
-            .content_type(ContentType::json())
-            .body(
-                serde_json::to_string(&CreateRes {
-                    msg: "User already exist".to_string(),
-                })
-                .unwrap(),
-            );
+            .content_type(ContentType::plaintext())
+            .body("User already exist!");
     }
 
     let mut rng = thread_rng();

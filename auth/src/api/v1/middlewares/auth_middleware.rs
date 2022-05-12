@@ -10,7 +10,7 @@ pub struct AuthMiddleware {
 }
 
 pub trait AuthMiddlewareTrait<T> {
-    fn parse(&self, jwt: &String) -> TokenData<T>;
+    fn parse(&self, jwt: &String) -> Result<TokenData<TokenInnerData>, jsonwebtoken::errors::Error>;
     fn encode(&self, data: &T) -> String;
 }
 
@@ -25,8 +25,8 @@ impl AuthMiddleware {
 }
 
 impl AuthMiddlewareTrait<TokenInnerData> for AuthMiddleware {
-    fn parse(&self, jwt: &String) -> TokenData<TokenInnerData> {
-        decode::<TokenInnerData>(&jwt, &self.pub_key, &Validation::new(Algorithm::RS256)).unwrap()
+    fn parse(&self, jwt: &String) -> Result<TokenData<TokenInnerData>, jsonwebtoken::errors::Error> {
+        decode::<TokenInnerData>(&jwt, &self.pub_key, &Validation::new(Algorithm::RS256))
     }
 
     fn encode(&self, data: &TokenInnerData) -> String {

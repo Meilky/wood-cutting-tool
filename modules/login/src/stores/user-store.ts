@@ -24,6 +24,7 @@ export class UserStore implements Store<UserData | undefined> {
 	}
 
 	protected async getUser(): Promise<void> {
+		console.log("ok")
 		const response = await fetch("/auth/v1/user/info", {
 			method: "POST",
 			headers: {
