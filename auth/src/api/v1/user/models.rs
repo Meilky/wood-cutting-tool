@@ -26,4 +26,6 @@ impl User {
 pub struct TokenInnerData {
     pub user_id: i32,
     pub fingerprint: String,
+    pub iat: i64,
+    pub exp: i64
 }

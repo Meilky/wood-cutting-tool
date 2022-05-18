@@ -23,6 +23,7 @@ INSERT INTO `references` VALUES
 	(null, "Rust serde", "Library rust utilis&#xE9; pour s&#xE9;rialiser le json dans le 'backend'.", "https://serde.rs/"),
 	(null, "Rust rand", "Library rust utilis&#xE9; pour g&#xE9;n&#xE9;rer le 'fingerprint' des 'json web token' et les 'salt' des 'hash' des mots de passe.", "https://docs.rs/rand/latest/rand/"),
 	(null, "Rust argon2", "Library rust utilis&#xE9; pour g&#xE9;n&#xE9;rer le 'hash' des mots de passe.", "https://docs.rs/argon2/latest/argon2/"),
+	(null, "Rust chrono", "Library rust utilis&#xE9; pour avoir le temps.", "https://docs.rs/chrono/latest/chrono/"),
 	(null, "Typescript-Lang", "Le language utilis&#xE9; pour coder le 'frontend'.", "https://www.typescriptlang.org/"),
 	(null, "Canvas 2d rendering context", "Utilis&#xE9; pour les r&#xE9;f&#xE9;rences du context 2d des canvas javascript pour faire aparaitre les coupures.", "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D"),
 	(null, "React lifecycle", "Utilis&#xE9; pour baser le cycle de vie de mes 'custom component' sur ceux de React.", "https://www.w3schools.com/react/react_lifecycle.asp"),

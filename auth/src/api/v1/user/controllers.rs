@@ -4,6 +4,7 @@ use actix_web::http::header::ContentType;
 use actix_web::http::StatusCode;
 use actix_web::web::{Data, Json};
 use actix_web::{HttpRequest, HttpResponse};
+use chrono::prelude::*;
 use cookie::Cookie;
 use rand::distributions::Alphanumeric;
 use rand::{thread_rng, Rng};
@@ -49,8 +50,6 @@ pub async fn info(req: HttpRequest, info: Json<InfoInfo>) -> HttpResponse {
         Some(t) => t,
     };
 
-    println!("{}",token.value().to_string());
-
     let token_data: TokenInnerData = match auth_mid.get_ref().parse(&token.value().to_string()) {
         Ok(data) => data.claims,
         Err(e) => {
@@ -79,7 +78,7 @@ pub async fn info(req: HttpRequest, info: Json<InfoInfo>) -> HttpResponse {
 
     let row = raw_row.unwrap();
 
-    HttpResponse::build(StatusCode::BAD_REQUEST)
+    HttpResponse::build(StatusCode::OK)
         .content_type(ContentType::plaintext())
         .body(
             serde_json::to_string(&InfoResponse {
@@ -120,7 +119,12 @@ pub async fn login(req: HttpRequest, info: Json<LoginInfo>) -> HttpResponse {
             .map(char::from)
             .collect();
 
+        let now: DateTime<Utc> = Utc::now();
+        let iat: i64 = now.timestamp();
+        let exp: i64 = iat + (60 * 60);
         let token_data = TokenInnerData {
+            exp,
+            iat,
             user_id: user.id,
             fingerprint: fingerprint.clone(),
         };
