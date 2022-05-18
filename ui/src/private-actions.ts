@@ -8,7 +8,7 @@ export class PrivateActionsCreator implements ActionCreator<PrivateActions> {
 	constructor(protected dispatcher: Dispatcher<PrivateActions>) {
 		this.call = this.call.bind(this);
 
-		this.actions = ["select_module"]
+		this.actions = ["select_module"];
 	}
 
 	public call<K extends keyof PrivateActions>(action: K, data: PrivateActions[K]): void {
