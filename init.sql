@@ -9,8 +9,55 @@ CREATE TABLE `users` (
 CREATE TABLE `references` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`description` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, `link` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, PRIMARY KEY (`id`)
+	`description` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	`link` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	PRIMARY KEY (`id`)
 );
+
+CREATE TABLE `projects` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`user_id` INT NOT NULL,
+	`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`user_id`) REFERENCES users(`id`)
+);
+
+CREATE TABLE `planks` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`project_id` INT NOT NULL,
+	`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	`width` INT NOT NULL,
+	`height` INT NOT NULL,
+	PRIMARY KEY (`id`),
+	FOREIGN KEY (`project_id`) REFERENCES projects(`id`)
+);
+
+CREATE TABLE `modules` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	`origin` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+INSERT INTO `users` VALUES 
+	(null, "admin", "admin@gmail.com", "$argon2i$v=19$m=4096,t=3,p=1$2aVr25cWzHpr4SqMlnp+y6veZrv2DcGSTxYmu2Ny0ro$7KTVEK1boFVzCCRiX6zug8ro2qs9VwxqDh5BLYso/to")
+;
+
+INSERT INTO `projects` VALUES
+	(null, 1, "The project")
+;
+
+INSERT INTO `planks` VALUES
+	(null, 1, "plank 2x4", 4, 2),
+	(null, 1, "plank 2x6", 6, 2),
+	(null, 1, "plank 4x4", 4, 4)
+;
+
+INSERT INTO `modules` VALUES
+	(null, "Login", "/modules/login/index.js"),
+	(null, "Wood Cutting Tool", "/modules/wood-cutting-tool/index.js"),
+	(null, "References", "/modules/references/index.js")
+;
 
 INSERT INTO `references` VALUES 
 	(null, "Github repo", "Lien &agrave; la 'repo' Github.", "https://github.com/Meilky/wood-cutting-tool"),
@@ -32,17 +79,4 @@ INSERT INTO `references` VALUES
 	(null, "Html form event", "Utilis&#xE9; pour que la page ne 'reload' pas lorsque nous cliquons sur le boutton soumettre dans la page d'accueil.", "https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event"),
 	(null, "Promise.allSettled", "Utilis&#xE9; pour 'fetch' tout les modules sans que tout les 'promise' sois rejet&#xE9; si une 'promise' est rejet&#xE9;.", "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled"),
 	(null, "Flux architecture", "Utilis&#xE9; pour le 'flow' du 'data' dans le 'frontend'.", "https://www.freecodecamp.org/news/an-introduction-to-the-flux-architectural-pattern-674ea74775c9/")
-;
-
-CREATE TABLE `modules` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	`origin` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-	PRIMARY KEY (`id`)
-);
-
-INSERT INTO `modules` VALUES
-	(null, "Login", "/modules/login/index.js"),
-	(null, "Wood Cutting Tool", "/modules/wood-cutting-tool/index.js"),
-	(null, "References", "/modules/references/index.js")
 ;
