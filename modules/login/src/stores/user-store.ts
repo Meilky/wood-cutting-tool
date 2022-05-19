@@ -15,6 +15,9 @@ export class UserStore implements Store<UserData | undefined> {
 		this.base = undefined;
 		this.listeners = [];
 
+		this.getUser = this.getUser.bind(this);
+		this.set = this.set.bind(this);
+
 		this.dispatcher.bind("set_user", this.set)
 		this.dispatcher.bind("get_user", this.getUser)
 	}
@@ -24,7 +27,6 @@ export class UserStore implements Store<UserData | undefined> {
 	}
 
 	protected async getUser(): Promise<void> {
-		console.log("ok")
 		const response = await fetch("/auth/v1/user/info", {
 			method: "POST",
 			headers: {
@@ -37,9 +39,13 @@ export class UserStore implements Store<UserData | undefined> {
 			})
 		});
 
+		const data = await response.json();
+
 		if (response.status !== 200) {
 			throw response.text;
 		}
+
+		this.dispatcher.dispatch("set_user", data)
 	}
 
 	public get(): UserData | undefined {
@@ -48,6 +54,8 @@ export class UserStore implements Store<UserData | undefined> {
 
 	public set(value: UserData): void {
 		this.value = Object.freeze(deepCopy(value));
+
+		this.emmitChange()
 	}
 
 	public emmitChange(): void {

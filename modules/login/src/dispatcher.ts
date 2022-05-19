@@ -5,7 +5,7 @@ export class ModuleDispatcher implements Dispatcher<PrivateActions> {
 	protected actions: { [K in keyof PrivateActions]: (value: PrivateActions[K]) => void };
 
 	constructor() {
-		this.actions = { login: this.naCallback, signup: this.naCallback, select_form: this.naCallback, test: this.naCallback };
+		this.actions = { login: this.naCallback, signup: this.naCallback, select_form: this.naCallback, get_user: this.naCallback, set_user: this.naCallback };
 
 		this.bind = this.bind.bind(this);
 		this.dispatch = this.dispatch.bind(this);
@@ -16,9 +16,7 @@ export class ModuleDispatcher implements Dispatcher<PrivateActions> {
 	}
 
 	public bind<K extends keyof PrivateActions>(action: K, callback: (value: PrivateActions[K]) => void): void {
-		if (this.actions[action]) {
-			this.actions[action] = callback as any;
-		}
+		this.actions[action] = callback as any;
 	}
 
 	public dispatch<K extends keyof PrivateActions>(action: K, data: PrivateActions[K]): void {
