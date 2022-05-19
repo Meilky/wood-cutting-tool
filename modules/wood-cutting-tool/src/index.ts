@@ -1,4 +1,8 @@
 import { WoodCuttingTool } from "./components/wood-cutting-tool";
 
-export const css = "/modules/wood-cutting-tool/index.css"
-export const component = new WoodCuttingTool();
+export const init = async (): Promise<any> => {
+	return {
+		css: "/modules/wood-cutting-tool/index.css",
+		component: new WoodCuttingTool(),
+	}
+}
