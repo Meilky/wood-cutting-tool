@@ -40,7 +40,7 @@ CREATE TABLE `modules` (
 );
 
 INSERT INTO `users` VALUES 
-	(null, "admin", "admin@gmail.com", "$argon2i$v=19$m=4096,t=3,p=1$2aVr25cWzHpr4SqMlnp+y6veZrv2DcGSTxYmu2Ny0ro$7KTVEK1boFVzCCRiX6zug8ro2qs9VwxqDh5BLYso/to")
+	(null, "admin", "admin@gmail.com", "<custom hash>")
 ;
 
 INSERT INTO `projects` VALUES
